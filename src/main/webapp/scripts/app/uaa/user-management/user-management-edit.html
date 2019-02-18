@@ -1,0 +1,177 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myUserLabel">
+            Create or edit a User</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label>ID</label>
+            <input type="text" class="form-control" name="id"
+                   ng-model="user.id" readonly>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">UserName</label>
+            <input type="text" class="form-control" name="userName"
+                   ng-model="user.userName" ng-maxlength="50">
+
+            <div ng-show="editForm.userName.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.userName.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.userName.$error.maxlength"
+                   translate-value-max="50">
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group" ng-show="user.id == null">
+            <label class="control-label">Password</label>
+            <input type="password" class="form-control" name="password"
+                   ng-model="user.password" ng-required="user.id == null" ng-maxlength="50">
+
+            <div ng-show="editForm.password.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.password.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.password.$error.maxlength"
+                   translate-value-max="50">
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">FamilyName</label>
+            <input type="text" class="form-control" name="familyName"
+                   ng-model="user.name.familyName" ng-maxlength="50">
+
+            <div ng-show="editForm.familyName.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.familyName.$error.maxlength"
+                   translate-value-max="50">
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">GivenName</label>
+            <input type="text" class="form-control" name="givenName"
+                   ng-model="user.name.givenName" ng-maxlength="50">
+
+            <div ng-show="editForm.givenName.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.givenName.$error.maxlength"
+                   translate-value-max="50">
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+        
+        <div class="form-group" >
+            <label class="control-label">Email</label>
+            <div class="form-inline" ng-repeat="email in user.emails track by $index">
+                <button type="button" class="btn btn-danger" ng-click="deleEmail($index)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <input type="text" class="form-control" name="email.value"
+                   ng-model="email.value" required ng-maxlength="100">
+                <input type="checkbox" id="email.primary" ng-model="email.primary">
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addEmail()">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+            
+            <div ng-show="editForm.email.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.email.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.email.$error.maxlength"
+                   translate-value-max="100">
+                    This field cannot be longer than 100 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group" >
+            <label class="control-label">PhoneNumber</label>
+            <div class="form-inline" ng-repeat="phoneNumber in user.phoneNumbers track by $index">
+                <button type="button" class="btn btn-danger" ng-click="delePhoneNumber($index)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <input type="text" class="form-control" name="phoneNumber"
+                   ng-model="phoneNumber.value" required ng-maxlength="100">
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addPhoneNumber()">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+
+            <div ng-show="editForm.phoneNumber.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.phoneNumber.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.phoneNumber.$error.maxlength"
+                   translate-value-max="100">
+                    This field cannot be longer than 100 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="active">
+                <input type="checkbox" id="active" ng-model="user.active">
+                <span>Activated</span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="verified">
+                <input type="checkbox" id="verified" ng-model="user.verified">
+                <span>Verified</span>
+            </label>
+        </div>
+
+        <!-- <div class="form-group">
+            <label class="control-label">origin</label>
+            <input type="text" class="form-control" name="origin"
+                   ng-model="user.origin" ng-maxlength="50">
+
+            <div ng-show="editForm.origin.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.origin.$error.maxlength"
+                   translate-value-max="50">
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div> -->
+        <!-- <div class="form-group">
+            <label>Profiles</label>
+            <select class="form-control" multiple name="authority" ng-model="user.authorities"
+                    ng-options="authority for authority in authorities">
+            </select>
+        </div> -->
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

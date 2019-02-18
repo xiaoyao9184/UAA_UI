@@ -1,0 +1,95 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myUserLabel">
+            Create a Member</h4>
+
+        <ol class="breadcrumb">
+            <li ng-repeat="path in paths track by $index">
+                <a ng-click="changePath($index,$event)">{{path.name}}</a>
+            </li>
+        </ol>
+    </div>
+    <div class="modal-body" >
+        <jh-alert-error></jh-alert-error>
+
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="control-label">Add list</label>
+                <ul class="list-group">
+                    <li class="list-group-item"
+                        ng-repeat="item in actionItems track by $index"
+                        ng-click="removeAction($index)"
+                        style="cursor: pointer;">
+                        <span class="glyphicon glyphicon glyphicon-user" ng-show="item.type == 'USER'"></span>
+                        <span class="glyphicon glyphicon-folder-open" ng-show="item.type == 'GROUP'"></span>
+                        {{item.name}}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="form-group col-md-8">
+                
+                <div class="form-group row">
+                    <div class="col-md-6">
+                        <label class="control-label">Search</label>
+                        <div class="btn-group">
+                            <label class="btn btn-default" ng-model="searchMode.user" uib-btn-checkbox>
+                                <span class="glyphicon glyphicon glyphicon-user"></span>
+                                User</label>
+                            <label class="btn btn-default" ng-model="searchMode.group" uib-btn-checkbox>
+                                <span class="glyphicon glyphicon-folder-open"></span>
+                                Group</label>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="text" class="form-control" name="value" placeholder="Search"
+                            ng-model="searchText" ng-change="loadPage(false)">
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <ul class="list-group col-md-6">
+                        <li class="list-group-item"
+                            ng-repeat="item in searchGroupItems track by item.id"
+                            ng-click="addAction(item)"
+                            style="cursor: pointer;">
+                            <span class="glyphicon glyphicon glyphicon-user" ng-show="item.type == 'USER'"></span>
+                            <span class="glyphicon glyphicon-folder-open" ng-show="item.type == 'GROUP'"></span>
+                            {{item.name}}
+                        </li>
+                    </ul>
+
+                    <ul class="list-group col-md-6">
+                        <li class="list-group-item"
+                            ng-repeat="item in searchUserItems track by item.id"
+                            ng-click="addAction(item)"
+                            style="cursor: pointer;">
+                            <span class="glyphicon glyphicon glyphicon-user" ng-show="item.type == 'USER'"></span>
+                            <span class="glyphicon glyphicon-folder-open" ng-show="item.type == 'GROUP'"></span>
+                            {{item.name}}
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="form-group row">
+                    <uib-pagination class="pagination-sm" total-items="pageTotal" items-per-page="pageSize"
+                        ng-model="pageNumber" ng-change="loadPage(true)"></uib-pagination>
+                </div>
+               
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

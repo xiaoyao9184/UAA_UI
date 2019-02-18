@@ -1,0 +1,49 @@
+<div>
+    <jh-alert></jh-alert>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">User Info</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-success">
+                            User name is {{userInfo.user_name}}
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            Full name is {{userInfo.name}}
+                        </li>
+                        <li class="list-group-item"
+                            ng-class="userInfo.email_verified ? 'list-group-item-success' : 'list-group-item-danger'">
+                            Email is {{userInfo.email}}
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            Phone is {{userInfo.phone_number}}
+                        </li>
+                        <li class="list-group-item list-group-item-warning">
+                            Last logon at {{userInfo.previous_logon_time | date:'dd/MM/yy HH:mm' }}
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="panel panel-danger">
+                <div class="panel-heading">Change password</div>
+                <div class="panel-body">
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="old-password-addon">Old Password</span>
+                            <input type="password" ng-model="password.oldPassword" class="form-control" id="old-password" aria-describedby="basic-addon3">
+                        </div>
+                        <div class="input-group">
+                            <span class="input-group-addon" id="new-password-addon">New Password</span>
+                            <input type="password" ng-model="password.password" class="form-control" id="new-password" aria-describedby="basic-addon3">
+                        </div>
+
+                        <button type="button" ng-click="changePassword()" class="btn btn-danger" aria-haspopup="true" aria-expanded="false">Change it</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

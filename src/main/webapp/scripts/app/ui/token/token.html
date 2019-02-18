@@ -1,0 +1,26 @@
+<div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>TokenDetails</h1>
+            <jh-alert></jh-alert>
+
+            <pre>{{token | json}}</pre>
+
+            <button class="btn btn-warning" ng-click="removeToken()">
+                <span class="glyphicon glyphicon-floppy-remove"></span> <span>Remove token from your Browser</span>
+            </button>
+            
+            <button class="btn btn-warning" 
+                ng-show="isSSO()"
+                ng-click="logoutUaa()">
+                <span class="glyphicon glyphicon-log-out"></span> <span>Logout UAA</span>
+            </button>
+            
+            <button class="btn btn-info" 
+                ng-show="isRefresh()"
+                ng-click="refreshToken()">
+                <span class="glyphicon glyphicon-refresh"></span> <span>Reflash Token</span>
+            </button>
+        </div>
+    </div>
+</div>

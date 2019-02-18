@@ -9,7 +9,7 @@
             </button>
             <a class="navbar-brand" href="#/"><span>UAA UI</span></a>
         </div>
-        <div class="collapse navbar-collapse" id="navbar-collapse" ng-switch="istokendpresent()">
+        <div class="collapse navbar-collapse" id="navbar-collapse" ng-switch="isAuthenticated()">
             <ul class="nav navbar-nav navbar-right">
                 <li ui-sref-active="active">
                     <a ui-sref="home" data-toggle="collapse" data-target=".navbar-collapse.in">
@@ -19,8 +19,9 @@
                 </li>
                 <!-- jhipster-needle-001 - JHipster will add new menu items here -->
 
-
-                <li ng-class="{active: $state.includes('admin')}"  ng-switch-when="true"  class="dropdown pointer">
+                <li class="dropdown pointer"
+                    ng-class="{active: $state.includes('admin')}" 
+                    ng-switch-when="true">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="" id="admin-menu">
                         <span>
                             <span class="glyphicon glyphicon-th-list"></span>
@@ -30,26 +31,45 @@
                     </a>
                     <ul class="dropdown-menu">
 
-                        <li ui-sref-active="active"><a ui-sref="metrics" data-toggle="collapse" data-target=".navbar-collapse.in">
+                        <li ui-sref-active="active" ng-show="!isClient()">
+                            <a ui-sref="user-info" data-toggle="collapse" data-target=".navbar-collapse.in">
                             <span class="glyphicon glyphicon glyphicon-user"></span>
-                            &#xA0;<span translate="global.menu.admin.metrics">Your Information</span></a></li>
-
-                        <li ui-sref-active="active"><a ui-sref="metrics" data-toggle="collapse" data-target=".navbar-collapse.in">
-                            <span class="glyphicon glyphicon glyphicon-user"></span>
-                            &#xA0;<span translate="global.menu.admin.metrics">Client Management</span></a></li>
-
+                            &#xA0;<span translate="global.menu.admin.user">Your Information</span></a></li>
+<!-- 
                         <li ui-sref-active="active">
-                            <a ui-sref="health" data-toggle="collapse" data-target=".navbar-collapse.in"><span class="glyphicon glyphicon-user"></span>
-                            &#xA0;<span >Zone Management</span></a></li>
+                            <a ui-sref="metrics" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon glyphicon-user"></span>
+                            &#xA0;<span translate="global.menu.admin.metrics">Client Management</span></a></li> -->
 
+                        
+                        <li ui-sref-active="active" ng-show="isZoneMode">
+                            <a ng-click="exitZoneMode()" style="cursor: pointer;" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-globe"></span>
+                            &#xA0;<span>Zone: <span class="badge">{{zoneName}}</span></span></a></li>
+
+                        <li ui-sref-active="active" ng-show="!isZoneMode">
+                            <a ui-sref="zone-management" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-globe"></span>
+                            &#xA0;<span translate="global.menu.admin.zone-management">Zone Management</span></a></li>
+
+                            
+                        <li ui-sref-active="active">
+                            <a ui-sref="client-management" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-inbox"></span>
+                            &#xA0;<span translate="global.menu.admin.client-management">Client Management</span></a></li>
+    
                         <li ui-sref-active="active">
                             <a ui-sref="user-management" data-toggle="collapse" data-target=".navbar-collapse.in">
                             <span class="glyphicon glyphicon-user"></span>
                             &#xA0;<span translate="global.menu.admin.user-management">User Management</span></a></li>
-
+                        
+                        <li ui-sref-active="active">
+                            <a ui-sref="group-management" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                            &#xA0;<span translate="global.menu.admin.group-management">Group Management</span></a></li>
+        
                     </ul>
                 </li>
-
 
             </ul>
         </div>

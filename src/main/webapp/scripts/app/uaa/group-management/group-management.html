@@ -1,0 +1,86 @@
+<div>
+    <h2>Groups</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <button class="btn btn-primary" ui-sref="group-management.new">
+                  <span class="glyphicon glyphicon-flash"></span> <span>Create a new Group</span>
+              </button>
+          </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>DisplayName</th>
+                <th>Description</th>
+
+                <th>CreatedDate</th>
+                <th>LastModifiedDate</th>
+
+                <th>ZoneId</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="group in groups track by group.id">
+                <td><a ui-sref="group-management-detail({id:group.id})">{{group.id}}</a></td>
+                <td>{{group.displayName }}</td>
+                <td>{{group.description}}</td>
+
+                <td>{{group.meta.created | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{group.meta.lastModified | date:'dd/MM/yy HH:mm'}}</td>
+
+                <td><a ui-sref="zone-management-detail({id:group.zoneId})">{{group.zoneId}}</a></td>
+
+                <td class="text-right">
+                    <button type="submit"
+                            ui-sref="group-management-detail({id:group.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="group-management.edit({id:group.id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="group-management.delete({id:group.id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="member-management({gid:group.id})"
+                            class="btn btn-success btn-sm">
+                        <span class="glyphicon glyphicon-fullscreen"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <!-- <ul class="list-group">
+            <li class="list-group-item" ng-repeat="group in groups track by group.id">
+
+                
+            </li>
+            <li class="list-group-item">Dapibus ac facilisis in</li>
+            <li class="list-group-item">Morbi leo risus</li>
+            <li class="list-group-item">Porta ac consectetur ac</li>
+            <li class="list-group-item">Vestibulum at eros</li>
+        </ul>
+        <ol class="breadcrumb">
+            <li><a href="#">Home</a></li>
+            <li><a href="#">Library</a></li>
+            <li class="active">Data</li>
+        </ol> -->
+    </div>
+    <div class="text-center">
+        <uib-pagination class="pagination-sm" total-items="totalItems" items-per-page="size"
+            ng-model="page" ng-change="loadPage()"></uib-pagination>
+    </div>
+</div>

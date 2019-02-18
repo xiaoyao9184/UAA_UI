@@ -1,0 +1,174 @@
+<div>
+    <h2><span>Client</span> "{{client.client_id}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>ID</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.client_id}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Token Salt</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.token_salt}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Grant</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.authorized_grant_types.join(' ')}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Redirect</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.redirect_uri.join(' ')}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Scope</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.scope.join(' ')}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Resource ID</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.resource_ids.join(' ')}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Authorities</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.authorities.join(' ')}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>AutoApprove</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.autoapprove.join(' ')}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>access_token_validity</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.access_token_validity}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>refresh_token_validity</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.refresh_token_validity}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>allowedproviders</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.allowedproviders.join(' ')}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>createdwith</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.createdwith}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>approvals_deleted</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.approvals_deleted}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>required_user_groups</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.required_user_groups.join(' ')}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastModified</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{client.lastModified | date:'dd/MM/yy HH:mm'}}" readonly>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    
+            
+    <div class="panel panel-danger">
+        <div class="panel-heading">Change Secret</div>
+        <div class="panel-body">
+            <div class="col-md-6 col-md-offset-3">
+                <jh-alert-error></jh-alert-error>
+                <jh-alert></jh-alert>
+                
+                <div class="input-group">
+                    <span class="input-group-addon" id="old-secret-addon">Old Secret</span>
+                    <input type="password" ng-model="secret.old_secret" class="form-control" id="old-secret" aria-describedby="old-secret-addon">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="secret-addon">Secret</span>
+                    <input type="password" ng-model="secret.secret" class="form-control" id="secret" aria-describedby="secret-addon">
+                </div>
+
+                <button type="button" ng-click="changeSecret()" class="btn btn-danger" aria-haspopup="true" aria-expanded="false">Change it</button>
+            </div>
+        </div>
+    </div>
+
+    <button type="submit"
+            ui-sref="client-management"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

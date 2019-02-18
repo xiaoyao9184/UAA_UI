@@ -1,0 +1,89 @@
+<div>
+    <h2>Users</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <button class="btn btn-primary" ui-sref="user-management.new">
+                  <span class="glyphicon glyphicon-flash"></span> <span>Create a new User</span>
+              </button>
+          </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Family Name</th>
+                <th>Given Name</th>
+                <th>Email</th>
+                <th></th>
+
+                <th>Previous LogonTime</th>
+                <th>Last LogonTime</th>
+                <th>Password LastModified</th>
+
+                <th>CreatedDate</th>
+                <th>LastModifiedDate</th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in users track by user.id">
+                <td><a ui-sref="user-management-detail({id:user.id})">{{user.id}}</a></td>
+                <td>{{user.userName }}</td>
+                <td>{{user.name.familyName}}</td>
+                <td>{{user.name.givenName}}</td>
+                <td>
+                    <span ng-repeat="e in user.emails"
+                          style="cursor: pointer;">{{e.value}}</span>
+                </td>
+                <td>
+                    <span class="label label-danger" ng-click="setActive(user, true)" ng-show="!user.active"
+                          style="cursor: pointer;">Desactivated</span>
+                    <span class="label label-success" ng-click="setActive(user, false)" ng-show="user.active"
+                          style="cursor: pointer;">Activated</span>
+                </td>
+
+                <td>{{user.previousLogonTime | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{user.lastLogonTime | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{user.passwordLastModified | date:'dd/MM/yy HH:mm'}}</td>
+
+                <td>{{user.meta.created | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{user.meta.lastModified | date:'dd/MM/yy HH:mm'}}</td>
+
+                <td>
+                    <span class="label label-danger" ng-show="!user.verified"
+                          >Desverified</span>
+                    <span class="label label-success" ng-show="user.verified"
+                          >Verified</span>
+                </td>
+                <td class="text-right">
+                    <button type="submit"
+                            ui-sref="user-management-detail({id:user.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="user-management.edit({id:user.id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="user-management.delete({id:user.id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <uib-pagination class="pagination-sm" total-items="totalItems" items-per-page="size"
+            ng-model="page" ng-change="loadPage()"></uib-pagination>
+    </div>
+</div>

@@ -1,0 +1,78 @@
+<div>
+    <h2>Zones</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <button class="btn btn-primary" ui-sref="zone-management.new">
+                      <span class="glyphicon glyphicon-flash"></span> <span>Create a new Zone</span>
+              </button>
+          </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Sub Domain</th>
+                <th></th>
+                
+                <!--<th>Profiles</th>-->
+                <th>Description</th>
+                <th>CreatedDate</th>
+                <th>LastModifiedDate</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="zone in zones track by zone.id">
+                <td><a ui-sref="zone-management-detail({login:zone.id})">{{zone.id}}</a></td>
+                <td>{{zone.name}}</td>
+                <td>{{zone.subdomain}}</td>
+                <td>
+                    <span class="label label-danger" ng-click="setActive(zone, true)" ng-show="!zone.active"
+                          style="cursor: pointer;">Desactivated</span>
+                    <span class="label label-success" ng-click="setActive(zone, false)" ng-show="zone.active"
+                          style="cursor: pointer;">Activated</span>
+                </td>
+                
+                <!--<td>-->
+                    <!--<div ng-repeat="authority in zone.authorities">-->
+                        <!--<span class="label label-info">{{ authority }}</span>-->
+                    <!--</div>-->
+                <!--</td>-->
+                <td>{{zone.description}}</td>
+                <td>{{zone.created | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{zone.last_modified | date:'dd/MM/yy HH:mm'}}</td>
+                <td class="text-right">
+                    <button type="submit"
+                            ui-sref="zone-management-detail({id:zone.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="zone-management.edit({id:zone.id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="zone-management.delete({id:zone.id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+                    <button type="submit"
+                            ng-click="changeZone(zone)"
+                            class="btn btn-warning btn-sm">
+                        <span class="glyphicon glyphicon-log-out"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <!--<uib-pagination class="pagination-sm" total-items="totalItems" ng-model="page" ng-change="loadAll()"></uib-pagination>-->
+    </div>
+</div>

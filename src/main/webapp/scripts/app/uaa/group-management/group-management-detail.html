@@ -1,0 +1,64 @@
+<div>
+    <h2><span>Group</span> "{{group.id}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>ID</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{group.id}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>DisplayName</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{group.displayName}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Description</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{group.description}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>CreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{group.meta.created | date:'dd/MM/yy HH:mm' }}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastCreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{group.meta.lastModified | date:'dd/MM/yy HH:mm'}}" readonly>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="group-management"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

@@ -1,0 +1,116 @@
+<div>
+    <h2><span>User</span> "{{user.id}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>ID</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.id}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>UserName</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.userName}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>FamilyName</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.name.familyName}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>GivenName</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.name.givenName}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Email</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" ng-repeat="e in user.emails" value="{{e.value}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Activated</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{user.active}}" readonly>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <span>PreviousLogonTime</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{user.previousLogonTime | date:'dd/MM/yy HH:mm' }}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastLogonTime</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{user.lastLogonTime | date:'dd/MM/yy HH:mm' }}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>PasswordLastModified</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{user.passwordLastModified | date:'dd/MM/yy HH:mm' }}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>CreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{user.meta.created | date:'dd/MM/yy HH:mm' }}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastCreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{user.meta.lastModified | date:'dd/MM/yy HH:mm'}}" readonly>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="user-management"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

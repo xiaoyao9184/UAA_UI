@@ -1,0 +1,88 @@
+<div>
+    <h2><span>Zone</span> "{{zone.id}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>ID</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.id}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Sub Domain</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.subdomain}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Activated</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.active}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Description</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.description}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>CreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{zone.created | date:'dd/MM/yy HH:mm' }}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastCreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{zone.last_modified | date:'dd/MM/yy HH:mm' }}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Config</span>
+                </td>
+                <td>
+                    <pre>{{zone.config | json}}</pre>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <button type="submit"
+            ui-sref="zone-management" ui-sref-opts="{reload:false}"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

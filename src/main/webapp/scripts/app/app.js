@@ -1,18 +1,21 @@
 'use strict';
 
 angular.module('uaaUIApp', ['LocalStorageModule', 
-    'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload',
-    'ui.bootstrap', 'ui.router',  'infinite-scroll', 'angular-loading-bar'])
+    'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'ngPostMessage',
+    'ui.bootstrap', 'ui.router',  'infinite-scroll', 'angular-loading-bar', 'file'])
 
-    .run(function ($rootScope, $location, $window, $http, $state,  Auth, Principal, ENV, VERSION) {
+    .run(function ($rootScope, $location, $window, $http, $state, Principal, ENV, VERSION) {
         
         $rootScope.ENV = ENV;
         $rootScope.VERSION = VERSION;
-        $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams, fromState, fromParams) {
             $rootScope.toState = toState;
             $rootScope.toStateParams = toStateParams;
 
-
+            var hash = $location.hash();
+            if (hash) {
+                toParams['#'] = hash;
+            }
             
         });
 
@@ -37,16 +40,15 @@ angular.module('uaaUIApp', ['LocalStorageModule',
             $window.document.title = titleKey;
         });
 
-         $rootScope.istokendpresent = function(){
+        $rootScope.istokendpresent = function(){
+            return $rootScope.uaatokendetails ? true : false;
+        }
 
-             return $rootScope.uaatokendetails ? true : false;
-
-         }
-        $rootScope.parseJwt = function(token) {
-         var base64Url = token.split('.')[1];
-         var base64 = base64Url.replace('-', '+').replace('_', '/');
-         return JSON.parse($window.atob(base64));
-       }
+        // $rootScope.parseJwt = function(token) {
+        //     var base64Url = token.split('.')[1];
+        //     var base64 = base64Url.replace('-', '+').replace('_', '/');
+        //     return JSON.parse($window.atob(base64));
+        // }
         $rootScope.back = function() {
             // If previous state is 'activate' or do not exist go to 'home'
             if ($rootScope.previousStateName === 'activate' || $state.get($rootScope.previousStateName) === null) {
@@ -65,6 +67,13 @@ angular.module('uaaUIApp', ['LocalStorageModule',
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);
 
         $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.rule(function ($injector, $location) {
+            var path = $location.path(),
+            normalized = path.toLowerCase();
+            if (path !== normalized) {
+               return normalized;
+            }
+        });
         $stateProvider.state('site', {
             'abstract': true,
             views: {
@@ -76,6 +85,7 @@ angular.module('uaaUIApp', ['LocalStorageModule',
         });
 
         $httpProvider.interceptors.push('errorHandlerInterceptor');
+        $httpProvider.interceptors.push('zoneInterceptor');
         $httpProvider.interceptors.push('authExpiredInterceptor');
         $httpProvider.interceptors.push('authInterceptor');
         $httpProvider.interceptors.push('notificationInterceptor');

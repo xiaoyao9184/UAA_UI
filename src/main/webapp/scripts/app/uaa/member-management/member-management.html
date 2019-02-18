@@ -1,0 +1,44 @@
+<div>
+    <h2>Members</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <button class="btn btn-primary" ui-sref="member-management.add">
+                  <span class="glyphicon glyphicon-flash"></span> <span>Add</span>
+              </button>
+              <button class="btn btn-danger" ui-sref="member-management.delete">
+                  <span class="glyphicon glyphicon-trash"></span> <span>Delete</span>
+              </button>
+          </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <ol class="breadcrumb">
+            <li ng-repeat="path in paths track by path.name">
+                <a ng-click="selectItem(path,$event)" style="cursor: pointer;">{{path.name}}</a>
+            </li>
+        </ol>
+        
+        <ul class="list-group">
+            <li class="list-group-item" 
+                ng-repeat="member in members track by member.id"
+                ng-click="selectItem(member,$event)"
+                style="cursor: pointer;">
+                <span class="glyphicon glyphicon-user"ng-show="member.type == 'USER'"></span>
+                <span class="glyphicon" 
+                    ng-class="member.show ? 'glyphicon-folder-open' : 'glyphicon-folder-close'"
+                    ng-click="expandItem(member,$event)" ng-show="member.type == 'GROUP'"></span>
+                {{member.name}}
+
+                <div ng-show="member.show" ng-init="member = member" ng-include="'scripts/app/uaa/member-management/member-item.html'"></div>
+            </li>
+        </ul>
+    </div>
+
+    <button type="submit"
+            ui-sref="group-management"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

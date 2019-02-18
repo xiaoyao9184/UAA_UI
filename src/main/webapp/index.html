@@ -25,6 +25,7 @@
         <div class="container">
             <div class="well" ui-view="content"></div>
 
+            <div class="well" ui-view="content2"></div>
             <div class="footer">
                <!--
                <p translate="footer">This is your footer</p>
@@ -44,6 +45,8 @@
 
         <!-- build:js scripts/vendor.js -->
         <!-- bower:js -->
+        <!-- <script src="bower_components/jquery/dist/jquery.min.js"></script>
+        <script src="bower_components/angular/angular.min.js"></script> -->
         <script src="bower_components/jquery/dist/jquery.js"></script>
         <script src="bower_components/angular/angular.js"></script>
         <script src="bower_components/angular-aria/angular-aria.js"></script>
@@ -59,6 +62,8 @@
         <script src="bower_components/json3/lib/json3.js"></script>
         <script src="bower_components/ng-file-upload/ng-file-upload.js"></script>
         <script src="bower_components/ngInfiniteScroll/build/ng-infinite-scroll.js"></script>
+
+        <script src="bower_components/angular-post-message/dist/angular-post-message.js"></script>
         <!-- endbower -->
         <!-- endbuild -->
 
@@ -66,28 +71,53 @@
     <!-- build:js({.tmp,src/main/webapp}) scripts/app.js -->
     <script src="scripts/app/app.js"></script>
     <script src="scripts/app/app.constants.js"></script>
-    <script src="scripts/components/auth/auth.service.js"></script>
-    <script src="scripts/components/auth/principal.service.js"></script>
+    <script src="scripts/components/ui/setting.service.js"></script>
+    <script src="scripts/components/ui/principal.service.js"></script>
+    <script src="scripts/components/ui/token.holder.service.js"></script>
+    <script src="scripts/components/ui/zone.holder.service.js"></script>
+
+    <script src="scripts/components/uaa/api/healthz.service.js"></script>
+    <script src="scripts/components/uaa/api/userinfo.service.js"></script>
+    <script src="scripts/components/uaa/api/info.service.js"></script>
+    <script src="scripts/components/uaa/api/user.service.js"></script>
+    <script src="scripts/components/uaa/api/group.service.js"></script>
+    <script src="scripts/components/uaa/api/member.service.js"></script>
+    <script src="scripts/components/uaa/api/client.service.js"></script>
+    <script src="scripts/components/uaa/api/zone.service.js"></script>
+    <script src="scripts/components/uaa/api/auto.login.service.js"></script>
+    <script src="scripts/components/uaa/api/passcode.service.js"></script>
+    <script src="scripts/components/uaa/provider/uaa.server.service.js"></script>
+    <script src="scripts/components/uaa/provider/token.server.service.js"></script>
+    <script src="scripts/components/uaa/provider/sso.server.service.js"></script>
+
+    <!-- <script src="scripts/components/auth/auth.service.js"></script>
     <script src="scripts/components/auth/authority.directive.js"></script>
     <script src="scripts/components/auth/services/account.service.js"></script>
     <script src="scripts/components/auth/services/activate.service.js"></script>
     <script src="scripts/components/auth/services/password.service.js"></script>
-    <script src="scripts/components/auth/services/register.service.js"></script>
+    <script src="scripts/components/auth/services/register.service.js"></script> -->
+
     <script src="scripts/components/form/form.directive.js"></script>
     <script src="scripts/components/form/maxbytes.directive.js"></script>
     <script src="scripts/components/form/minbytes.directive.js"></script>
     <script src="scripts/components/form/uib-pager.config.js"></script>
     <script src="scripts/components/form/uib-pagination.config.js"></script>
-    <script src="scripts/components/admin/audits.service.js"></script>
+
+    <script src="scripts/components/navbar/navbar.directive.js"></script>
+    <script src="scripts/components/navbar/navbar.controller.js"></script>
+
+    <script src="scripts/components/file/file.js"></script>
+
+    <!-- <script src="scripts/components/admin/audits.service.js"></script>
     <script src="scripts/components/admin/logs.service.js"></script>
     <script src="scripts/components/admin/configuration.service.js"></script>
-    <script src="scripts/components/admin/monitoring.service.js"></script>
+    <script src="scripts/components/admin/monitoring.service.js"></script> -->
+
     <script src="scripts/components/interceptor/auth.interceptor.js"></script>
     <script src="scripts/components/interceptor/errorhandler.interceptor.js"></script>
     <script src="scripts/components/interceptor/notification.interceptor.js"></script>
-    <script src="scripts/components/navbar/navbar.directive.js"></script>
-    <script src="scripts/components/navbar/navbar.controller.js"></script>
-    <script src="scripts/components/user/user.service.js"></script>
+    <script src="scripts/components/interceptor/zone.interceptor.js"></script>
+
     <script src="scripts/components/util/truncate.filter.js"></script>
     <script src="scripts/components/util/base64.service.js"></script>
     <script src="scripts/components/util/capitalize.filter.js"></script>
@@ -97,7 +127,8 @@
     <script src="scripts/components/util/dateutil.service.js"></script>
     <script src="scripts/components/util/data-util.service.js"></script>
     <script src="scripts/components/util/sort.directive.js"></script>
-    <script src="scripts/app/account/account.js"></script>
+
+    <!-- <script src="scripts/app/account/account.js"></script>
     <script src="scripts/app/account/activate/activate.js"></script>
     <script src="scripts/app/account/activate/activate.controller.js"></script>
     <script src="scripts/app/account/login/login.js"></script>
@@ -126,21 +157,55 @@
     <script src="scripts/app/admin/logs/logs.controller.js"></script>
     <script src="scripts/app/admin/metrics/metrics.js"></script>
     <script src="scripts/app/admin/metrics/metrics.controller.js"></script>
-    <script src="scripts/app/admin/metrics/metrics.modal.controller.js"></script>
-    <script src="scripts/app/admin/user-management/user-management-detail.controller.js"></script>
-    <script src="scripts/app/admin/user-management/user-management-dialog.controller.js"></script>
-    <script src="scripts/app/admin/user-management/user-management-delete-dialog.controller.js"></script>
-    <script src="scripts/app/admin/user-management/user-management.controller.js"></script>
-    <script src="scripts/app/admin/user-management/user-management.js"></script>
+    <script src="scripts/app/admin/metrics/metrics.modal.controller.js"></script> -->
 
+    <script src="scripts/app/ui/setting/setting.js"></script>
+    <script src="scripts/app/ui/setting/setting.controller.js"></script>
+    <script src="scripts/app/ui/login/login.js"></script>
+    <script src="scripts/app/ui/login/password.controller.js"></script>
+    <script src="scripts/app/ui/login/authorization_code.controller.js"></script>
+    <script src="scripts/app/ui/login/implicit.controller.js"></script>
+    <script src="scripts/app/ui/login/auto_login.controller.js"></script>
+    <script src="scripts/app/ui/login/client_credentials.controller.js"></script>
+    <script src="scripts/app/ui/login/redirect.controller.js"></script>
+    <script src="scripts/app/ui/token/token.js"></script>
+    <script src="scripts/app/ui/token/token.controller.js"></script>
+
+    <script src="scripts/app/uaa/user-info/user-info.js"></script>
+    <script src="scripts/app/uaa/user-info/user-info.controller.js"></script>
+    <script src="scripts/app/uaa/server-info/server-info.js"></script>
+    <script src="scripts/app/uaa/server-info/server-info.controller.js"></script>
+    <script src="scripts/app/uaa/zone-management/zone-management.js"></script>
+    <script src="scripts/app/uaa/zone-management/zone-management.controller.js"></script>
+    <script src="scripts/app/uaa/zone-management/zone-management-detail.controller.js"></script>
+    <script src="scripts/app/uaa/zone-management/zone-management-edit.controller.js"></script>
+    <script src="scripts/app/uaa/zone-management/zone-management-delete.controller.js"></script>
+    <script src="scripts/app/uaa/client-management/client-management.js"></script>
+    <script src="scripts/app/uaa/client-management/client-management.controller.js"></script>
+    <script src="scripts/app/uaa/client-management/client-management-detail.controller.js"></script>
+    <script src="scripts/app/uaa/client-management/client-management-edit.controller.js"></script>
+    <script src="scripts/app/uaa/client-management/client-management-delete.controller.js"></script>
+    <script src="scripts/app/uaa/client-management/client-management-meta.controller.js"></script>
+    <script src="scripts/app/uaa/user-management/user-management-detail.controller.js"></script>
+    <script src="scripts/app/uaa/user-management/user-management-edit.controller.js"></script>
+    <script src="scripts/app/uaa/user-management/user-management-delete.controller.js"></script>
+    <script src="scripts/app/uaa/user-management/user-management.controller.js"></script>
+    <script src="scripts/app/uaa/user-management/user-management.js"></script>
+    <script src="scripts/app/uaa/group-management/group-management.js"></script>
+    <script src="scripts/app/uaa/group-management/group-management.controller.js"></script>
+    <script src="scripts/app/uaa/group-management/group-management-detail.controller.js"></script>
+    <script src="scripts/app/uaa/group-management/group-management-edit.controller.js"></script>
+    <script src="scripts/app/uaa/group-management/group-management-delete.controller.js"></script>
+    <script src="scripts/app/uaa/member-management/member-management.js"></script>
+    <script src="scripts/app/uaa/member-management/member-management.controller.js"></script>
+    <script src="scripts/app/uaa/member-management/member-management-add.controller.js"></script>
+    <script src="scripts/app/uaa/member-management/member-management-delete.controller.js"></script>
 
     <script src="scripts/app/error/error.js"></script>
     <script src="scripts/app/main/main.js"></script>
     <script src="scripts/app/main/main.controller.js"></script>
     <script src="scripts/app/uaa/uaa.js"></script>
-    <script src="scripts/app/uaa/tokendetails/tokendetails.js"></script>
-    <script src="scripts/app/uaa/tokendetails/tokendetails.controller.js"></script>
-    <script src="scripts/components/auth/provider/auth.oauth2.service.js"></script>
+    
     <!-- endbuild -->
 </body>
 </html>

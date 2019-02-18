@@ -1,0 +1,14 @@
+<ul class="list-group">
+    <li class="list-group-item" 
+        ng-repeat="member in member.members track by member.id"
+        ng-click="selectItem(member,$event)"
+        style="cursor: pointer;">
+        <span class="glyphicon glyphicon-user"ng-show="member.type == 'USER'"></span>
+        <span class="glyphicon" 
+            ng-class="member.show ? 'glyphicon-folder-open' : 'glyphicon-folder-close'"
+            ng-click="expandItem(member,$event)" ng-show="member.type == 'GROUP'"></span>
+        {{member.name}}
+        
+        <div ng-show="member.show" ng-init="member = member" ng-include="'scripts/app/admin/member-management/member-item.html'"></div>
+    </li>
+</ul>

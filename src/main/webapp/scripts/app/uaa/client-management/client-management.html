@@ -1,0 +1,133 @@
+<div>
+    <h2>Clients</h2>
+    <jh-alert></jh-alert>
+
+    <div class="row">
+        <div class="col-xs-6 col-md-2"
+            ng-repeat="app in apps track by app.clientId">
+            <a class="thumbnail"
+                ui-sref="client-management.meta({id:app.clientId})">
+                <img alt="no icon" 
+                    style="height: 90px; width: 150px;" 
+                    data-ng-src="{{app.appIconUrl}}">
+
+                <h3>{{app.clientName}}</h3>
+                <h6>{{app.clientId}}</h6>
+                <span class="label"
+                    ng-class="app.showOnHomePage ? 'label-primary' : 'label-default'" >Show</span>
+            </a>
+        </div>
+    </div>
+
+    <!-- <div class="row">
+        <div class="col-sm-6 col-md-4" ng-repeat="client in clients track by client.clientId">
+            <div class="thumbnail">
+                <a class="thumbnail"
+                    ui-sref="client-management.meta({id:client.clientId})">
+                    <img alt="no icon" 
+                        style="height: 150px; width: 150px;" 
+                        data-ng-src="{{client.appIconUrl}}">
+                </a>
+                <div class="caption">
+                    <h3>{{client.clientName}}</h3>
+                    <h6>{{client.clientId}}</h6>
+                    <p>
+                        <span class="label"
+                            ng-class="client.showOnHomePage ? 'label-primary' : 'label-default'" >Show on Home</span>
+                        
+                        <span class="label"
+                            ng-class="client.appLaunchUrl ? 'label-primary' : 'label-default'" >
+                            <a ng-href="{{client.appLaunchUrl}}">Get it!</a>
+                        </span>
+                    </p>
+                    <p>
+                        <a class="btn btn-primary" 
+                            ui-sref="client-management.meta({id:client.clientId})">Setting</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <button class="btn btn-primary" ui-sref="client-management.new">
+                  <span class="glyphicon glyphicon-flash"></span> <span>Create a new Client</span>
+              </button>
+          </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Token Salt</th>
+
+                <th>Url</th>
+                <th>Scope</th>
+                <th>Grant</th>
+                <th>AutoApprove</th>
+
+                <th>LastModified</th>
+
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="client in pageClients track by client.client_id">
+                <td><a ui-sref="client-management-detail({id:client.client_id})">{{client.client_id}}</a></td>
+                <td>{{client.name}}</td>
+                <td>{{client.token_salt}}</td>
+
+                <td>
+                    {{client.redirect_uri.join(' ')}}
+                </td>
+                
+                <td>
+                    {{client.scope.join(' ')}}
+                </td>
+                
+                <td>
+                    {{client.authorized_grant_types.join(' ')}}
+                </td>
+
+                <td>
+                    {{client.autoapprove.join(' ')}}
+                </td>
+
+                <td>{{client.lastModified | date:'dd/MM/yy HH:mm'}}</td>
+
+                <td class="text-right">
+                    <button type="submit"
+                            ui-sref="client-management-detail({id:client.client_id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="client-management.edit({id:client.client_id})"
+                            class="btn btn-primary btn-sm">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="client-management.delete({id:client.client_id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="client-management.meta({id:client.client_id})"
+                            class="btn btn-success btn-sm">
+                        <span class="glyphicon glyphicon-fullscreen"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <uib-pagination class="pagination-sm" total-items="pageTotal" items-per-page="pageSize"
+            ng-model="pageNumber" ng-change="loadPage()"></uib-pagination>
+    </div>
+</div>

@@ -23,14 +23,14 @@ angular.module('uaaUIApp')
         return {
             restrict: 'E',
             template: '<div class="alerts" ng-cloak="">' +
-                            '<div ng-repeat="alert in alerts" ng-class="[alert.position, {\'toast\': alert.toast}]">' +
-                                '<uib-alert ng-cloak="" type="{{alert.type}}" close="alert.close(alerts)"><pre>{{ alert.msg }}</pre></uib-alert>' +
+                            '<div ng-repeat="alert in error_alerts" ng-class="[alert.position, {\'toast\': alert.toast}]">' +
+                                '<uib-alert ng-cloak="" type="{{alert.type}}" close="alert.close(error_alerts)"><pre>{{ alert.msg }}</pre></uib-alert>' +
                             '</div>' +
                       '</div>',
             controller: ['$scope',
                 function($scope) {
 
-                    $scope.alerts = [];
+                    $scope.error_alerts = [];
 
                     var cleanHttpErrorListener = $rootScope.$on('uaaUIApp.httpError', function (event, httpResponse) {
                         var i;
@@ -57,6 +57,8 @@ angular.module('uaaUIApp')
                                     }
                                 } else if (httpResponse.data && httpResponse.data.message) {
                                     addErrorAlert(httpResponse.data.message, httpResponse.data.message, httpResponse.data);
+                                } else if (httpResponse.data && httpResponse.data.error) {
+                                    addErrorAlert(httpResponse.data.error_description, httpResponse.data.error, httpResponse.data);
                                 } else {
                                     addErrorAlert(httpResponse.data);
                                 }
@@ -65,6 +67,8 @@ angular.module('uaaUIApp')
                             default:
                                 if (httpResponse.data && httpResponse.data.message) {
                                     addErrorAlert(httpResponse.data.message);
+                                } else if (httpResponse.data && httpResponse.data.error) {
+                                    addErrorAlert(httpResponse.data.error_description);
                                 } else {
                                     addErrorAlert(JSON.stringify(httpResponse));
                                 }
@@ -74,12 +78,12 @@ angular.module('uaaUIApp')
                     $scope.$on('$destroy', function () {
                         if(cleanHttpErrorListener !== undefined && cleanHttpErrorListener !== null){
                             cleanHttpErrorListener();
-                            $scope.alerts = [];
+                            $scope.error_alerts = [];
                         }
                     });
 
                     var addErrorAlert = function (message, key, data) {
-                        $scope.alerts.push(
+                        $scope.error_alerts.push(
                             AlertService.add(
                                 {
                                     type: "danger",
@@ -88,7 +92,7 @@ angular.module('uaaUIApp')
                                     toast: AlertService.isToast(),
                                     scoped: true
                                 },
-                                $scope.alerts
+                                $scope.error_alerts
                             )
                         );
                     }
