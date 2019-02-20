@@ -25,6 +25,25 @@ angular.module('uaaUIApp')
         })
     .factory('UserPassword', function ($resource) {
         return $resource('api/Users/:id/password', {}, {
-                'change': { method:'PUT' }
+                // only login as user
+                'change': { 
+                    method:'PUT',
+                    headers: {
+                        "Authorization": function(config) {
+                            if(angular.isUndefined(config.data.token)){
+                                return null;
+                            }
+                            var auth = 'Bearer ' + config.data.token
+                            return auth;
+                        }
+                    },
+                    transformRequest: function(data) {
+                        // you can delete the variable if you don't want it sent to the backend
+                        // delete data['old_secret'];
+                        delete data['token'];
+                        // transform payload before sending
+                        return JSON.stringify(data);
+                    }
+                }
             });
         });

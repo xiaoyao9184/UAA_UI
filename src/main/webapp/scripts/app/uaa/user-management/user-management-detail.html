@@ -107,6 +107,30 @@
             </tbody>
         </table>
     </div>
+ 
+    <div class="panel panel-danger">
+        <div class="panel-heading">Change Password</div>
+        <div class="panel-body">
+            <div class="col-md-6 col-md-offset-3">
+                <jh-alert-error></jh-alert-error>
+                <jh-alert></jh-alert>
+                
+                <div class="input-group">
+                    <span class="input-group-addon" id="old-password-addon">Old Password</span>
+                    <input type="password" class="form-control" id="old-password" aria-describedby="old-password-addon"
+                        ng-model="secret.old_password">
+                </div>
+                <div class="input-group">
+                    <span class="input-group-addon" id="password-addon">Password</span>
+                    <input type="password" class="form-control" id="password" aria-describedby="password-addon"
+                        ng-model="secret.password" >
+                </div>
+
+                <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false"
+                    ng-click="changePassword()">Change it</button>
+            </div>
+        </div>
+    </div>
 
     <button type="submit"
             ui-sref="user-management"

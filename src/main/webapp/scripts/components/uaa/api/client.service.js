@@ -16,11 +16,6 @@ angular.module('uaaUIApp')
                 'delete':{ method:'DELETE'}
             });
         })
-    .factory('ClientInfo', function ($resource) {
-        return $resource('api/clientinfo', {}, {
-                'get': { method:'GET' }
-            });
-        })
     .factory('ClientSecret', function ($resource, Base64) {
         return $resource('api/oauth/clients/:id/secret', {}, {
                 // only login as user
@@ -33,6 +28,9 @@ angular.module('uaaUIApp')
                             // // access variable via config.data
                             // return auth;
 
+                            if(angular.isUndefined(config.data.token)){
+                                return null;
+                            }
                             var auth = 'Bearer ' + config.data.token
                             return auth;
                         }

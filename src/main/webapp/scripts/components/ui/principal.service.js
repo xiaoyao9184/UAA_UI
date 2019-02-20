@@ -36,24 +36,40 @@ angular.module('uaaUIApp')
                     return 'UNKNOW';
                 });
             },
-            hasAuthority: function (authority) {
-                if (!_authenticated) {
-                    return $q.when(false);
+            hasScope: function (scope) {
+                if (!_authenticated || !_token) {
+                    return false;
                 }
 
-                return this.identity().then(function(_id) {
-                    return _id.authorities && _id.authorities.indexOf(authority) !== -1;
-                }, function(err){
+                return _token.scope.indexOf(scope);
+            },
+            hasAnyScope: function (scopes) {
+                if (!_authenticated || !_token) {
                     return false;
-                });
+                }
+
+                for (var i = 0; i < scopes.length; i++) {
+                    if (_token.scope.indexOf(scopes[i]) !== -1) {
+                        return true;
+                    }
+                }
+
+                return false;
+            },
+            hasAuthority: function (authority) {
+                if (!_authenticated || !_token) {
+                    return false;
+                }
+
+                return _token.aud.indexOf(authority);
             },
             hasAnyAuthority: function (authorities) {
-                if (!_authenticated || !_identity || !_identity.authorities) {
+                if (!_authenticated || !_token) {
                     return false;
                 }
 
                 for (var i = 0; i < authorities.length; i++) {
-                    if (_identity.authorities.indexOf(authorities[i]) !== -1) {
+                    if (_token.aud.indexOf(authorities[i]) !== -1) {
                         return true;
                     }
                 }
