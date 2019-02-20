@@ -2,7 +2,9 @@
 
 angular.module('uaaUIApp')
     .controller('UserManagementDetailController', 
-    function ($scope, $stateParams, User, UserPassword, UserStatus, TokenServerProvider, Setting, AlertService, Principal) {
+    function ($scope, $stateParams, $location,
+        User, UserPassword, UserStatus, UserVerify, UserVerifyLink,
+        TokenServerProvider, Setting, AlertService, Principal) {
         $scope.user = {};
         $scope.load = function (id) {
             Principal.identity()
@@ -68,6 +70,26 @@ angular.module('uaaUIApp')
                 "passwordChangeRequired" : true
             }, function(result) {
                 AlertService.success('UI: Force user password to expire success!');
+            }).$promise
+        };
+
+
+        $scope.verify = {
+            redirect_uri: $location.absUrl().replace(/#\/.*/gi, ''),
+            verify_link: ''
+        }
+        $scope.verifyUser = function() {
+            UserVerify.verify({id: $scope.user.id}, function(result) {
+                $scope.user = result;
+                AlertService.success('UI: Verify user success!');
+            }).$promise
+        };
+        $scope.verifyLink = function() {
+            UserVerifyLink.verify({id: $scope.user.id,
+                redirect_uri: $scope.verify.redirect_uri
+            }, function(result) {
+                $scope.verify.verify_link = result.verify_link;
+                AlertService.success('UI: Verify link create success!');
             }).$promise
         };
     });

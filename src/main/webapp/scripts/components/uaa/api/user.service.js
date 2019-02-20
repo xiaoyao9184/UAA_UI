@@ -51,4 +51,14 @@ angular.module('uaaUIApp')
         return $resource('api/Users/:id/status', {}, {
                 'change': { method:'PATCH' }
             });
+        })
+    .factory('UserVerify', function ($resource) {
+        return $resource('api/Users/:id/verify', {}, {
+                'verify': { method:'GET' }
+            });
+        })
+    .factory('UserVerifyLink', function ($resource) {
+        return $resource('api/Users/:id/verify-link', {}, {
+                'verify': { method:'GET' }
+            });
         });

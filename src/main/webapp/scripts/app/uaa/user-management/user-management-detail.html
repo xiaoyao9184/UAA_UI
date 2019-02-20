@@ -148,6 +148,33 @@
         </div>
     </div>
 
+    <div class="panel panel-info">
+        <div class="panel-heading">Verify</div>
+        <div class="panel-body">
+            <div class="col-md-6 col-md-offset-3">
+                <jh-alert-error></jh-alert-error>
+                <jh-alert></jh-alert>
+                
+                <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                    ng-click="verifyUser()">Verify</button>
+                
+                <div class="input-group">
+                    <span class="input-group-addon" id="verify-redirect-addon">Redirect uri</span>
+                    <input type="text" class="form-control" id="redirect_uri" aria-describedby="verify-redirect-addon"
+                        ng-model="verify.redirect_uri">
+                    <span class="input-group-addon" id="verify-link-addon">Verify link</span>
+                    <input type="text" class="form-control" id="verify_link" aria-describedby="verify-link-addon"
+                        ng-model="verify.verify_link">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                            ng-click="verifyLink()">Create verify link</button>
+                    </span>
+                </div>
+                    
+            </div>
+        </div>
+    </div>
+
     <button type="submit"
             ui-sref="user-management"
             class="btn btn-info">
