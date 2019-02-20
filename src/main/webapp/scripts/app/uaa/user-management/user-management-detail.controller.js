@@ -2,7 +2,7 @@
 
 angular.module('uaaUIApp')
     .controller('UserManagementDetailController', 
-    function ($scope, $stateParams, User, UserPassword, TokenServerProvider, Setting, AlertService, Principal) {
+    function ($scope, $stateParams, User, UserPassword, UserStatus, TokenServerProvider, Setting, AlertService, Principal) {
         $scope.user = {};
         $scope.load = function (id) {
             Principal.identity()
@@ -53,5 +53,21 @@ angular.module('uaaUIApp')
                     AlertService.success(result.message);
                 }).$promise
             })
+        };
+
+        $scope.unlockAccount = function() {
+            UserStatus.change({id: $scope.user.id}, {
+                "locked" : false
+            }, function(result) {
+                AlertService.success('UI: Unlock account success!');
+            }).$promise
+        };
+
+        $scope.expirePassword = function() {
+            UserStatus.change({id: $scope.user.id}, {
+                "passwordChangeRequired" : true
+            }, function(result) {
+                AlertService.success('UI: Force user password to expire success!');
+            }).$promise
         };
     });

@@ -132,6 +132,22 @@
         </div>
     </div>
 
+    <div class="panel panel-info">
+        <div class="panel-heading">Status</div>
+        <div class="panel-body">
+            <div class="col-md-6 col-md-offset-3">
+                <jh-alert-error></jh-alert-error>
+                <jh-alert></jh-alert>
+                
+                <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                    ng-click="unlockAccount()">Unlock Account</button>
+
+                <button type="button" class="btn btn-warning" aria-haspopup="true" aria-expanded="false"
+                    ng-click="expirePassword()">Expire Password</button>
+            </div>
+        </div>
+    </div>
+
     <button type="submit"
             ui-sref="user-management"
             class="btn btn-info">

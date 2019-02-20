@@ -46,4 +46,9 @@ angular.module('uaaUIApp')
                     }
                 }
             });
+        })
+    .factory('UserStatus', function ($resource) {
+        return $resource('api/Users/:id/status', {}, {
+                'change': { method:'PATCH' }
+            });
         });
