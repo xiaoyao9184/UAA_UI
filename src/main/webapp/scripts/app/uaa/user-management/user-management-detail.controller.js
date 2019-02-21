@@ -2,9 +2,14 @@
 
 angular.module('uaaUIApp')
     .controller('UserManagementDetailController', 
-    function ($scope, $stateParams, $location,
+    function ($scope, $state, $stateParams, $location,
         User, UserPassword, UserStatus, UserVerify, UserVerifyLink,
-        TokenServerProvider, Setting, AlertService, Principal) {
+        TokenServerProvider, Principal, Setting, AlertService) {
+         
+        if($state.current.name !== 'token-user'){
+            $state.go('token-user')
+        }
+        
         $scope.user = {};
         $scope.load = function (id) {
             Principal.identity()

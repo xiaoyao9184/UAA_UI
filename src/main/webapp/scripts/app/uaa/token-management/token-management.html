@@ -1,0 +1,65 @@
+<div>
+    <h2>Revocable Tokens</h2>
+    <jh-alert></jh-alert>
+
+    <div class="alert alert-warning" role="alert"
+        ng-show="!tokenPolicy.jwtRevocable">
+        JWT format token not show beacuse 
+        <a ui-sref="zone-management-detail({id:zoneId})">Zone</a>
+        TokenPolicy Configuration
+    </div>
+
+    <div class="container">
+        <div class="row">
+        <div class="col-md-4">
+            <button type="submit" class="btn btn-danger btn-sm"
+                ng-click="revokeToken()">
+                <span class="glyphicon glyphicon-remove-circle">All</span>
+            </button>
+        </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Client ID</th>
+                <th>User ID</th>
+                <th>Format</th>
+                <th>Response Type</th>
+                <th>Issued At</th>
+                <th>Expires At</th>
+                <th>Value</th>
+                <th>Zone ID</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat-start="token in tokens track by token.tokenId">
+                <td>{{token.tokenId | limitTo:8}}</a></td>
+                <td>{{token.clientId}}</td>
+                <td>{{token.userId | limitTo:8}}</td>
+                <td>{{token.format}}</td>
+                <td>{{token.responseType}}</td>
+                <td>{{token.issuedAt | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{token.expiresAt | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{token.value}}</td>
+                <td>{{token.zoneId}}</td>
+
+                <td class="text-right" rowspan="2">
+                    <button type="submit" class="btn btn-danger btn-sm"
+                        ng-click="revokeToken(token.tokenId)">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+                </td>
+            </tr>
+            <tr ng-repeat-end>
+                <td colspan="9">{{token.scope}}</td>
+            </tr>
+            </div>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+    </div>
+</div>

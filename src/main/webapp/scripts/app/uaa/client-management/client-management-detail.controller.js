@@ -3,7 +3,13 @@
 angular.module('uaaUIApp')
     .controller('ClientManagementDetailController', function (
         $scope, $state, $stateParams, 
-        AlertService, Client, ClientSecret, TokenServerProvider, TokenHolder, Principal) {
+        Client, ClientSecret, 
+        TokenServerProvider, TokenHolder, Principal, AlertService) {
+        
+        if($state.current.name !== 'token-client'){
+            $state.go('token-client')
+        }
+        
         $scope.client = {};
         $scope.load = function (id) {
             $scope.isMe = TokenHolder.getJwt().payload.client_id === id;

@@ -9,7 +9,7 @@ angular.module('uaaUIApp')
 
         function restoreZone(){
             _current = localStorageService.get("zone")
-            _uaa = _current === null;
+            _uaa = (_current === null || _current.id === 'uaa');
         }
         function is_uaa(){
             return _uaa;
