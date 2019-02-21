@@ -80,9 +80,19 @@
         </table>
     </div>
 
-    <button type="submit"
-            ui-sref="zone-management" ui-sref-opts="{reload:false}"
-            class="btn btn-info">
+    <button type="submit" class="btn btn-info"
+            ui-sref="zone-management" ui-sref-opts="{reload:false}">
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+    
+    <button type="submit" class="btn btn-primary"
+        ui-sref="zone-management-detail.edit({id:zone.id})">
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+
+    <button type="submit" class="btn btn-warning"
+            ng-show="isZoneMode"
+            ng-click="exitZoneMode()">
+        <span class="glyphicon glyphicon-log-out"></span>&nbsp;<span> Exit</span>
     </button>
 </div>

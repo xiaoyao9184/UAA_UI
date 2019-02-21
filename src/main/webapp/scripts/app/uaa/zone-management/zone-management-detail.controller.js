@@ -1,12 +1,17 @@
 'use strict';
 
 angular.module('uaaUIApp')
-    .controller('ZoneManagementDetailController', function ($scope, $stateParams, Zone) {
-        $scope.zone = {};
-        $scope.load = function (id) {
-            Zone.get({id: id}, function(result) {
-                $scope.zone = result;
-            });
+    .controller('ZoneManagementDetailController', 
+    function ($scope, $state, $q, ZoneHolder, entity) {
+        $scope.zone = entity;
+
+        $q.all([ZoneHolder.current(),$scope.zone.$promise])
+            .then(function(zone){
+                $scope.isZoneMode = (zone[0].id === zone[1].id);
+            })
+        
+        $scope.exitZoneMode = function(){
+            ZoneHolder.reset();
+            $state.go('home', null, { reload: true });
         };
-        $scope.load($stateParams.id);
     });

@@ -10,15 +10,8 @@ angular.module('uaaUIApp')
 
         $scope.isZoneMode = !ZoneHolder.isUAA();
         if($scope.isZoneMode){
-            ZoneHolder.name().then(function(name){
-                $scope.zoneName = name;
+            ZoneHolder.current().then(function(zone){
+                $scope.zone = zone;
             })
         }
-        
-        $scope.exitZoneMode = function(){
-            ZoneHolder.reset();
-            $scope.isZoneMode = false;
-            $scope.zoneName = 'uaa';
-            $state.go('home', null, { reload: true });
-        };
     });

@@ -34,7 +34,9 @@ angular.module('uaaUIApp')
                     }
                 },
                 resolve: {
-                    
+                    entity: ['Zone', '$stateParams', function(Zone, $stateParams) {
+                        return Zone.get({id : $stateParams.id});
+                    }]
                 }
             })
             .state('zone-management.new', {
@@ -113,5 +115,33 @@ angular.module('uaaUIApp')
                         $state.go('^');
                     })
                 }]
-            });
+            })
+            .state('zone-management-detail.edit', {
+                parent: 'zone-management-detail',
+                url: '/zone/:id/edit',
+                data: {
+                    authorities: ['ROLE_ADMIN'],
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'scripts/app/uaa/zone-management/zone-management-edit.html',
+                        controller: 'ZoneManagementEditController',
+                        size: 'lg',
+                        resolve: {
+                            entity: ['Zone', function(Zone) {
+                                var v = Zone.get({id : $stateParams.id})
+                                v.$promise
+                                    .then(function (z) {
+                                        z.config = JSON.stringify(z.config);
+                                    });
+                                return v;
+                            }]
+                        }
+                    }).result.then(function(result) {
+                        $state.go('zone-management-detail', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
+                    })
+                }]
+            })
     });
