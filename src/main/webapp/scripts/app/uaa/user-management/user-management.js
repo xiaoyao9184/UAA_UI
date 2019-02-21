@@ -122,5 +122,25 @@ angular.module('uaaUIApp')
                         $state.go('^');
                     })
                 }]
-            });
+            })
+            .state('user-management.invite', {
+                parent: 'user-management',
+                url: '/invite',
+                data: {
+                    authorities: ['ROLE_ADMIN'],
+                },
+                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                    $uibModal.open({
+                        templateUrl: 'scripts/app/uaa/user-management/user-management-invite.html',
+                        controller: 'UserManagementInviteController',
+                        size: 'lg',
+                        resolve: {
+                        }
+                    }).result.then(function(result) {
+                        $state.go('user-management', null, { reload: true });
+                    }, function() {
+                        $state.go('user-management');
+                    })
+                }]
+            })
     });

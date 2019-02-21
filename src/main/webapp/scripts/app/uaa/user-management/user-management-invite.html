@@ -1,0 +1,69 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myUserLabel">
+            Invite Users</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        
+        <div class="form-group">
+            <label>Client id</label>
+            <input type="text" class="form-control" name="client_id"
+                ng-model="params.client_id">
+        </div>
+        <div class="form-group">
+            <label>Redirect uri</label>
+            <input type="text" class="form-control" name="redirect_uri"
+                uib-tooltip="Cannot jump to a non-UAA url"
+                ng-model="params.redirect_uri">
+        </div>
+
+        <div class="form-group" >
+            <label class="control-label">Invite emails</label>
+            <div class="form-inline" ng-repeat="invite in invites track by $index">
+                <button type="button" class="btn btn-danger" ng-click="deleInvite($index)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <input type="text" class="form-control" name="invite.email"
+                   ng-model="invite.email" required ng-maxlength="100">
+                   
+                <span class="label glyphicon glyphicon-info-sign"
+                    ng-show="invite.done"
+                    ng-class="invite.success ? 'label-success' : 'label-danger'">
+                </span>
+
+                <div class="input-group"
+                    ng-show="invite.success">
+                    <span class="input-group-addon" id="verify-link-addon">Verify link</span>
+                    <input type="text" class="form-control" id="invite_link" aria-describedby="invite-link-addon"
+                        ng-model="invite.inviteLink">
+                </div>
+
+                <div class="input-group">
+                    <div class="alert-danger" role="alert"
+                        ng-show="invite.done && !invite.success">
+                        {{invite.errorMessage}}
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addInvite()">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+            
+        </div>
+        
+        
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

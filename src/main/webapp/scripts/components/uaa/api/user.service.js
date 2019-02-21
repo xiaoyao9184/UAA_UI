@@ -61,4 +61,11 @@ angular.module('uaaUIApp')
         return $resource('api/Users/:id/verify-link', {}, {
                 'verify': { method:'GET' }
             });
+        })
+    .factory('UserInvite', function ($resource) {
+        return $resource('api/invite_users', {}, {
+                'invite': { method:'POST' }
+            });
         });
+
+        
