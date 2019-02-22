@@ -10,17 +10,35 @@
                 <span class="glyphicon glyphicon-floppy-remove"></span> <span>Remove token from your Browser</span>
             </button>
             
-            <button class="btn btn-warning" 
-                ng-show="isSSO()"
-                ng-click="logoutUaa()">
-                <span class="glyphicon glyphicon-log-out"></span> <span>Logout UAA</span>
-            </button>
-            
             <button class="btn btn-info" 
                 ng-show="isRefresh()"
                 ng-click="refreshToken()">
                 <span class="glyphicon glyphicon-refresh"></span> <span>Reflash Token</span>
             </button>
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <button class="btn btn-warning" 
+                ng-show="isSSO()"
+                ng-click="logoutUaa()">
+                <span class="glyphicon glyphicon-log-out"></span> <span>Logout UAA</span>
+            </button>
+
+            <div class="input-group"
+                ng-show="!isSSO()">
+                <span class="input-group-addon" id="sso_username-addon">User</span>
+                <input type="text" class="form-control" id="sso_username" aria-describedby="sso_username-addon"
+                    ng-model="sso.username">
+                <span class="input-group-addon" id="sso_password-addon">Password</span>
+                <input type="text" class="form-control" id="sso_password" aria-describedby="sso_password-addon"
+                    ng-model="sso.password">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-success"
+                        ng-click="loginUaa()" >Login UAA</button>
+                </span>
+            </div>
         </div>
     </div>
 </div>

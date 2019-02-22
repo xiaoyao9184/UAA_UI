@@ -21,6 +21,24 @@ angular.module('uaaUIApp')
                     
                     return deferred.promise;
                 }
+            },
+            start_autologin: function(credentials){
+                var data = "code=" + encodeURIComponent(credentials.code) 
+                    + "&client_id=" + encodeURIComponent(credentials.clientId)
+                var uaa_login_url = credentials.url + 'autologin?' + data;
+
+                if(Setting.get().authWindowType === 'popup'){
+                    $window.open(uaa_login_url, 'UAA-Autologin-Window', 
+                        Setting.get().authWindowParam);;
+                }
+            },
+            start_passcode: function(credentials){
+                var uaa_passcode_url = credentials.url + 'passcode';
+
+                if(Setting.get().authWindowType === 'popup'){
+                    $window.open(uaa_passcode_url, 'UAA-Passcode-Window', 
+                        Setting.get().authWindowParam);;
+                }
             }
         };
     });

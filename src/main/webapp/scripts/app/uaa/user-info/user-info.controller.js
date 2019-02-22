@@ -2,7 +2,7 @@
 
 angular.module('uaaUIApp')
     .controller('UserInfoController', 
-        function ($scope, UserInfo, UserPassword, AlertService) {
+        function ($scope, UserInfo, UserPassword, Passcode, SSOServerProvider, AlertService, Setting) {
 
         UserInfo.get().$promise
             .then(function (info) {
@@ -19,4 +19,10 @@ angular.module('uaaUIApp')
                     $scope.password.password = ''
                 })
         }
+
+        $scope.getPasscode = function(){
+            SSOServerProvider.start_passcode({
+                url: Setting.get().url
+            });
+        };
     });

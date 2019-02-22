@@ -73,5 +73,15 @@ angular.module('uaaUIApp')
                         controller: 'AuthRedirectController'
                     }
                 }
+            })
+            .state('passcode', {
+                parent: 'home',
+                // url: '/',
+                views: {
+                    'login': {
+                        templateUrl: 'scripts/app/ui/login/passcode.html',
+                        controller: 'LoginPasscodeController'
+                    }
+                }
             });
     });

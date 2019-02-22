@@ -76,8 +76,8 @@ angular.module('uaaUIApp')
 
                 return false;
             },
-            uaaLogout(){
-                _uaaLogin = false
+            uaaLogin(flag){
+                _uaaLogin = flag
             },
             token: function(token){
                 _token = token

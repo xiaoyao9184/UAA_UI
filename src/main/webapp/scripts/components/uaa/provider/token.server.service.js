@@ -41,6 +41,17 @@ angular.module('uaaUIApp')
                     }
                 });
             },
+            passcode: function(credentials) {
+                var data = "passcode=" +  encodeURIComponent(credentials.passcode) 
+                    + "&grant_type=password";
+                return $http.post('api/oauth/token', data, {
+                    headers: {
+                        "Content-Type": "application/x-www-form-urlencoded",
+                        "Accept": "application/json",
+                        "Authorization": "Basic " + Base64.encode(credentials.clientId + ':' + credentials.clientSecret)
+                    }
+                });
+            },
             authorization_code: function(credentials){
                 var data = "client_id=" + encodeURIComponent(credentials.clientId) 
                     + "&redirect_uri=" + encodeURIComponent(credentials.redirect_uri) 
