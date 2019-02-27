@@ -20,6 +20,12 @@
     <br>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
+            <button class="btn btn-default"
+                ng-click="checkUaaSSO()">
+                <span class="glyphicon glyphicon-log-up"></span> <span>Check UAA SSO</span>
+            </button>
+            <br>
+
             <button class="btn btn-warning" 
                 ng-show="isSSO()"
                 ng-click="logoutUaa()">

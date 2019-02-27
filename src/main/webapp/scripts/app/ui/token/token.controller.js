@@ -79,4 +79,31 @@ angular.module('uaaUIApp')
             })
         }
 
+        $scope.checkUaaSSO = function(){
+            var setting = Setting.get()
+            //https://github.com/cloudfoundry/uaa/issues/950
+            var userId = $scope.token.user_id;
+            if(setting.sessionCheckUrl === 'session_management'){
+                var res = sjcl.hash.sha256.hash(setting.clientId 
+                    + ' ' + window.location.origin 
+                    + ' ' + userId 
+                    + ' ' + 'ui');
+                userId = sjcl.codec.hex.fromBits(res) + "." + 'ui';
+            }
+
+            SSOServerProvider.start_session({
+                url: setting.url + setting.sessionCheckUrl,
+                clientId: setting.clientId,
+                messageOrigin: window.location.origin,
+                userId: userId
+            },$scope)
+            .then(function(data){
+                if(data.text === 'changed'){
+                    Principal.uaaLogin(false);
+                }else{
+                    Principal.uaaLogin(true);
+                }
+            });
+        };
+
     });

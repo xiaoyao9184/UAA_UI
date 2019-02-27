@@ -3,7 +3,7 @@
 angular.module('uaaUIApp')
     .factory('Setting', function apiService(localStorageService) {
         return {
-            version: 6,
+            version: 7,
             set: function(setting) {
                 localStorageService.set('setting', setting);
             },
@@ -28,7 +28,9 @@ angular.module('uaaUIApp')
                         authRedirectUrl: '#/auth_redirect?',
 
                         authWindowType: 'popup',
-                        authWindowParam :'toolbar=no,scrollbars=no,resizable=no,top=100,left=500,width=600,height=800'
+                        authWindowParam :'toolbar=no,scrollbars=no,resizable=no,top=100,left=500,width=600,height=800',
+                    
+                        sessionCheckUrl: 'session_management'
                     }
                     localStorageService.set('setting', setting);
                 }

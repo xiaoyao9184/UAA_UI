@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('uaaUIApp')
-    .factory('SSOServerProvider', function ($http, $window, $location, $q, Base64, Setting) {
+    .factory('SSOServerProvider', function ($http, $window, $location, $interval, $q, Base64, Setting) {
         return {
             start_logout: function(credentials,$scope){
                 var data = "client_id=" + encodeURIComponent(credentials.clientId) 
@@ -38,6 +38,32 @@ angular.module('uaaUIApp')
                 if(Setting.get().authWindowType === 'popup'){
                     $window.open(uaa_passcode_url, 'UAA-Passcode-Window', 
                         Setting.get().authWindowParam);;
+                }
+            },
+            start_session: function(credentials,$scope){
+                var data = "clientId=" + encodeURIComponent(credentials.clientId) 
+                    + "&messageOrigin=" + encodeURIComponent(credentials.messageOrigin);
+                var uaa_url = credentials.url + '?' + data
+
+                var msg = credentials.clientId + ' ' + credentials.userId;
+
+                var sender = null;
+
+                if(Setting.get().authWindowType === 'popup'){
+                    var authWindow = $window.open(uaa_url, 'UAA-Session-Window', 
+                        Setting.get().authWindowParam);
+                    sender = $interval(function() {
+                        authWindow.postMessage(msg, uaa_url)
+                    }, 100);
+
+                    var deferred = $q.defer();
+                    var listener = $scope.$root.$on('$messageIncoming', function (event, data){
+                        $interval.cancel(sender);
+                        listener();
+                        authWindow.close();
+                        deferred.resolve(data);
+                    });
+                    return deferred.promise;
                 }
             }
         };
