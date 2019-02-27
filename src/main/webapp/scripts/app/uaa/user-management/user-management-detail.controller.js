@@ -2,13 +2,14 @@
 
 angular.module('uaaUIApp')
     .controller('UserManagementDetailController', 
-    function ($scope, $state, $stateParams, $location,
-        User, UserPassword, UserStatus, UserVerify, UserVerifyLink,
+    function ($scope, $state, $stateParams, $location, $filter,
+        User, UserPassword, UserStatus, UserVerify, UserVerifyLink, Password, Email,
         TokenServerProvider, Principal, Setting, AlertService) {
          
         if($state.current.name !== 'token-user'){
             $state.go('token-user')
         }
+        var setting = Setting.get();
         
         $scope.user = {};
         $scope.load = function (id) {
@@ -44,7 +45,6 @@ angular.module('uaaUIApp')
                 return
             }
 
-            var setting = Setting.get();
             TokenServerProvider.password({
                 clientId: setting.clientId,
                 clientSecret: setting.clientSecret,
@@ -61,6 +61,57 @@ angular.module('uaaUIApp')
                 }).$promise
             })
         };
+
+        $scope.reset = {
+            password: '',
+            code: ''
+        };
+        $scope.resetPassword = function(useCodeFlow) {
+            Password.reset({
+                client_id: setting.clientId,
+                redirect_uri: $location.absUrl().replace(/#\/.*/gi, '')
+            },$scope.user.userName,function(result) {
+                if(useCodeFlow){
+                    Password.change({},{
+                        code: result.code,
+                        new_password: $scope.reset.password
+                    },function(result) {
+                        AlertService.success('UI: reset password success!');
+                        //TODO
+                        var r = result
+                    });
+                }else{
+                    //use code in other system
+                    $scope.reset.code = result.code
+                }
+            });
+        };
+
+        $scope.email = {
+            email: '',
+            code: ''
+        };
+        $scope.changeEmail = function(useCodeFlow) {
+            Email.verification({},{
+                userId: $scope.user.id,
+                email: $scope.email.email,
+                client_id: setting.clientId
+            },function(result) {
+                //TODO https://github.com/cloudfoundry/uaa/issues/951
+                AlertService.warning('UI: bug https://github.com/cloudfoundry/uaa/issues/951!');
+                if(useCodeFlow){
+                    Email.change({},result.code,function(result) {
+                        AlertService.success('UI: change email success!');
+                        //TODO
+                        var r = result
+                    });
+                }else{
+                    //use code in other system
+                    $scope.email.code = result.code
+                }
+            });
+        };
+        
 
         $scope.unlockAccount = function() {
             UserStatus.change({id: $scope.user.id}, {

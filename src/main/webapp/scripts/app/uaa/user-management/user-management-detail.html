@@ -131,6 +131,69 @@
             </div>
         </div>
     </div>
+ 
+    <div class="panel panel-danger">
+        <div class="panel-heading">Reset Password</div>
+        <div class="panel-body">
+            <div class="col-md-6 col-md-offset-3">
+                <jh-alert-error></jh-alert-error>
+                <jh-alert></jh-alert>
+                
+                <div class="input-group">
+                    <span class="input-group-addon" id="reset-password-addon">New Password</span>
+                    <input type="password" class="form-control" id="reset-password" aria-describedby="reset-password-addon"
+                        ng-model="reset.password">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false"
+                            ng-click="resetPassword(true)">Reset</button>
+                    </span>
+                </div>
+                
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                            ng-click="resetPassword(false)">Get</button>
+                    </span>
+                    <span class="input-group-addon" id="reset-password-code-addon">Reset Password Code</span>
+                    <input type="text" class="form-control" id="reset-password-code" aria-describedby="reset-password-code-addon"
+                        ng-model="reset.code">
+                </div>
+            </div>
+        </div>
+    </div>
+ 
+    <div class="panel panel-danger">
+        <div class="panel-heading">Change Email</div>
+        <div class="panel-body">
+            <div class="col-md-6 col-md-offset-3">
+                <jh-alert-error></jh-alert-error>
+                <jh-alert></jh-alert>
+                
+                <div class="input-group">
+                    <span class="input-group-addon" id="change-email-addon">New Email</span>
+                    <input type="text" class="form-control" id="change-email" aria-describedby="change-email-addon"
+                        ng-model="email.email">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false"
+                            ng-click="changeEmail(true)">Change</button>
+                    </span>
+                </div>
+                
+                <div class="input-group">
+                    <span class="input-group-addon" id="change-email-addon">New Email</span>
+                    <input type="text" class="form-control" id="change-email" aria-describedby="change-email-addon"
+                        ng-model="email.email">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                            ng-click="changeEmail(false)">Get</button>
+                    </span>
+                    <span class="input-group-addon" id="change-email-code-addon">Change Email Code</span>
+                    <input type="text" class="form-control" id="change-email-code" aria-describedby="change-email-code-addon"
+                        ng-model="email.code">
+                </div>
+            </div>
+        </div>
+    </div>
 
     <div class="panel panel-info">
         <div class="panel-heading">Status</div>

@@ -81,16 +81,17 @@
         <div class="form-group" >
             <label class="control-label">Email</label>
             <div class="form-inline" ng-repeat="email in user.emails track by $index">
-                <button type="button" class="btn btn-danger" ng-click="deleEmail($index)">
+                <!-- <button type="button" class="btn btn-danger" ng-click="deleEmail($index)">
                     <span class="glyphicon glyphicon-minus"></span>
-                </button>
+                </button> -->
                 <input type="text" class="form-control" name="email.value"
-                   ng-model="email.value" required ng-maxlength="100">
-                <input type="checkbox" id="email.primary" ng-model="email.primary">
+                    ng-model="email.value" required ng-maxlength="100">
+                <!-- <input type="checkbox" id="email.primary" 
+                    ng-model="email.primary"> -->
             </div>
-            <button type="button" class="btn btn-primary" ng-click="addEmail()">
+            <!-- <button type="button" class="btn btn-primary" ng-click="addEmail()">
                 <span class="glyphicon glyphicon glyphicon-plus"></span>
-            </button>
+            </button> -->
             
             <div ng-show="editForm.email.$invalid">
                 <p class="help-block"

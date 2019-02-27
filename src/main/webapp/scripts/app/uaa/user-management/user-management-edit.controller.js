@@ -30,11 +30,11 @@ angular.module('uaaUIApp').controller('UserManagementEditController',
             $uibModalInstance.dismiss('cancel');
         };
 
-        $scope.addEmail = function() {
-            $scope.user.emails.push({
-                value: null, primary: false
-            })
-        };
+        // $scope.addEmail = function() {
+        //     $scope.user.emails.push({
+        //         value: null, primary: false
+        //     })
+        // };
 
         $scope.addPhoneNumber = function() {
             $scope.user.phoneNumbers.push({
@@ -42,9 +42,9 @@ angular.module('uaaUIApp').controller('UserManagementEditController',
             });
         };
 
-        $scope.deleEmail = function(index) {
-            $scope.user.emails.splice(index,1);
-        };
+        // $scope.deleEmail = function(index) {
+        //     $scope.user.emails.splice(index,1);
+        // };
 
         $scope.delePhoneNumber = function(index) {
             $scope.user.phoneNumbers.splice(index,1);
