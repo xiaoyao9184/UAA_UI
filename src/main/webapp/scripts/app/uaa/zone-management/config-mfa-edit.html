@@ -1,0 +1,59 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h6 class="modal-title" id="myUserLabel">
+            TokenPolicy</h6> -->
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+
+        <div class="form-group">
+            <label for="enabled">
+                <input type="checkbox" id="enabled" 
+                    ng-model="mfaConfig.enabled">
+                <span>Enabled</span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Provider Name</label>
+            <input type="text" class="form-control" name="providerName"
+                ng-model="mfaConfig.providerName">
+
+            <div ng-show="editForm.providerName.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.providerName.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Identity Providers</label>
+            <br>
+            <div class="form-inline" 
+                ng-repeat="identityProvider in mfaConfig.identityProviders track by $index">
+                <button type="button" class="btn btn-danger" 
+                    ng-click="deleItem(mfaConfig.identityProviders,$index)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <input type="text" class="form-control" name="identityProvider_{{$index}}"
+                   ng-model="identityProvider" required ng-maxlength="100">
+            </div>
+            <button type="button" class="btn btn-primary" 
+                ng-click="addItem(mfaConfig.identityProviders,'')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button> -->
+    </div>
+</form>

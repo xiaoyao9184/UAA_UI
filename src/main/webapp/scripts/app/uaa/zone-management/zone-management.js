@@ -79,10 +79,10 @@ angular.module('uaaUIApp')
                         resolve: {
                             entity: ['Zone', function(Zone) {
                                 var v = Zone.get({id : $stateParams.id})
-                                v.$promise
-                                    .then(function (z) {
-                                        z.config = JSON.stringify(z.config);
-                                    });
+                                // v.$promise
+                                //     .then(function (z) {
+                                //         z.config = JSON.stringify(z.config);
+                                //     });
                                 return v;
                             }]
                         }
@@ -129,12 +129,7 @@ angular.module('uaaUIApp')
                         size: 'lg',
                         resolve: {
                             entity: ['Zone', function(Zone) {
-                                var v = Zone.get({id : $stateParams.id})
-                                v.$promise
-                                    .then(function (z) {
-                                        z.config = JSON.stringify(z.config);
-                                    });
-                                return v;
+                                return Zone.get({id : $stateParams.id});
                             }]
                         }
                     }).result.then(function(result) {

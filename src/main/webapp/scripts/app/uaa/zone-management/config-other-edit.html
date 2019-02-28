@@ -1,0 +1,61 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h6 class="modal-title" id="myUserLabel">
+            TokenPolicy</h6> -->
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+
+        <div class="form-group">
+            <label class="control-label">Default Identity Provider</label>
+            <input type="number" class="form-control" name="defaultIdentityProvider"
+                ng-model="tokenPolicy.defaultIdentityProvider">
+
+            <div ng-show="editForm.defaultIdentityProvider.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.defaultIdentityProvider.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">issuer</label>
+            <input type="number" class="form-control" name="issuer"
+                ng-model="other.issuer">
+
+            <div ng-show="editForm.issuer.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.issuer.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="active">
+                <input type="checkbox" id="idpDiscoveryEnabled" 
+                    ng-model="other.idpDiscoveryEnabled">
+                <span>IDP Discovery Enabled</span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="active">
+                <input type="checkbox" id="accountChooserEnabled" 
+                    ng-change="other.idpDiscoveryEnabled = other.accountChooserEnabled || other.idpDiscoveryEnabled"
+                    ng-model="other.accountChooserEnabled">
+                <span>Account Chooser Enabled</span>
+            </label>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button> -->
+    </div>
+</form>

@@ -1,0 +1,39 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h6 class="modal-title" id="myUserLabel">
+            TokenPolicy</h6> -->
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+
+        <div class="form-group">
+            <label class="control-label">Default Groups</label>
+            <br>
+            <div class="form-inline" 
+                ng-repeat="defaultGroup in userConfig.defaultGroups track by $index">
+                <button type="button" class="btn btn-danger" 
+                    ng-click="deleItem(userConfig.defaultGroups,$index)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <input type="text" class="form-control" name="defaultGroup_{{$index}}"
+                   ng-model="defaultGroup" required ng-maxlength="100">
+            </div>
+            <button type="button" class="btn btn-primary" 
+                ng-click="addItem(userConfig.defaultGroups,'')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button> -->
+    </div>
+</form>

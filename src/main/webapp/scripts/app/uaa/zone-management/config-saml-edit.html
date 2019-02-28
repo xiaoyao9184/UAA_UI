@@ -1,0 +1,204 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h6 class="modal-title" id="myUserLabel">
+            TokenPolicy</h6> -->
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+
+        <div class="form-group">
+            <label class="control-label">Entity ID</label>
+            <input type="number" class="form-control" name="entityID"
+                ng-model="samlConfig.entityID">
+
+            <div ng-show="editForm.entityID.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.entityID.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="assertionSigned">
+                <input type="checkbox" id="assertionSigned" 
+                    ng-model="samlConfig.assertionSigned">
+                <span>Assertion Signed</span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="requestSigned">
+                <input type="checkbox" id="requestSigned" 
+                    ng-model="samlConfig.requestSigned">
+                <span>Request Signed</span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="wantAssertionSigned">
+                <input type="checkbox" id="wantAssertionSigned" 
+                    ng-model="samlConfig.wantAssertionSigned">
+                <span>Want Assertion Signed</span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="wantAuthnRequestSigned">
+                <input type="checkbox" id="wantAuthnRequestSigned" 
+                    ng-model="samlConfig.wantAuthnRequestSigned">
+                <span>Want Authn RequestSigned</span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="disableInResponseToCheck">
+                <input type="checkbox" id="disableInResponseToCheck" 
+                    ng-model="samlConfig.disableInResponseToCheck">
+                <span>Disable In Response To Check</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Assertion Time To Live Seconds</label>
+            <input type="number" class="form-control" name="accessTokenValidity"
+                ng-model="samlConfig.assertionTimeToLiveSeconds" ng-min="-1">
+
+            <div ng-show="editForm.assertionTimeToLiveSeconds.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.assertionTimeToLiveSeconds.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                    ng-show="editForm.assertionTimeToLiveSeconds.$error.min"
+                    translate-value-max="255">
+                    This field cannot be smaller than -1.
+                </p>
+            </div>
+        </div>
+
+        
+        <!-- <div class="form-group">
+            <label class="control-label">Active Key Id</label>
+            <input type="text" class="form-control" name="entityID"
+                ng-model="samlConfig.activeKeyId">
+
+            <div ng-show="editForm.activeKeyId.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.activeKeyId.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div> -->
+        
+        <div class="form-group">
+            <label class="control-label">Active Key Id</label>
+            <br>
+            <div class="btn-group" uib-dropdown>
+                <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                    {{samlConfig.activeKeyId}} 
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                    <li role="menuitem" ng-repeat="(k,v) in samlConfig.keys track by $index">
+                        <a href ng-click="changeKey(k)">{{k}}</a>
+                    </li>
+                    <li class="divider"></li>
+                    <li role="menuitem">
+                        <a href ng-click="addItem(samlConfig.keys,{key:'NEW',value:{}});changeKey('NEW')">New</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <input type="text" class="form-control" name="name"
+                        ng-model="samlConfig.activeKeyId">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Key</label>
+                    <input type="text" class="form-control" name="key"
+                        ng-model="key.key">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Passphrase</label>
+                    <input type="text" class="form-control" name="passphrase"
+                        ng-model="key.passphrase">
+                </div>
+            </div>
+            
+       
+            <div class="form-group col-md-6 col-md-3">
+                <label class="control-label">Certificate</label>
+                <textarea class="form-control" name="certificate"
+                    ng-model="key.certificate" ></textarea>
+            </div>
+        </div>
+
+
+        <!-- <div class="form-group">
+            <uib-tabset active="activeForm">
+                <uib-tab ng-repeat="(key,value) in samlConfig.keys track by $index" 
+                    heading="{{key}}">
+                    <div class="form-group">
+                            <label class="control-label">Name</label>
+                        <input type="text" class="form-control" name="name_{{$index}}"
+                            ng-model="key">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Key</label>
+                        <input type="text" class="form-control" name="key_{{$index}}"
+                            ng-model="value.key">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Passphrase</label>
+                        <input type="text" class="form-control" name="passphrase_{{$index}}"
+                            ng-model="value.passphrase">
+                    </div>
+                    <div class="form-group row-md-4">
+                        <label class="control-label">Certificate</label>
+                        <textarea class="form-control" name="certificate_{{$index}}"
+                            ng-model="value.certificate" ></textarea>
+                    </div>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+
+        <div class="form-group" ng-repeat="(key,value) in samlConfig.keys track by $index">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <input type="text" class="form-control" name="name_{{$index}}"
+                        ng-model="key">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Key</label>
+                    <input type="text" class="form-control" name="key_{{$index}}"
+                        ng-model="value.key">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Passphrase</label>
+                    <input type="text" class="form-control" name="passphrase_{{$index}}"
+                        ng-model="value.passphrase">
+                </div>
+                <div class="form-group row-md-4">
+                    <label class="control-label">Certificate</label>
+                    <textarea class="form-control" name="certificate_{{$index}}"
+                        ng-model="value.certificate" ></textarea>
+                </div>
+            </div>
+        </div> -->
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button> -->
+    </div>
+</form>
