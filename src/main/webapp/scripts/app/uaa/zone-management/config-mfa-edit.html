@@ -16,10 +16,25 @@
                 <span>Enabled</span>
             </label>
         </div>
+
         <div class="form-group">
             <label class="control-label">Provider Name</label>
+            <br>
             <input type="text" class="form-control" name="providerName"
+                ng-hide="true"
+                ng-required="mfaConfig.enabled"
                 ng-model="mfaConfig.providerName">
+            <div class="btn-group" uib-dropdown>
+                <button id="single-button" type="button" class="btn btn-primary" uib-dropdown-toggle ng-disabled="disabled">
+                    {{mfaConfig.providerName}} 
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                    <li role="menuitem" ng-repeat="provider in providers.mfa track by $index">
+                        <a href ng-click="mfaConfig.providerName = provider.name">{{provider.name}}</a>
+                    </li>
+                </ul>
+            </div>
 
             <div ng-show="editForm.providerName.$invalid">
                 <p class="help-block"
@@ -28,22 +43,20 @@
                 </p>
             </div>
         </div>
+
         <div class="form-group">
             <label class="control-label">Identity Providers</label>
             <br>
             <div class="form-inline" 
-                ng-repeat="identityProvider in mfaConfig.identityProviders track by $index">
-                <button type="button" class="btn btn-danger" 
-                    ng-click="deleItem(mfaConfig.identityProviders,$index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="identityProvider_{{$index}}"
-                   ng-model="identityProvider" required ng-maxlength="100">
+                ng-repeat="provider in providers.identity track by $index">
+                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                <span class="label"
+                    uib-tooltip="Use Origin Key not Name"
+                    ng-class="hasItem(mfaConfig.identityProviders,provider.originKey) ? 'label-primary' : 'label-default'"
+                    ng-click="toggleItem(mfaConfig.identityProviders,provider.originKey)">
+                    {{provider.originKey}}</span>
+                    {{provider.name}}
             </div>
-            <button type="button" class="btn btn-primary" 
-                ng-click="addItem(mfaConfig.identityProviders,'')">
-                <span class="glyphicon glyphicon glyphicon-plus"></span>
-            </button>
         </div>
 
     </div>

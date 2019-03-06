@@ -1,0 +1,58 @@
+<div>
+    <h2>Providers</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <button class="btn btn-primary" ui-sref="mfa-provider.new">
+                  <span class="glyphicon glyphicon-flash"></span> <span>Create a new provider</span>
+              </button>
+          </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>issuer</th>
+                <th>Provider Description</th>
+                <th>Identity Zone Id</th>
+                <th>Created</th>
+                <th>LastModifiedDate</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="provider in providers track by provider.id">
+                <td><a ui-sref="mfa-provider-detail({id:provider.id,type:provider.type})">{{provider.id}}</a></td>
+                <td>{{provider.name}}</td>
+                <td>{{provider.type}}</td>
+                <td>{{provider.config.issuer}}</td>
+                <td>{{provider.config.providerDescription}}</td>
+                <td>{{provider.identityZoneId}}</td>
+                <td>{{provider.created | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{provider.last_modified | date:'dd/MM/yy HH:mm'}}</td>
+
+                <td class="text-right">
+                    <button type="submit"
+                            ui-sref="mfa-provider-detail({id:provider.id,type:provider.type})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="mfa-provider.delete({id:provider.id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        
+    </div>
+</div>

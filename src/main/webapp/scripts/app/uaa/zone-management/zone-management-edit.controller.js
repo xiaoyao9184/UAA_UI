@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('ZoneManagementEditController',
-    ['$scope', '$q', '$http', '$uibModalInstance', 'entity', 'Zone', 'Base64', 'Setting',
-        function($scope, $q, $http, $uibModalInstance, entity, Zone, Base64, Setting) {
+    ['$scope', '$q', '$http', '$uibModalInstance', 'entity', 'Zone', 'MFAProvider', 'IdentityProvider', 'Base64', 'Setting',
+        function($scope, $q, $http, $uibModalInstance, entity, Zone, MFAProvider, IdentityProvider, Base64, Setting) {
 
         $scope.setting = Setting.get();
         $scope.zone = entity;
@@ -350,6 +350,17 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
             $scope.samlConfig.activeKeyId = key;
             $scope.key = $scope.samlConfig.keys[key]
         }
+
+        $scope.providers = {
+            mfa: null,
+            identity: null
+        }
+        MFAProvider.query({}, function (result) {
+            $scope.providers.mfa = result;
+        });
+        IdentityProvider.query({}, function (result, headers) {
+            $scope.providers.identity = result;
+        });
 
         $scope.timerToDate = function(timer,date) {
             var d = new Date((timer + new Date().getTimezoneOffset() * 60)*1000)

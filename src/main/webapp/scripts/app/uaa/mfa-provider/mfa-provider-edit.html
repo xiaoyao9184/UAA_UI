@@ -1,0 +1,67 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myUserLabel">
+            Create or edit a Provider</h4>
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+        <div class="form-group">
+            <label>ID</label>
+            <input type="text" class="form-control" name="id"
+                   ng-model="provider.id" readonly>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <input type="text" class="form-control" name="name"
+                   ng-model="provider.name" required ng-maxlength="50">
+
+            <div ng-show="editForm.name.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.name.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.name.$error.maxlength"
+                   translate-value-max="50">
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Type</label>
+            <br>
+            <div class="btn-group">
+                <label class="btn btn-primary" 
+                    ng-model="provider.type" uib-btn-radio="'google-authenticator'">google-authenticator</label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Provider Description</label>
+            <input type="text" class="form-control" name="providerDescription"
+                   ng-model="provider.config.providerDescription">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">issuer</label>
+            <input type="text" class="form-control" name="issuer"
+                   ng-model="provider.config.issuer">
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
