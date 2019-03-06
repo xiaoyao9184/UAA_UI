@@ -1,0 +1,288 @@
+<div>
+    <h2><span>Type</span> "{{provider.type}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Description</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.providerDescription}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Email Domain</span>
+                </td>
+                <td>
+                    <div ng-repeat="domain in provider.config.emailDomain track by $index">
+                        <input type="text" class="input-sm form-control" value="{{domain}}" readonly>
+                    </div>
+                </td>
+            </tr>
+
+ 
+            <tr>
+                <td>
+                    <span>issuer</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.issuer}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Auth Url</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.authUrl}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Token Url</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.tokenUrl}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Token Key Url</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.tokenKeyUrl}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Token Key</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.tokenKey}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>User Info Url</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.userInfoUrl}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Discovery Url</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.discoveryUrl}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Password Grant Enabled</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordGrantEnabled}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Prompts</span>
+                </td>
+                <td>
+                    <div ng-repeat="prompt in provider.config.prompts track by $index">
+                        <tr><td>
+                            <span>Name</span>
+                        </td>
+                        <td>
+                            <input type="text" class="input-sm form-control" value="{{prompt.name}}" readonly>
+                        </td></tr>
+                        <tr><td>
+                            <span>Text</span>
+                        </td>
+                        <td>
+                            <input type="text" class="input-sm form-control" value="{{prompt.text}}" readonly>
+                        </td></tr>
+                        <tr><td>
+                            <span>Type</span>
+                        </td>
+                        <td>
+                            <input type="text" class="input-sm form-control" value="{{prompt.type}}" readonly>
+                        </td></tr>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Relying Party Id</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.relyingPartyId}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Relying Party Secret</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="HIDE" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Scopes</span>
+                </td>
+                <td>
+                    <div ng-repeat="scope in provider.config.scopes track by $index">
+                        <input type="text" class="input-sm form-control" value="{{scope}}" readonly>
+                    </div>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>Link Text</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.linkText}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Show Link Text</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.showLinkText}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Skip Ssl Validation</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.skipSslValidation}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Response Type</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.responseType}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Client Auth In Body</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.clientAuthInBody}}" readonly>
+                </td>
+            </tr>
+
+            
+            <tr>
+                <td>
+                    <span>Add Shadow User On Login</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.addShadowUserOnLogin}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>External Groups Whitelist</span>
+                </td>
+                <td>
+                    <div ng-repeat="whitelist in provider.config.externalGroupsWhitelist track by $index">
+                        <input type="text" class="input-sm form-control" value="{{whitelist}}" readonly>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Store Custom Attributes</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.storeCustomAttributes}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:user_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.user_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:email</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.email}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:given_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.given_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:family_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.family_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:phone_number</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.phone_number}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:email_verified</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.email_verified}}" readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>Mapping:department</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings['user.attribute.department']}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:external_groups</span>
+                </td>
+                <td>
+                    <div ng-repeat="external_group in provider.config.attributeMappings.external_groups track by $index">
+                        <input type="text" class="input-sm form-control" value="{{external_group}}" readonly>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

@@ -11,15 +11,11 @@
 
         <div class="form-group">
             <label class="control-label">Entity ID</label>
-            <input type="number" class="form-control" name="entityID"
+            <input type="text" class="form-control" name="entityID"
+                placeholder="Support URL, default use config file for this" 
+                uib-tooltip="Zone UAA no need to set this"
+                ng-readonly="zone.id === 'uaa'"
                 ng-model="samlConfig.entityID">
-
-            <div ng-show="editForm.entityID.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.entityID.$error.required">
-                    This field is required.
-                </p>
-            </div>
         </div>
         <div class="form-group">
             <label for="assertionSigned">

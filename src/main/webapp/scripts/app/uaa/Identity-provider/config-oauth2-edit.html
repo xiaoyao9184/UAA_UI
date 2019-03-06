@@ -1,0 +1,326 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h6 class="modal-title" id="myUserLabel">
+            TokenPolicy</h6> -->
+    </div>
+    <div class="modal-body">
+        <jh-alert-error></jh-alert-error>
+
+        <div class="form-group">
+            <label class="control-label">Provider Description</label>
+            <input type="text" class="form-control" name="providerDescription"
+                uib-tooltip="Description"
+                ng-model="provider.config.providerDescription">
+        </div>
+        
+        <!-- additionalConfiguration not used -->
+
+        <div class="form-group">
+            <label class="control-label">Email Domain</label>
+            <br>
+            <div class="form-inline" 
+                ng-repeat="domain in provider.config.emailDomain track by $index">
+                <button type="button" class="btn btn-danger" 
+                    ng-click="deleItem(provider.config.emailDomain,$index)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <input type="text" class="form-control" name="domain_{{$index}}"
+                    ng-model="provider.config.emailDomain[$index]" required>
+
+                <div ng-show="editForm.domain_{{$index}}.$invalid">
+                    <p class="help-block"
+                        ng-show="editForm.domain_{{$index}}.$error.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" 
+                ng-click="addItem(provider.config.emailDomain,'')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+
+        
+        <div class="form-group">
+            <div class="alert alert-info" role="alert">
+                <!-- Banner show in 'idp_discovery/*' and 'mfa/*' page.
+                <br>
+                You must enable 'IDP Discovery'. go 
+                <a href ng-click="activeTab(9)">config it</a> -->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">issuer</label>
+            <input type="text" class="form-control" name="issuer"
+                uib-tooltip="The OAuth 2.0 token issuer. This value is used to validate the issuer inside the token."
+                ng-model="provider.config.issuer">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Auth Url</label>
+            <input type="text" class="form-control" name="authUrl"
+                uib-tooltip="The OAuth 2.0 authorization endpoint URL"
+                ng-model="provider.config.authUrl">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Token Url</label>
+            <input type="text" class="form-control" name="tokenUrl"
+                uib-tooltip="The OAuth 2.0 token endpoint URL"
+                ng-model="provider.config.tokenUrl">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Token Key Url</label>
+            <input type="text" class="form-control" name="tokenKeyUrl"
+                uib-tooltip="JWT token verification key"
+                ng-model="provider.config.tokenKeyUrl">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Token Key</label>
+            <input type="text" class="form-control" name="tokenKey"
+                uib-tooltip="JWT token verification key"
+                ng-model="provider.config.tokenKey">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Check Token Url</label>
+            <input type="text" class="form-control" name="checkTokenUrl"
+                uib-tooltip="Reserved for future OAuth use."
+                ng-model="provider.config.checkTokenUrl">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Relying Party Id</label>
+            <input type="text" class="form-control" name="relyingPartyId"
+                uib-tooltip="The client ID" required
+                ng-model="provider.config.relyingPartyId">
+
+            <div ng-show="editForm.relyingPartyId.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.relyingPartyId.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Relying Party Secret</label>
+            <input type="password" class="form-control" name="relyingPartySecret"
+                uib-tooltip="The client secret"
+                placeholder="**********"
+                ng-required="!provider.id"
+                ng-model="provider.config.relyingPartySecret">
+
+            <div ng-show="editForm.relyingPartySecret.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.relyingPartySecret.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Scopes</label>
+            <br>
+            <div class="form-inline" 
+                ng-repeat="scope in provider.config.scopes track by $index">
+                <button type="button" class="btn btn-danger" 
+                    ng-click="deleItem(provider.config.scopes,$index)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <input type="text" class="form-control" name="scope_{{$index}}"
+                    ng-model="provider.config.scopes[$index]" required>
+
+                <div ng-show="editForm.scope_{{$index}}.$invalid">
+                    <p class="help-block"
+                        ng-show="editForm.scope_{{$index}}.$error.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" 
+                ng-click="addItem(provider.config.scopes,'')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+
+        
+        <div class="form-group">
+            <div class="alert alert-info" role="alert">
+                Link show in 'login' page.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Link Text</label>
+            <input type="text" class="form-control" name="linkText"
+                uib-tooltip="JWT token verification key"
+                ng-model="provider.config.linkText">
+            <label for="showLinkText">
+                <input type="checkbox" id="showLinkText" 
+                    ng-model="provider.config.showLinkText">
+                <span>Show Link Text</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="active">
+                <input type="checkbox" id="skipSslValidation" 
+                    ng-model="provider.config.skipSslValidation">
+                <span>Skip Ssl Validation</span>
+            </label>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label">Response Type</label>
+            <input type="text" class="form-control" name="responseType"
+                uib-tooltip="Response type for the authorize request, will be sent to OAuth server, defaults to code"
+                ng-model="provider.config.responseType">
+        </div>
+
+        <div class="form-group">
+            <label for="active">
+                <input type="checkbox" id="clientAuthInBody" 
+                    ng-model="provider.config.clientAuthInBody">
+                <span>Client Auth In Body</span>
+            </label>
+        </div>
+
+        
+        <div class="form-group">
+            <div class="alert alert-info" role="alert">
+                Usually enable 'addShadowUserOnLogin' will create same user on frist login.
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="active">
+                <input type="checkbox" id="addShadowUserOnLogin" 
+                    ng-model="provider.config.addShadowUserOnLogin">
+                <span>Add Shadow User On Login</span>
+            </label>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label">External Groups Whitelist</label>
+            <br>
+            <div class="form-inline" 
+                ng-repeat="whitelist in provider.config.externalGroupsWhitelist track by $index">
+                <button type="button" class="btn btn-danger" 
+                    ng-click="deleItem(provider.config.externalGroupsWhitelist,$index)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <input type="text" class="form-control" name="domain_{{$index}}"
+                    ng-model="provider.config.externalGroupsWhitelist[$index]" required>
+
+                <div ng-show="editForm.whitelist_{{$index}}.$invalid">
+                    <p class="help-block"
+                        ng-show="editForm.whitelist_{{$index}}.$error.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" 
+                ng-click="addItem(provider.config.externalGroupsWhitelist,'')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+    
+        <div class="form-group">
+            <label for="active">
+                <input type="checkbox" id="storeCustomAttributes" 
+                    ng-model="provider.config.storeCustomAttributes">
+                <span>Store Custom Attributes</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:user_name</label>
+            <input type="text" class="form-control" name="user_name"
+                uib-tooltip="Map user_name to the attribute for user name in the provider assertion or token."
+                ng-model="provider.config.attributeMappings.user_name">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:email</label>
+            <input type="text" class="form-control" name="email"
+                uib-tooltip="Map email to the attribute for email in the provider assertion or token."
+                ng-model="provider.config.attributeMappings.email">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:given_name</label>
+            <input type="text" class="form-control" name="given_name"
+                uib-tooltip="Map given_name to the attribute for given name in the provider assertion or token."
+                ng-model="provider.config.attributeMappings.given_name">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:family_name</label>
+            <input type="text" class="form-control" name="family_name"
+                uib-tooltip="Map family_name to the attribute for family name in the provider assertion or token."
+                ng-model="provider.config.attributeMappings.family_name">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:phone_number</label>
+            <input type="text" class="form-control" name="phone_number"
+                uib-tooltip="Map phone_number to the attribute for phone number in the provider assertion or token."
+                ng-model="provider.config.attributeMappings.phone_number">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:email_verified</label>
+            <input type="text" class="form-control" name="email_verified"
+                uib-tooltip="Maps the attribute on the assertion to the email_verified user record at the time of authentication."
+                ng-model="provider.config.attributeMappings.email_verified">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:department</label>
+            <input type="text" class="form-control" name="department"
+                ng-model="provider.config.attributeMappings['user.attribute.department']">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:external_groups</label>
+            <br>
+            <div class="form-inline" 
+                ng-repeat="external_group in provider.config.attributeMappings.external_groups track by $index">
+                <button type="button" class="btn btn-danger" 
+                    ng-click="deleItem(provider.config.attributeMappings.external_groups,$index)">
+                    <span class="glyphicon glyphicon-minus"></span>
+                </button>
+                <input type="text" class="form-control" name="external_group_{{$index}}"
+                    ng-model="provider.config.attributeMappings.external_groups[$index]" required>
+
+                <div ng-show="editForm.external_group_{{$index}}.$invalid">
+                    <p class="help-block"
+                        ng-show="editForm.external_group_{{$index}}.$error.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" 
+                ng-click="addItem(provider.config.attributeMappings.external_groups,'')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+        
+    </div>
+    <div class="modal-footer">
+        <!-- <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
+           >Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button> -->
+    </div>
+</form>

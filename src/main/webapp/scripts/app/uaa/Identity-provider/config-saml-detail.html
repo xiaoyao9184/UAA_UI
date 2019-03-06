@@ -1,0 +1,227 @@
+<div>
+    <h2><span>Type</span> "{{provider.type}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Description</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.providerDescription}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Email Domain</span>
+                </td>
+                <td>
+                    <div ng-repeat="domain in provider.config.emailDomain track by $index">
+                        <input type="text" class="input-sm form-control" value="{{domain}}" readonly>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Meta Data Location</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.metaDataLocation}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>IdP Entity Alias</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.idpEntityAlias}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Zone Id</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.zoneId}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Name ID</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.nameID}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Assertion Consumer Index</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.assertionConsumerIndex}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Metadata Trust Check</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.metadataTrustCheck}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Show Saml Link</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.showSamlLink}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Link Text</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.linkText}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Icon Url</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.iconUrl}}" readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>Group Mapping Mode</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.groupMappingMode}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Skip Ssl Validation</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.skipSslValidation}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Authn Context</span>
+                </td>
+                <td>
+                    <div ng-repeat="ac in provider.config.authnContext track by $index">
+                        <input type="text" class="input-sm form-control" value="{{ac}}" readonly>
+                    </div>
+                </td>
+            </tr>
+   
+            
+            <tr>
+                <td>
+                    <span>Add Shadow User On Login</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.addShadowUserOnLogin}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>External Groups Whitelist</span>
+                </td>
+                <td>
+                    <div ng-repeat="whitelist in provider.config.externalGroupsWhitelist track by $index">
+                        <input type="text" class="input-sm form-control" value="{{whitelist}}" readonly>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Store Custom Attributes</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.storeCustomAttributes}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:user_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.user_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:email</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.email}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:given_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.given_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:family_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.family_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:phone_number</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.phone_number}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:email_verified</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.email_verified}}" readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>Mapping:department</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings['user.attribute.department']}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:external_groups</span>
+                </td>
+                <td>
+                    <div ng-repeat="external_group in provider.config.attributeMappings.external_groups track by $index">
+                        <input type="text" class="input-sm form-control" value="{{external_group}}" readonly>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

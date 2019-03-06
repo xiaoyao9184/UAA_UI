@@ -1,0 +1,65 @@
+<div>
+    <h2><span>User</span> "{{provider.id}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>ID</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.id}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Activated</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.active}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Origin Key</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.originKey}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Type</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.type}}" readonly>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+ 
+    <div ui-view="config"></div>
+    
+
+    <button type="submit"
+            ui-sref="identity-provider"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

@@ -1,0 +1,130 @@
+<div>
+    <h2><span>Type</span> "{{provider.type}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Description</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.providerDescription}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Email Domain</span>
+                </td>
+                <td>
+                    <div ng-repeat="domain in provider.config.emailDomain track by $index">
+                        <input type="text" class="input-sm form-control" value="{{domain}}" readonly>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Disable Internal User Management</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.disableInternalUserManagement}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Expire Password In Months</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordPolicy.expirePasswordInMonths}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Password Newer Than</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordPolicy.passwordNewerThan  | date:'dd/MM/yy HH:mm'}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Min Length</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordPolicy.minLength}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Max Length</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordPolicy.maxLength}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Require Upper Case Character</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordPolicy.requireUpperCaseCharacter}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Require Lower Case Character</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordPolicy.requireLowerCaseCharacter}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Require Digit</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordPolicy.requireDigit}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Require Special Character</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordPolicy.requireSpecialCharacter}}" readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>Count Failures Within</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.lockoutPolicy.countFailuresWithin}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Lockout After Failures</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.lockoutPolicy.lockoutAfterFailures}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Lockout Period Seconds</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.lockoutPolicy.lockoutPeriodSeconds}}" readonly>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>

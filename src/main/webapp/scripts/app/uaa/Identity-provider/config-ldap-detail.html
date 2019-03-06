@@ -1,0 +1,328 @@
+<div>
+    <h2><span>Type</span> "{{provider.type}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>Description</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.providerDescription}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Email Domain</span>
+                </td>
+                <td>
+                    <div ng-repeat="domain in provider.config.emailDomain track by $index">
+                        <input type="text" class="input-sm form-control" value="{{domain}}" readonly>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>ldap Profile File</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.ldapProfileFile}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Base Url</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.baseUrl}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Referral</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.referral}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Skip Ssl Validation</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.skipSSLVerification}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>User DN Pattern</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.userDNPattern}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>User DN Pattern Delimiter</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.userDNPatternDelimiter}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Bind User Dn</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.bindUserDn}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Bind Password</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.bindPassword}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>User Search Base</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.userSearchBase}}" readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>User Search Filter</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.userSearchFilter}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Password Attribute Name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordAttributeName}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Password Encoder</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.passwordEncoder}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Local Password Compare</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.localPasswordCompare}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mail Attribute Name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.mailAttributeName}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mail Substitute</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.mailSubstitute}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mail Substitute Overrides Ldap</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.mailSubstituteOverridesLdap}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>ldap Group File</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.ldapGroupFile}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Group Search Base</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.groupSearchBase}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Group Search Filter</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.groupSearchFilter}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Groups Ignore Partial Results</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.groupsIgnorePartialResults}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Auto Add Groups</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.autoAddGroups}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Group Search Sub Tree</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.groupSearchSubTree}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Max Group Search Depth</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.maxGroupSearchDepth}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Group Role Attribute</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.groupRoleAttribute}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>TLS Configuration</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.tlsConfiguration}}" readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>Add Shadow User On Login</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.addShadowUserOnLogin}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>External Groups Whitelist</span>
+                </td>
+                <td>
+                    <div ng-repeat="whitelist in provider.config.externalGroupsWhitelist track by $index">
+                        <input type="text" class="input-sm form-control" value="{{whitelist}}" readonly>
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Store Custom Attributes</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.storeCustomAttributes}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:user_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.user_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:email</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.email}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:given_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.given_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:family_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.family_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:phone_number</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.phone_number}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:email_verified</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.email_verified}}" readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>Mapping:department</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings['user.attribute.department']}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:external_groups</span>
+                </td>
+                <td>
+                    <div ng-repeat="external_group in provider.config.attributeMappings.external_groups track by $index">
+                        <input type="text" class="input-sm form-control" value="{{external_group}}" readonly>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+</div>
