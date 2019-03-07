@@ -40,7 +40,7 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
 
         $scope.initRawConfig = function() {
             $scope.zone.$promise.then(function(zone){
-                $scope.config = JSON.stringify(zone.config);
+                $scope.config = JSON.stringify(zone.config,null,"  ");
             })
         };
         $scope.configChange = function() {

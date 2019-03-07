@@ -30,10 +30,22 @@
             </tr>
             <tr>
                 <td>
-                    <span>Meta Data Location</span>
+                    <span>MetaData Location</span>
                 </td>
                 <td>
-                    <input type="text" class="input-sm form-control" value="{{provider.config.metaDataLocation}}" readonly>
+                    <pre 
+                        ng-show="ui.MetaDataFormat === 'XML'">{{provider.config.metaDataLocation}}</pre>
+                    <input type="text" class="input-sm form-control" 
+                        ng-show="ui.MetaDataFormat === 'URL'"
+                        value="{{provider.config.metaDataLocation}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Metadata Trust Check</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.metadataTrustCheck}}" readonly>
                 </td>
             </tr>
             <tr>
@@ -66,14 +78,6 @@
                 </td>
                 <td>
                     <input type="text" class="input-sm form-control" value="{{provider.config.assertionConsumerIndex}}" readonly>
-                </td>
-            </tr>
-            <tr>
-                <td>
-                    <span>Metadata Trust Check</span>
-                </td>
-                <td>
-                    <input type="text" class="input-sm form-control" value="{{provider.config.metadataTrustCheck}}" readonly>
                 </td>
             </tr>
             <tr>

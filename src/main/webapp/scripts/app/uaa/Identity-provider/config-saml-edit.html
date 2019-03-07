@@ -64,10 +64,25 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label">Meta Data Location</label>
-            <input type="text" class="form-control" name="metaDataLocation"
-                required placeholder="XML or http URL"
-                ng-model="provider.config.metaDataLocation">
+            <label class="control-label">MetaData Location</label>
+
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <label class="btn btn-primary" 
+                        ng-model="ui.MetaDataFormat" uib-btn-radio="'XML'">XML</label>
+                    <label class="btn btn-primary" 
+                        ng-model="ui.MetaDataFormat" uib-btn-radio="'URL'">URL</label>
+                </span>
+                <input type="text" class="form-control" name="metaDataLocation"
+                    required
+                    placeholder="http://"
+                    ng-show="ui.MetaDataFormat === 'URL'"
+                    ng-model="provider.config.metaDataLocation" >
+                <textarea class="form-control"
+                    style="height: 300px;"
+                    ng-show="ui.MetaDataFormat === 'XML'"
+                    ng-model="provider.config.metaDataLocation"></textarea>
+            </div>
 
             <div ng-show="editForm.metaDataLocation.$invalid">
                 <p class="help-block"
@@ -75,6 +90,14 @@
                     This field is required.
                 </p>
             </div>
+        </div>
+
+        <div class="form-group">
+            <label for="active">
+                <input type="checkbox" id="metadataTrustCheck" 
+                    ng-model="provider.config.metadataTrustCheck">
+                <span>Metadata Trust Check</span>
+            </label>
         </div>
 
         <div class="form-group">
@@ -130,14 +153,6 @@
                     This field cannot be smaller than 0.
                 </p>
             </div>
-        </div>
-
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="metadataTrustCheck" 
-                    ng-model="provider.config.metadataTrustCheck">
-                <span>Metadata Trust Check</span>
-            </label>
         </div>
 
         <div class="form-group">

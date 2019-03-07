@@ -1,0 +1,161 @@
+<div>
+    <h2><span>Provider</span> "{{provider.id}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>ID</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.id}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Entity Id</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.entityId}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Active</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.active}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Identity Zone Id</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.identityZoneId}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Version</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.version}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>CreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{provider.created | date:'dd/MM/yy HH:mm' }}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastModified</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{provider.lastModified | date:'dd/MM/yy HH:mm'}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>MetaData Location</span>
+                </td>
+                <td>
+                    <pre 
+                        ng-show="ui.MetaDataFormat === 'XML'">{{provider.config.metaDataLocation}}</pre>
+                    <input type="text" class="input-sm form-control" 
+                        ng-show="ui.MetaDataFormat === 'URL'"
+                        value="{{provider.config.metaDataLocation}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Metadata Trust Check</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.metadataTrustCheck}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Enable Idp Initiated Sso</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.enableIdpInitiatedSso}}" readonly>
+                </td>
+            </tr>
+            
+            <tr>
+                <td>
+                    <span>Mapping:email</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.email}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:given_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.given_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:family_name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.family_name}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Mapping:phone_number</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{provider.config.attributeMappings.phone_number}}" readonly>
+                </td>
+            </tr>
+
+            <tr>
+                <td>
+                    <span>Static Custom Attributes</span>
+                </td>
+                <td>
+                    <pre>{{provider.config.staticCustomAttributes | json}}</pre>
+                </td>
+            </tr>
+
+        </table>
+    </div>
+ 
+    <div ui-view="config"></div>
+    
+
+    <button type="submit"
+            ui-sref="saml-service-provider"
+            class="btn btn-info">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

@@ -1,0 +1,83 @@
+<div>
+    <h2>Providers</h2>
+    <jh-alert></jh-alert>
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <button class="btn btn-primary" ui-sref="saml-service-provider.new">
+                  <span class="glyphicon glyphicon-flash"></span> <span>Create a new provider</span>
+              </button>
+          </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>EntityId</th>
+                <th>Active</th>
+                <th>Metadata Location</th>
+                <th>Metadata Trust Check</th>
+                <th>Identity Zone Id</th>
+                <th>Created</th>
+                <th>LastModifiedDate</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="provider in providers track by provider.id">
+                <td><a ui-sref="saml-service-provider-detail({id:provider.id})">{{provider.id}}</a></td>
+                <td>{{provider.name}}</td>
+                <td>{{provider.entityId}}</td>
+                <td>
+                    <span class="label label-danger"
+                        ng-show="!provider.active">Desactivated</span>
+                    <span class="label label-success"
+                        ng-show="provider.active">Activated</span>
+                </td>
+                <td>
+                    <span class="label label-primary" style="cursor: pointer;"
+                        uib-tooltip="click to copy"
+                        ng-click="copy(provider.config.metaDataLocation)"
+                        ng-show="provider.ui.MetaDataFormat === 'XML'">XML</span>
+                    <span class="label label-primary" style="cursor: pointer;"
+                        uib-tooltip="click to copy: {{provider.config.metaDataLocation}}"
+                        ng-click="copy(provider.config.metaDataLocation)"
+                        ng-show="provider.ui.MetaDataFormat === 'URL'">URL</span>
+                </td>
+                <td>
+                    <span class="label label-danger"
+                        ng-show="!provider.config.metadataTrustCheck">No</span>
+                    <span class="label label-success"
+                        ng-show="provider.config.metadataTrustCheck">Yes</span>
+                </td>
+                <td>{{provider.identityZoneId}}</td>
+                <td>{{provider.created | date:'dd/MM/yy HH:mm'}}</td>
+                <td>{{provider.lastModified | date:'dd/MM/yy HH:mm'}}</td>
+
+                <td class="text-right">
+                    <button type="submit"
+                            ui-sref="saml-service-provider-detail({id:provider.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
+                    <button type="submit" class="btn btn-primary btn-sm"
+                            ui-sref="saml-service-provider.edit({id:provider.id})">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="saml-service-provider.delete({id:provider.id})"
+                            class="btn btn-danger btn-sm">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        
+    </div>
+</div>
