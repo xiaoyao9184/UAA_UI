@@ -38,13 +38,21 @@
             <tr ng-repeat-start="token in tokens track by token.tokenId">
                 <td>{{token.tokenId | limitTo:8}}</a></td>
                 <td>{{token.clientId}}</td>
-                <td>{{token.userId | limitTo:8}}</td>
+                <td>
+                    <a ui-sref="user-management-detail({id:provider.userId})">
+                        {{token.userId | limitTo:8}}
+                    </a>
+                </td>
                 <td>{{token.format}}</td>
                 <td>{{token.responseType}}</td>
                 <td>{{token.issuedAt | date:'dd/MM/yy HH:mm'}}</td>
                 <td>{{token.expiresAt | date:'dd/MM/yy HH:mm'}}</td>
                 <td>{{token.value}}</td>
-                <td>{{token.zoneId}}</td>
+                <td>
+                    <a ui-sref="zone-management-detail({id:provider.identityZoneId})">
+                        {{token.zoneId | limitTo:8}}
+                    </a>
+                </td>
 
                 <td class="text-right" rowspan="2">
                     <button type="submit" class="btn btn-danger btn-sm"

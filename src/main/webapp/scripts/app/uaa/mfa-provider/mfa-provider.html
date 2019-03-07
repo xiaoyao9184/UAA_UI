@@ -1,5 +1,5 @@
 <div>
-    <h2>Providers</h2>
+    <h2>MFA Providers</h2>
     <jh-alert></jh-alert>
     <div class="container">
         <div class="row">
@@ -19,22 +19,32 @@
                 <th>Type</th>
                 <th>issuer</th>
                 <th>Provider Description</th>
-                <th>Identity Zone Id</th>
-                <th>Created</th>
-                <th>LastModifiedDate</th>
+                <th>Created<br>LastModified</th>
+                <th>ZoneId</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="provider in providers track by provider.id">
-                <td><a ui-sref="mfa-provider-detail({id:provider.id,type:provider.type})">{{provider.id}}</a></td>
+                <td>
+                    <a ui-sref="mfa-provider-detail({id:provider.id,type:provider.type})">
+                        {{provider.id | limitTo:8}}
+                    </a>
+                </td>
                 <td>{{provider.name}}</td>
                 <td>{{provider.type}}</td>
                 <td>{{provider.config.issuer}}</td>
                 <td>{{provider.config.providerDescription}}</td>
-                <td>{{provider.identityZoneId}}</td>
-                <td>{{provider.created | date:'dd/MM/yy HH:mm'}}</td>
-                <td>{{provider.last_modified | date:'dd/MM/yy HH:mm'}}</td>
+                <td>
+                    {{provider.created | date:'dd/MM/yy HH:mm'}}
+                    <br><br>
+                    {{provider.last_modified | date:'dd/MM/yy HH:mm'}}
+                </td>
+                <td>
+                    <a ui-sref="zone-management-detail({id:provider.identityZoneId})">
+                        {{provider.identityZoneId | limitTo:8}}
+                    </a>
+                </td>
 
                 <td class="text-right">
                     <button type="submit"

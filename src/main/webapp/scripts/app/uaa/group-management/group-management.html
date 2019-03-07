@@ -17,25 +17,30 @@
                 <th>ID</th>
                 <th>DisplayName</th>
                 <th>Description</th>
-
-                <th>CreatedDate</th>
-                <th>LastModifiedDate</th>
-
+                <th>Created<br>LastModified</th>
                 <th>ZoneId</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="group in groups track by group.id">
-                <td><a ui-sref="group-management-detail({id:group.id})">{{group.id}}</a></td>
-                <td>{{group.displayName }}</td>
+                <td>
+                    <a ui-sref="group-management-detail({id:group.id})">
+                        {{group.id | limitTo:8}}
+                    </a>
+                </td>
+                <td>{{group.displayName}}</td>
                 <td>{{group.description}}</td>
-
-                <td>{{group.meta.created | date:'dd/MM/yy HH:mm'}}</td>
-                <td>{{group.meta.lastModified | date:'dd/MM/yy HH:mm'}}</td>
-
-                <td><a ui-sref="zone-management-detail({id:group.zoneId})">{{group.zoneId}}</a></td>
-
+                <td>
+                    {{group.meta.created | date:'dd/MM/yy HH:mm'}}
+                    <br><br>
+                    {{group.meta.lastModified | date:'dd/MM/yy HH:mm'}}
+                </td>
+                <td>
+                    <a ui-sref="zone-management-detail({id:group.zoneId})">
+                        {{group.zoneId | limitTo:8}}
+                    </a>
+                </td>
                 <td class="text-right">
                     <button type="submit"
                             ui-sref="group-management-detail({id:group.id})"

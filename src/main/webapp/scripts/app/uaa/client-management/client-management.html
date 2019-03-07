@@ -63,24 +63,21 @@
             <thead>
             <tr>
                 <th>ID</th>
-                <th>Name</th>
-                <th>Token Salt</th>
-
                 <th>Url</th>
                 <th>Scope</th>
                 <th>Grant</th>
                 <th>AutoApprove</th>
-
                 <th>LastModified</th>
-
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="client in pageClients track by client.client_id">
-                <td><a ui-sref="client-management-detail({id:client.client_id})">{{client.client_id}}</a></td>
-                <td>{{client.name}}</td>
-                <td>{{client.token_salt}}</td>
+                <td>
+                    <a ui-sref="client-management-detail({id:client.client_id})">
+                        {{client.client_id}}
+                    </a>
+                </td>
 
                 <td>
                     {{client.redirect_uri.join(' ')}}

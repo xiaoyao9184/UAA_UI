@@ -1,5 +1,5 @@
 <div>
-    <h2>Providers</h2>
+    <h2>SAML Service Providers</h2>
     <jh-alert></jh-alert>
     <div class="container">
         <div class="row">
@@ -18,17 +18,19 @@
                 <th>Name</th>
                 <th>EntityId</th>
                 <th>Active</th>
-                <th>Metadata Location</th>
-                <th>Metadata Trust Check</th>
-                <th>Identity Zone Id</th>
-                <th>Created</th>
-                <th>LastModifiedDate</th>
+                <th>Metadata</th>
+                <th>Created<br>LastModified</th>
+                <th>ZoneId</th>
                 <th></th>
             </tr>
             </thead>
             <tbody>
             <tr ng-repeat="provider in providers track by provider.id">
-                <td><a ui-sref="saml-service-provider-detail({id:provider.id})">{{provider.id}}</a></td>
+                <td>
+                    <a ui-sref="saml-service-provider-detail({id:provider.id})">
+                        {{provider.id | limitTo:8}}
+                    </a>
+                </td>
                 <td>{{provider.name}}</td>
                 <td>{{provider.entityId}}</td>
                 <td>
@@ -46,16 +48,22 @@
                         uib-tooltip="click to copy: {{provider.config.metaDataLocation}}"
                         ng-click="copy(provider.config.metaDataLocation)"
                         ng-show="provider.ui.MetaDataFormat === 'URL'">URL</span>
+                    <br><br>
+                    <span class="label label-danger"
+                        ng-show="!provider.config.metadataTrustCheck">No Check</span>
+                    <span class="label label-success"
+                        ng-show="provider.config.metadataTrustCheck">Trust Check</span>
                 </td>
                 <td>
-                    <span class="label label-danger"
-                        ng-show="!provider.config.metadataTrustCheck">No</span>
-                    <span class="label label-success"
-                        ng-show="provider.config.metadataTrustCheck">Yes</span>
+                    {{provider.created | date:'dd/MM/yy HH:mm'}}
+                    <br><br>
+                    {{provider.lastModified | date:'dd/MM/yy HH:mm'}}
                 </td>
-                <td>{{provider.identityZoneId}}</td>
-                <td>{{provider.created | date:'dd/MM/yy HH:mm'}}</td>
-                <td>{{provider.lastModified | date:'dd/MM/yy HH:mm'}}</td>
+                <td>
+                    <a ui-sref="zone-management-detail({id:provider.zoneId})">
+                        {{provider.identityZoneId | limitTo:8}}
+                    </a>
+                </td>
 
                 <td class="text-right">
                     <button type="submit"
