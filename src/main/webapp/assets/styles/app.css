@@ -1,0 +1,37 @@
+/* form UAA tiles a */
+.tiles-nowidth {
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: 50% 54%;
+    background-size: 88%;
+    border: 1px solid #cccccc;
+    display: block;
+    height: 86px;
+    overflow: hidden;
+    padding: 8px;
+    margin: 4px;
+}
+
+/* form UAA tiles a */
+.tiles {
+    background-color: white;
+    background-repeat: no-repeat;
+    background-position: 50% 54%;
+    background-size: 88%;
+    border: 1px solid #cccccc;
+    display: block;
+    height: 86px;
+    overflow: hidden;
+    width: 158px;
+    padding: 8px;
+    margin: 4px;
+}
+
+/* form UAA tile-icon */
+.tile-icon {
+    width: 100%;
+    height: 100%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+    background-size: contain;
+}

@@ -54,7 +54,41 @@ angular.module('uaaUIApp')
                             entity: function () {
                                 return {
                                     id: null, subdomain: null, name: null, description: null,
-                                    active: true, config: null
+                                    active: true, 
+                                    config: {
+                                        clientSecretPolicy: {},
+                                        corsPolicy: {
+                                            defaultConfiguration: {
+                                                allowedHeaders: [],
+                                                allowedMethods: [],
+                                                allowedOriginPatterns: [],
+                                                allowedOrigins: [],
+                                                allowedUriPatterns: [],
+                                                allowedUris: []
+                                            },
+                                            xhrConfiguration: {
+                                                allowedHeaders: [],
+                                                allowedMethods: [],
+                                                allowedOriginPatterns: [],
+                                                allowedOrigins: [],
+                                                allowedUriPatterns: [],
+                                                allowedUris: []
+                                            }
+                                        },
+                                        links: {
+                                            logout: { whitelist: [] },
+                                            selfService: {}
+                                        },
+                                        mfaConfig: { identityProviders: [] },
+                                        prompts: [
+                                            {name: "username", type: "text", text: "Email"},
+                                            {name: "password", type: "password", text: "Password"},
+                                            {name: "passcode", type: "password", text: "Password"}
+                                        ],
+                                        samlConfig: { keys: {} },
+                                        tokenPolicy: {},
+                                        userConfig: { defaultGroups: [] }    
+                                    }
                                 };
                             }
                         }

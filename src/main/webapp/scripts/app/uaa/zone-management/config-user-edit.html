@@ -14,12 +14,16 @@
             <br>
             <div class="form-inline" 
                 ng-repeat="defaultGroup in userConfig.defaultGroups track by $index">
-                <button type="button" class="btn btn-danger" 
-                    ng-click="deleItem(userConfig.defaultGroups,$index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="defaultGroup_{{$index}}"
-                   ng-model="defaultGroup" required ng-maxlength="100">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(userConfig.defaultGroups,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="defaultGroup_{{$index}}"
+                        ng-model="defaultGroup" required ng-maxlength="100">
+                </div>
             </div>
             <button type="button" class="btn btn-primary" 
                 ng-click="addItem(userConfig.defaultGroups,'')">

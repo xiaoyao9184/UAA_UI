@@ -262,7 +262,15 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
         };
 
         $scope.init = function(name,object) {
-            $scope.zone.$promise.then(function(zone){
+            var promise;
+            if(angular.isUndefined($scope.zone.$promise)){
+                var deferred = $q.defer();
+                deferred.resolve($scope.zone);
+                promise = deferred.promise;
+            }else{
+                promise = $scope.zone.$promise
+            }
+            promise.then(function(zone){
                 if(name in zone.config){
                     $scope[name] = zone.config[name];
                 }else if(angular.isDefined(object)){

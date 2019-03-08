@@ -152,14 +152,18 @@
                     <br>
                     <div class="form-inline" 
                         ng-repeat="resourceId in client.resource_ids track by $index">
-                        <button type="button" class="btn btn-danger" 
-                            ng-disabled="true"
-                            ng-click="deleItem(client.resource_ids,$index)">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                        <input type="text" class="form-control" name="resourceId_{{$index}}"
-                            ng-disabled="true" 
-                            ng-model="client.resource_ids[$index]">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger" 
+                                    ng-disabled="true"
+                                    ng-click="deleItem(client.resource_ids,$index)">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            <input type="text" class="form-control" name="resourceId_{{$index}}"
+                                ng-disabled="true" 
+                                ng-model="client.resource_ids[$index]">
+                        </div>
                     </div>
                     <div class="btn-group" uib-dropdown>
                         <button type="button" class="btn btn-primary" id="single-button" 
@@ -205,24 +209,27 @@
 
                     <div class="form-inline" 
                         ng-repeat="scope in client.scope track by $index">
-                        <button type="button" class="btn btn-danger" 
-                            ng-click="deleItem(client.scope,$index)">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger" 
+                                    ng-click="deleItem(client.scope,$index)">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                                <button type="button" class="btn"
+                                    uib-tooltip="click to toggle auto approve"
+                                    ng-class="hasItem(client.autoapprove,scope) || 
+                                        hasItem(client.autoapprove,'true') ? 'btn-primary' : 'btn-warning'"
+                                    ng-disabled="hasItem(client.autoapprove,'true')"
+                                    ng-click="toggleItem(client.autoapprove,scope)">
+                                    <span class="glyphicon"
+                                        ng-class="hasItem(client.autoapprove,scope) || 
+                                        hasItem(client.autoapprove,'true') ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
+                                </button>
+                            </span>
 
-                        <input type="text" class="form-control" name="scope_{{$index}}"
-                            ng-model="client.scope[$index]" required>
-
-                        <button type="button" class="btn"
-                            uib-tooltip="click to toggle auto approve"
-                            ng-class="hasItem(client.autoapprove,scope) || 
-                                hasItem(client.autoapprove,'true') ? 'btn-primary' : 'btn-warning'"
-                            ng-disabled="hasItem(client.autoapprove,'true')"
-                            ng-click="toggleItem(client.autoapprove,scope)">
-                            <span class="glyphicon"
-                                ng-class="hasItem(client.autoapprove,scope) || 
-                                hasItem(client.autoapprove,'true') ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
-                        </button>
+                            <input type="text" class="form-control" name="scope_{{$index}}"
+                                ng-model="client.scope[$index]" required>
+                        </div>    
                     </div>
 
                     <div class="btn-group" uib-dropdown>
@@ -257,12 +264,16 @@
                     <br>
                     <div class="form-inline" 
                         ng-repeat="group in client.required_user_groups track by $index">
-                        <button type="button" class="btn btn-danger" 
-                            ng-click="deleItem(client.required_user_groups,$index)">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                        <input type="text" class="form-control" name="group_{{$index}}"
-                            ng-model="client.required_user_groups[$index]" required>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger" 
+                                    ng-click="deleItem(client.required_user_groups,$index)">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            <input type="text" class="form-control" name="group_{{$index}}"
+                                ng-model="client.required_user_groups[$index]" required>
+                        </div>
                     </div>
                     <div class="btn-group" uib-dropdown>
                         <button type="button" class="btn btn-primary" id="single-button" 
@@ -296,16 +307,20 @@
         <div class="form-group">
             <div class="row">
                 <div class="col-md-6">
-                        <label class="control-label">Authorities</label>
+                    <label class="control-label">Authorities</label>
                     <br>
                     <div class="form-inline" 
                         ng-repeat="authoritie in client.authorities track by $index">
-                        <button type="button" class="btn btn-danger" 
-                            ng-click="deleItem(client.authorities,$index)">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                        <input type="text" class="form-control" name="authoritie_{{$index}}"
-                            ng-model="client.authorities[$index]" required>
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger" 
+                                    ng-click="deleItem(client.authorities,$index)">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                            </span>
+                            <input type="text" class="form-control" name="authoritie_{{$index}}"
+                                ng-model="client.authorities[$index]" required>
+                        </div>
                     </div>
                     <div class="btn-group" uib-dropdown>
                         <button type="button" class="btn btn-primary" id="single-button" 
