@@ -15,6 +15,13 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label">Name</label>
+            <input type="text" class="form-control" name="clientName"
+                placeholder="display name for confirm access and App page"
+                ng-model="client.clientName">
+        </div>
+
+        <div class="form-group">
             <label class="control-label">Show On Home Page</label> 
             <h6>
                 <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
@@ -35,16 +42,24 @@
             <div class="media">
                 <div class="media-left">
                     <div ng-model="file" ng-change="flashIcon()" file-browser>
-                        <a class="thumbnail" >
-                            <img class="media-object"
+                        <a class="thumbnail tiles" >
+                            <div class="tile-icon" style="background-image:url({{imageUrl}})"></div>
+                            <!-- <img class="media-object"
                                 style="height: 90px; width: 150px;"
-                                data-ng-src="{{imageUrl}}">
+                                data-ng-src="{{imageUrl}}"> -->
                         </a>
                     </div>
                 </div>
             </div>
         </div>
 
+        <div class="form-group">
+            <label class="control-label">Created By</label>
+            <br>
+            <a ui-sref="user-management-detail({id:client.createdBy})">
+                {{client.createdBy | limitTo:8}}
+            </a>
+        </div>
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">

@@ -11,7 +11,7 @@
         <div class="form-group">
             <label>ID</label>
             <input type="text" class="form-control" name="client_id"
-                   ng-model="client.client_id" ng-maxlength="50" ng-required="true">
+                ng-model="client.client_id" ng-maxlength="50" ng-required="true">
 
             <div ng-show="editForm.client_id.$invalid">
                 <p class="help-block"
@@ -30,7 +30,7 @@
         <div class="form-group" ng-show="mode === 'new'">
             <label class="control-label">Secret</label>
             <input type="password" class="form-control" name="client_secret"
-                   ng-model="client.client_secret" ng-maxlength="50">
+                ng-model="client.client_secret" ng-maxlength="50">
                    <!-- ng-required="mode === 'new'"> -->
 
             <div ng-show="editForm.client_secret.$invalid">
@@ -48,115 +48,368 @@
         </div>
 
         <div class="form-group">
-            <label class="control-label">Grant</label>
-            <!-- <div class="form-inline" 
-                ng-repeat="grant in client.authorized_grant_types track by $index">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-danger"
-                            ng-click="deleGrant($index)">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                    </span>
-                    <input type="text" class="form-control" name="grant"
-                        ng-model="client.authorized_grant_types[$index]" readonly>
+            <div class="row">
+                <div class="col-md-12">
+                    <label class="control-label">Grant</label>
+                    <div class="form-inline">
+                        <h4>
+                            <span
+                                ng-repeat="(key, grant) in ui.grants"
+                                ng-if="grant.type === 'oauth2'">
+                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                                <span class="label"
+                                    ng-class="hasItem(client.authorized_grant_types,key) ? 'label-primary' : 'label-default'"
+                                    ng-click="toggleItem(client.authorized_grant_types,key)">{{grant.name}}</span>
+                            </span>
+                        </h4>
+                    </div>
                 </div>
             </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary dropdown-toggle" 
-                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-                <ul class="dropdown-menu dropdown-menu-left">
-                    <li ng-click="addGrant('authorization_code')"><a>authorization_code</a></li>
-                    <li ng-click="addGrant('password')"><a>password</a><li>
-                    <li ng-click="addGrant('implicit')"><a>implicit</a></li>
-                    <li ng-click="addGrant('client_credentials')"><a>client_credentials</a></li>
-                </ul>
-            </div> -->
-            <div class="form-inline">
-                <h4>
-                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-                <span class="label"
-                    ng-class="enableGrant('authorization_code') ? 'label-primary' : 'label-default'"
-                    ng-click="toggleGrant('authorization_code')">
-                    authorization_code</span>
-                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-                <span class="label"
-                    ng-class="enableGrant('password') ? 'label-primary' : 'label-default'"
-                    ng-click="toggleGrant('password')">password</span>
-                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-                <span class="label"
-                    ng-class="enableGrant('implicit') ? 'label-primary' : 'label-default'"
-                    ng-click="toggleGrant('implicit')">implicit</span>
-                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
-                <span class="label"
-                    ng-class="enableGrant('client_credentials') ? 'label-primary' : 'label-default'"
-                    ng-click="toggleGrant('client_credentials')">client_credentials</span>
-                </h4>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-inline">
+                        <h5>
+                            <span
+                                ng-repeat="(key, grant) in ui.grants"
+                                ng-if="grant.type === 'other'">
+                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                                <span class="label"
+                                    ng-class="hasItem(client.authorized_grant_types,key) ? 'label-primary' : 'label-default'"
+                                    ng-click="toggleItem(client.authorized_grant_types,key)">{{grant.name}}</span>
+                            </span>
+                        </h5>
+                    </div>
+                </div>
             </div>
-            <div class="form-inline">
-                <h6>
-                    <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-                    <span class="label"
-                        ng-class="is_refresh_token ? 'label-primary' : 'label-default'"
-                        >refresh_token</span>
-                </h6>
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="form-inline">
+                        <h6>
+                            <span
+                                ng-repeat="(key, grant) in ui.grants"
+                                ng-if="grant.type === 'flag'">
+                                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                                <span class="label"
+                                    ng-class="hasItem(client.authorized_grant_types,key) ? 'label-primary' : 'label-default'"
+                                    ng-click="toggleItem(client.authorized_grant_types,key)">{{grant.name}}</span>
+                            </span>
+                        </h6>
+                    </div>
+                </div>
             </div>
+        </div>
+            
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label">Redirect</label>
+                    <br>
+                    <div class="form-inline" 
+                        ng-repeat="redirect in client.redirect_uri track by $index">
+                        <div class="input-group">
+                            <span class="input-group-btn">
+                                <button type="button" class="btn btn-danger"
+                                    ng-click="deleItem(client.redirect_uri,$index)">
+                                    <span class="glyphicon glyphicon-minus"></span>
+                                </button>
+                                <button type="button" class="btn btn-default"
+                                    uib-tooltip="matches zero or more characters" 
+                                    ng-click="client.redirect_uri[$index] = client.redirect_uri[$index] + '*'">
+                                    *
+                                </button>
+                                <button type="button" class="btn btn-default"
+                                    uib-tooltip="matches zero or more 'directories' in a path" 
+                                    ng-click="client.redirect_uri[$index] = client.redirect_uri[$index] + '/**'">
+                                    **
+                                </button>
+                            </span>
+                            <input type="text" class="form-control" name="redirect"
+                                placeholder="http://"
+                                ng-model="client.redirect_uri[$index]" required>
+                            <span class="input-group-btn">
+                        </div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary" 
+                            ng-click="addItem(client.redirect_uri,'http://')">
+                            <span class="glyphicon glyphicon-plus"></span>
+                        </button>
+                    </div>
+        
+                    <input type="number" class="form-control" name="redirect_uri_count"
+                        ng-model="client.redirect_uri.length" ng-min="0" ng-show="false">
+                    <div ng-show="editForm.redirect_uri_count.$invalid">
+                        <p class="help-block"
+                            ng-show="editForm.redirect_uri_count.$error.min">
+                            authorization_code or implicit grant type requires at least one redirect URL.
+                        </p>
+                    </div>
+                </div>
 
-            <input type="number" class="form-control" name="grant_count"
-                ng-model="client.authorized_grant_types.length" ng-min="1" ng-show="false">
-            <div ng-show="editForm.grant_count.$invalid">
+                <div class="col-md-6">
+                    <label class="control-label"
+                        uib-tooltip="The UAA does not allow or require resource ids">Resource Ids</label>
+                    <br>
+                    <div class="form-inline" 
+                        ng-repeat="resourceId in client.resource_ids track by $index">
+                        <button type="button" class="btn btn-danger" 
+                            ng-disabled="true"
+                            ng-click="deleItem(client.resource_ids,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                        <input type="text" class="form-control" name="resourceId_{{$index}}"
+                            ng-disabled="true" 
+                            ng-model="client.resource_ids[$index]">
+                    </div>
+                    <div class="btn-group" uib-dropdown>
+                        <button type="button" class="btn btn-primary" id="single-button" 
+                            uib-dropdown-toggle
+                            ng-disabled="true">
+                            +
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem">
+                                <a href ng-click="addItem(client.resource_ids,'')">
+                                    Other
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href ng-click="addItem(client.resource_ids,default.resourceIds)">
+                                    Add all default
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li role="menuitem" ng-repeat="resourceId in default.resourceIds track by $index">
+                                <a href ng-click="addItem(client.resource_ids,resourceId)">
+                                    {{resourceId}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                    <label class="control-label">
+                        Scopes
+                        <span class="label"
+                            uib-tooltip="auto approve ALL"
+                            ng-class="hasItem(client.autoapprove,'true') ? 'label-primary' : 'label-default'"
+                            ng-click="toggleItem(client.autoapprove,'true')">All Approve</span>
+                    </label>
+                    <br>
+
+                    <div class="form-inline" 
+                        ng-repeat="scope in client.scope track by $index">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(client.scope,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+
+                        <input type="text" class="form-control" name="scope_{{$index}}"
+                            ng-model="client.scope[$index]" required>
+
+                        <button type="button" class="btn"
+                            uib-tooltip="click to toggle auto approve"
+                            ng-class="hasItem(client.autoapprove,scope) || 
+                                hasItem(client.autoapprove,'true') ? 'btn-primary' : 'btn-warning'"
+                            ng-disabled="hasItem(client.autoapprove,'true')"
+                            ng-click="toggleItem(client.autoapprove,scope)">
+                            <span class="glyphicon"
+                                ng-class="hasItem(client.autoapprove,scope) || 
+                                hasItem(client.autoapprove,'true') ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
+                        </button>
+                    </div>
+
+                    <div class="btn-group" uib-dropdown>
+                        <button type="button" class="btn btn-primary" id="single-button" 
+                            uib-dropdown-toggle>
+                            +
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem">
+                                <a href ng-click="addItem(client.scope,'')">
+                                    Other
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href ng-click="addItem(client.scope,default.groups)">
+                                    Add all default
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li role="menuitem" ng-repeat="group in default.groups track by $index">
+                                <a href ng-click="addItem(client.scope,group)">
+                                    {{group}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="control-label">Required user groups</label>
+                    <br>
+                    <div class="form-inline" 
+                        ng-repeat="group in client.required_user_groups track by $index">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(client.required_user_groups,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                        <input type="text" class="form-control" name="group_{{$index}}"
+                            ng-model="client.required_user_groups[$index]" required>
+                    </div>
+                    <div class="btn-group" uib-dropdown>
+                        <button type="button" class="btn btn-primary" id="single-button" 
+                            uib-dropdown-toggle>
+                            +
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem">
+                                <a href ng-click="addItem(client.required_user_groups,'')">
+                                    Other
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href ng-click="addItem(client.required_user_groups,default.groups)">
+                                    Add all default
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li role="menuitem" ng-repeat="group in default.groups track by $index">
+                                <a href ng-click="addItem(client.required_user_groups,group)">
+                                    {{group}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+            
+        <div class="form-group">
+            <div class="row">
+                <div class="col-md-6">
+                        <label class="control-label">Authorities</label>
+                    <br>
+                    <div class="form-inline" 
+                        ng-repeat="authoritie in client.authorities track by $index">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(client.authorities,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                        <input type="text" class="form-control" name="authoritie_{{$index}}"
+                            ng-model="client.authorities[$index]" required>
+                    </div>
+                    <div class="btn-group" uib-dropdown>
+                        <button type="button" class="btn btn-primary" id="single-button" 
+                            uib-dropdown-toggle>
+                            +
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                            <li role="menuitem">
+                                <a href ng-click="addItem(client.authorities,'')">
+                                    Other
+                                </a>
+                            </li>
+                            <li role="menuitem">
+                                <a href ng-click="addItem(client.authorities,default.groups)">
+                                    Add all default
+                                </a>
+                            </li>
+                            <li class="divider"></li>
+                            <li role="menuitem" ng-repeat="group in default.groups track by $index">
+                                <a href ng-click="addItem(client.authorities,group)">
+                                    {{group}}
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <label class="control-label">Allowed Providers</label>
+                    <br>
+                    <div class="form-inline" 
+                        ng-repeat="provider in providers.identity track by $index">
+                        <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                        <span class="label"
+                            uib-tooltip="Use Origin Key not Name"
+                            ng-class="hasItem(client.allowedproviders,provider.originKey) ? 'label-primary' : 'label-default'"
+                            ng-click="toggleItem(client.allowedproviders,provider.originKey)">
+                            {{provider.originKey}}</span>
+                            {{provider.name}}
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <input type="text" class="form-control" name="name"
+                placeholder="display name for confirm access and App page"
+                ng-model="client.name">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Access token validity</label>
+            <input type="number" class="form-control" name="access_token_validity"
+                placeholder="time in seconds to access token expiration after it is issued"
+                ng-model="client.access_token_validity" ng-min="1">
+
+            <div ng-show="editForm.access_token_validity.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.grant_count.$error.min">
-                    An authorized grant type must be provided.
+                    ng-show="editForm.access_token_validity.$error.min"
+                    translate-value-max="255">
+                    This field cannot be smaller than 1.
                 </p>
             </div>
         </div>
 
         <div class="form-group">
-            <label class="control-label">Redirect</label>
-            <div class="form-inline" 
-                ng-repeat="redirect in client.redirect_uri track by $index">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-danger"
-                            ng-click="deleRedirect($index)">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                        <button type="button" class="btn btn-default"
-                            uib-tooltip="matches zero or more characters" 
-                            ng-click="client.redirect_uri[$index] = client.redirect_uri[$index] + '*'">
-                            *
-                        </button>
-                        <button type="button" class="btn btn-default"
-                            uib-tooltip="matches zero or more 'directories' in a path" 
-                            ng-click="client.redirect_uri[$index] = client.redirect_uri[$index] + '/**'">
-                            **
-                        </button>
-                    </span>
-                    <input type="text" class="form-control" name="redirect"
-                        placeholder="http://"
-                        ng-model="client.redirect_uri[$index]" required>
-                    <span class="input-group-btn">
-                </div>
-            </div>
-            <div class="btn-group">
-                <button type="button" class="btn btn-primary" 
-                    ng-click="addRedirect('authorization_code')">
-                    <span class="glyphicon glyphicon-plus"></span>
-                </button>
-            </div>
+            <label class="control-label">Refresh token validity</label>
+            <input type="number" class="form-control" name="refresh_token_validity"
+                placeholder="time in seconds to refresh token expiration after it is issued"
+                ng-model="client.refresh_token_validity" ng-min="1">
 
-            <input type="number" class="form-control" name="redirect_uri_count"
-                ng-model="client.redirect_uri.length" ng-min="0" ng-show="false">
-            <div ng-show="editForm.redirect_uri_count.$invalid">
+            <div ng-show="editForm.refresh_token_validity.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.redirect_uri_count.$error.min">
-                    authorization_code or implicit grant type requires at least one redirect URL.
+                    ng-show="editForm.refresh_token_validity.$error.min"
+                    translate-value-max="255">
+                    This field cannot be smaller than 1.
                 </p>
             </div>
         </div>
+        
+        <div class="form-group">
+            <label>Token Salt</label>
+            <input type="text" class="form-control" name="token_salt"
+                placeholder="A random string used to generate the client's revokation key. Change this value to revoke all active tokens for the client"
+                ng-model="client.token_salt">
+        </div>
+        
+        <div class="form-group">
+            <label>Created with</label>
+            <input type="text" class="form-control" name="createdwith"
+                placeholder="What scope the bearer token had when client was created"
+                ng-model="client.createdwith">
+        </div>
+
+        <div class="form-group">
+            <label for="approvals_deleted">
+                <input type="checkbox" id="approvals_deleted" ng-model="client.approvals_deleted">
+                <span>Approvals Deleted</span>
+            </label>
+        </div>
+
+        <!-- TODO additionalInformation -->
 
     </div>
     <div class="modal-footer">

@@ -20,14 +20,6 @@
             </tr>
             <tr>
                 <td>
-                    <span>Name</span>
-                </td>
-                <td>
-                    <input type="text" class="input-sm form-control" value="{{client.name}}" readonly>
-                </td>
-            </tr>
-            <tr>
-                <td>
                     <span>Token Salt</span>
                 </td>
                 <td>
@@ -39,7 +31,9 @@
                     <span>Grant</span>
                 </td>
                 <td>
-                    <input type="text" class="input-sm form-control" value="{{client.authorized_grant_types.join(' ')}}" readonly>
+                    <div ng-repeat="authorized_grant_type in client.authorized_grant_types track by $index">
+                        <input type="text" class="input-sm form-control" value="{{authorized_grant_type}}" readonly>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -47,7 +41,9 @@
                     <span>Redirect</span>
                 </td>
                 <td>
-                    <input type="text" class="input-sm form-control" value="{{client.redirect_uri.join(' ')}}" readonly>
+                    <div ng-repeat="redirect_uri in client.redirect_uri track by $index">
+                        <input type="text" class="input-sm form-control" value="{{redirect_uri}}" readonly>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -55,7 +51,9 @@
                     <span>Scope</span>
                 </td>
                 <td>
-                    <input type="text" class="input-sm form-control" value="{{client.scope.join(' ')}}" readonly>
+                    <div ng-repeat="scope in client.scope track by $index">
+                        <input type="text" class="input-sm form-control" value="{{scope}}" readonly>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -63,7 +61,9 @@
                     <span>Resource ID</span>
                 </td>
                 <td>
-                    <input type="text" class="input-sm form-control" value="{{client.resource_ids.join(' ')}}" readonly>
+                    <div ng-repeat="resource_id in client.resource_ids track by $index">
+                        <input type="text" class="input-sm form-control" value="{{resource_id}}" readonly>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -71,7 +71,9 @@
                     <span>Authorities</span>
                 </td>
                 <td>
-                    <input type="text" class="input-sm form-control" value="{{client.authorities.join(' ')}}" readonly>
+                    <div ng-repeat="authoritie in client.authorities track by $index">
+                        <input type="text" class="input-sm form-control" value="{{authoritie}}" readonly>
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -79,12 +81,14 @@
                     <span>AutoApprove</span>
                 </td>
                 <td>
-                    <input type="text" class="input-sm form-control" value="{{client.autoapprove.join(' ')}}" readonly>
+                    <div ng-repeat="autoapprove in client.autoapprove track by $index">
+                        <input type="text" class="input-sm form-control" value="{{autoapprove}}" readonly>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <span>access_token_validity</span>
+                    <span>Access token validity</span>
                 </td>
                 <td>
                     <input type="text" class="input-sm form-control" value="{{client.access_token_validity}}" readonly>
@@ -92,7 +96,7 @@
             </tr>
             <tr>
                 <td>
-                    <span>refresh_token_validity</span>
+                    <span>Refresh token validity</span>
                 </td>
                 <td>
                     <input type="text" class="input-sm form-control" value="{{client.refresh_token_validity}}" readonly>
@@ -100,15 +104,17 @@
             </tr>
             <tr>
                 <td>
-                    <span>allowedproviders</span>
+                    <span>Allowed providers</span>
                 </td>
                 <td>
-                    <input type="text" class="input-sm form-control" value="{{client.allowedproviders.join(' ')}}" readonly>
+                    <div ng-repeat="allowedprovider in client.allowedproviders track by $index">
+                        <input type="text" class="input-sm form-control" value="{{allowedprovider}}" readonly>
+                    </div>
                 </td>
             </tr>
             <tr>
                 <td>
-                    <span>createdwith</span>
+                    <span>Created with</span>
                 </td>
                 <td>
                     <input type="text" class="input-sm form-control" value="{{client.createdwith}}" readonly>
@@ -116,7 +122,7 @@
             </tr>
             <tr>
                 <td>
-                    <span>approvals_deleted</span>
+                    <span>Approvals deleted</span>
                 </td>
                 <td>
                     <input type="text" class="input-sm form-control" value="{{client.approvals_deleted}}" readonly>
@@ -124,10 +130,12 @@
             </tr>
             <tr>
                 <td>
-                    <span>required_user_groups</span>
+                    <span>Required user groups</span>
                 </td>
                 <td>
-                    <input type="text" class="input-sm form-control" value="{{client.required_user_groups.join(' ')}}" readonly>
+                    <div ng-repeat="required_user_group in client.required_user_groups track by $index">
+                        <input type="text" class="input-sm form-control" value="{{required_user_group}}" readonly>
+                    </div>
                 </td>
             </tr>
             <tr>

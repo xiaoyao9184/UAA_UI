@@ -5,7 +5,6 @@ angular.module('uaaUIApp')
         $scope.apps = [];
 
         $scope.clients = [];
-        $scope.pageClients = [];
         $scope.pageTotal = 0
         $scope.pageNumber = 1;
         $scope.pageSize = 5;
@@ -27,27 +26,16 @@ angular.module('uaaUIApp')
                 });
         }
 
-        $scope.loadAll = function () {
-            return Client.query().$promise
-                .then(function(result){
-                    $scope.clients = result.resources;
-                    $scope.pageTotal = result.totalResults;
-                });
-        }
-        $scope.loadPage = function () {            
-            if($scope.pageTotal !== 0){
-                var startIndex = ($scope.pageNumber - 1) * $scope.pageSize;
-                $scope.pageClients = $scope.clients.slice(startIndex, startIndex + $scope.pageSize);
-                return
-            }
+        $scope.loadPage = function () {
+            var startIndex = ($scope.pageNumber - 1) * $scope.pageSize + 1
+            Client.query({startIndex: startIndex, count: $scope.pageSize}, function (result) {
+                $scope.clients = result.resources;
+                $scope.pageTotal = result.totalResults;
+            });
         };
 
         $scope.loadAllApp();
-
-        $scope.loadAll()
-            .then(function(){
-                $scope.loadPage()
-            });
+        $scope.loadPage();
 
         $scope.clear = function () {
             $scope.client = {
@@ -56,4 +44,32 @@ angular.module('uaaUIApp')
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
         };
+
+
+        $scope.grants = {
+            "client_credentials": {
+                name: "client_credentials"
+            },
+            "implicit": {
+                name: "implicit"
+            },
+            "password": {
+                name: "password"
+            },
+            "authorization_code": {
+                name: "authorization_code"
+            },
+            "refresh_token": {
+                name: "refresh_token"
+            },
+            "user_token": {
+                name: "user_token"
+            },
+            "urn:ietf:params:oauth:grant-type:saml2-bearer": {
+                name: "saml2-bearer"
+            },
+            "urn:ietf:params:oauth:grant-type:jwt-bearer": {
+                name: "jwt-bearer"
+            },
+        }
     });
