@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('MFAProviderEditController',
-    ['$scope', '$http', '$uibModalInstance', '$state', 'entity', 'MFAProvider', 'Setting',
-        function($scope, $http, $uibModalInstance, $state, entity, MFAProvider, Setting) {
+    ['$scope', '$q', '$uibModalInstance', 'entity', 'MFAProvider',
+        function($scope, $q, $uibModalInstance, entity, MFAProvider) {
 
-        $scope.setting = Setting.get();
         $scope.provider = entity;
+
         var onSaveSuccess = function (result) {
             $scope.isSaving = false;
             $uibModalInstance.close(result);
@@ -27,5 +27,23 @@ angular.module('uaaUIApp').controller('MFAProviderEditController',
         $scope.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
+
+        var init = function() {
+            var promise;
+            if(angular.isUndefined($scope.provider.$promise)){
+                var deferred = $q.defer();
+                deferred.resolve($scope.provider);
+                promise = deferred.promise;
+            }else{
+                promise = $scope.provider.$promise;
+            }
+            promise.then(function(provider){
+                if(angular.isUndefined(provider.type)){
+                    provider.type = 'google-authenticator';
+                }
+            });
+        };
+
+        init();
 
 }]);

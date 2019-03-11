@@ -24,7 +24,7 @@ angular.module('uaaUIApp')
             parseJwt: function(token) {
                 var base64Url = token.split('.')[1];
                 var base64 = base64Url.replace('-', '+').replace('_', '/');
-                return JSON.parse($window.atob(base64));
+                return angular.fromJson($window.atob(base64));
             },
             hasValidToken: function () {
                 var token = this.get();
@@ -38,8 +38,8 @@ angular.module('uaaUIApp')
                 var header = jwt[0].replace(/-/g, '+').replace(/_/g, '/');
                 var payload = jwt[1].replace(/-/g, '+').replace(/_/g, '/');
                 var signature = jwt[2].replace(/-/g, '+').replace(/_/g, '/');
-                header = JSON.parse($window.atob(header))
-                payload = JSON.parse($window.atob(payload))
+                header = angular.fromJson($window.atob(header))
+                payload = angular.fromJson($window.atob(payload))
                 signature = $window.atob(signature)
                 return {
                     header: header,

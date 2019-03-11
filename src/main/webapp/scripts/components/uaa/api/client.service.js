@@ -2,17 +2,26 @@
 
 angular.module('uaaUIApp')
     .factory('Client', function ($resource) {
+        var transformRequest = function(data) {
+            if(data.allowedproviders != null &&
+                data.allowedproviders.length == 0){
+                //https://github.com/cloudfoundry/uaa/blob/b9f228091ee9856129b157c9f908978549e8ca37/server/src/main/java/org/cloudfoundry/identity/uaa/oauth/UaaAuthorizationRequestManager.java#L222-L227
+                delete data.allowedproviders
+            }
+            return angular.toJson(data);
+        }
+
         return $resource('api/oauth/clients/:id', {}, {
-                'query': {method: 'GET', isArray: false},
-                'get': {
-                    method: 'GET',
-                    transformResponse: function (data) {
-                        data = angular.fromJson(data);
-                        return data;
-                    }
+                'query': { method: 'GET', isArray: false},
+                'get': { method: 'GET' },
+                'save': { 
+                    method:'POST',
+                    transformRequest: transformRequest
                 },
-                'save': { method:'POST' },
-                'update': { method:'PUT' },
+                'update': { 
+                    method:'PUT',
+                    transformRequest: transformRequest
+                },
                 'delete':{ method:'DELETE'}
             });
         })
@@ -40,7 +49,7 @@ angular.module('uaaUIApp')
                         // delete data['old_secret'];
                         delete data['token'];
                         // transform payload before sending
-                        return JSON.stringify(data);
+                        return angular.fromJson(data);
                     }
                 }
             });

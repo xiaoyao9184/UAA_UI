@@ -34,9 +34,9 @@ angular.module('uaaUIApp')
                     }
                 },
                 resolve: {
-                    entity: ['Zone', '$stateParams', function(Zone, $stateParams) {
+                    entity: function(Zone, $stateParams) {
                         return Zone.get({id : $stateParams.id});
-                    }]
+                    }
                 }
             })
             .state('zone-management.new', {
@@ -45,51 +45,14 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', function($state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/zone-management/zone-management-edit.html',
                         controller: 'ZoneManagementEditController',
                         size: 'lg',
                         resolve: {
-                            entity: function () {
-                                return {
-                                    id: null, subdomain: null, name: null, description: null,
-                                    active: true, 
-                                    config: {
-                                        clientSecretPolicy: {},
-                                        corsPolicy: {
-                                            defaultConfiguration: {
-                                                allowedHeaders: [],
-                                                allowedMethods: [],
-                                                allowedOriginPatterns: [],
-                                                allowedOrigins: [],
-                                                allowedUriPatterns: [],
-                                                allowedUris: []
-                                            },
-                                            xhrConfiguration: {
-                                                allowedHeaders: [],
-                                                allowedMethods: [],
-                                                allowedOriginPatterns: [],
-                                                allowedOrigins: [],
-                                                allowedUriPatterns: [],
-                                                allowedUris: []
-                                            }
-                                        },
-                                        links: {
-                                            logout: { whitelist: [] },
-                                            selfService: {}
-                                        },
-                                        mfaConfig: { identityProviders: [] },
-                                        prompts: [
-                                            {name: "username", type: "text", text: "Email"},
-                                            {name: "password", type: "password", text: "Password"},
-                                            {name: "passcode", type: "password", text: "Password"}
-                                        ],
-                                        samlConfig: { keys: {} },
-                                        tokenPolicy: {},
-                                        userConfig: { defaultGroups: [] }    
-                                    }
-                                };
+                            entity: function (Zone) {
+                                return new Zone();
                             }
                         }
                     }).result.then(function(result) {
@@ -105,20 +68,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/zone-management/zone-management-edit.html',
                         controller: 'ZoneManagementEditController',
                         size: 'lg',
                         resolve: {
-                            entity: ['Zone', function(Zone) {
-                                var v = Zone.get({id : $stateParams.id})
-                                // v.$promise
-                                //     .then(function (z) {
-                                //         z.config = JSON.stringify(z.config);
-                                //     });
-                                return v;
-                            }]
+                            entity: function(Zone) {
+                                return Zone.get({id : $stateParams.id});
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('zone-management', null, { reload: true });
@@ -133,15 +91,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/zone-management/zone-management-delete.html',
                         controller: 'ZoneManagementDeleteController',
                         size: 'md',
                         resolve: {
-                            entity: ['Zone', function(Zone) {
+                            entity: function(Zone) {
                                 return Zone.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('zone-management', null, { reload: true });
@@ -156,15 +114,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/zone-management/zone-management-edit.html',
                         controller: 'ZoneManagementEditController',
                         size: 'lg',
                         resolve: {
-                            entity: ['Zone', function(Zone) {
+                            entity: function(Zone) {
                                 return Zone.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('zone-management-detail', null, { reload: true });

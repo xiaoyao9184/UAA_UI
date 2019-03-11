@@ -17,7 +17,7 @@
         <div class="form-group">
             <label class="control-label">UserName</label>
             <input type="text" class="form-control" name="userName"
-                   ng-model="user.userName" ng-maxlength="50">
+                   ng-model="user.userName" required ng-maxlength="50">
 
             <div ng-show="editForm.userName.$invalid">
                 <p class="help-block"
@@ -36,7 +36,8 @@
         <div class="form-group" ng-show="user.id == null">
             <label class="control-label">Password</label>
             <input type="password" class="form-control" name="password"
-                   ng-model="user.password" ng-required="user.id == null" ng-maxlength="50">
+                   ng-model="user.password" 
+                   ng-required="user.id == null" ng-maxlength="50">
 
             <div ng-show="editForm.password.$invalid">
                 <p class="help-block"
@@ -80,57 +81,58 @@
         
         <div class="form-group" >
             <label class="control-label">Email</label>
-            <div class="form-inline" ng-repeat="email in user.emails track by $index">
-                <!-- <button type="button" class="btn btn-danger" ng-click="deleEmail($index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button> -->
-                <input type="text" class="form-control" name="email.value"
+            <div class="form-inline" 
+                ng-repeat="email in user.emails track by $index">
+                <input type="text" class="form-control" name="email"
                     ng-model="email.value" required ng-maxlength="100">
-                <!-- <input type="checkbox" id="email.primary" 
-                    ng-model="email.primary"> -->
-            </div>
-            <!-- <button type="button" class="btn btn-primary" ng-click="addEmail()">
-                <span class="glyphicon glyphicon glyphicon-plus"></span>
-            </button> -->
-            
-            <div ng-show="editForm.email.$invalid">
-                <p class="help-block"
-                   ng-show="editForm.email.$error.required">
-                    This field is required.
-                </p>
 
-                <p class="help-block"
-                   ng-show="editForm.email.$error.maxlength"
-                   translate-value-max="100">
-                    This field cannot be longer than 100 characters.
-                </p>
+                <div ng-show="editForm.email.$invalid">
+                    <p class="help-block"
+                        ng-show="editForm.email.$error.required">
+                        This field is required.
+                    </p>
+    
+                    <p class="help-block"
+                        ng-show="editForm.email.$error.maxlength"
+                        translate-value-max="100">
+                        This field cannot be longer than 100 characters.
+                    </p>
+                </div>
             </div>
         </div>
+
         <div class="form-group" >
             <label class="control-label">PhoneNumber</label>
-            <div class="form-inline" ng-repeat="phoneNumber in user.phoneNumbers track by $index">
-                <button type="button" class="btn btn-danger" ng-click="delePhoneNumber($index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="phoneNumber"
-                   ng-model="phoneNumber.value" required ng-maxlength="100">
+            <br>
+            <div class="form-inline" 
+                ng-repeat="phoneNumber in user.phoneNumbers track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(user.phoneNumbers,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="phoneNumber_{{$index}}"
+                        ng-model="phoneNumber.value" required ng-maxlength="100">
+                </div>
+
+                <div ng-show="editForm.phoneNumber_{{$index}}.$invalid">
+                    <p class="help-block"
+                        ng-show="editForm.phoneNumber_{{$index}}.$error.required">
+                        This field is required.
+                    </p>
+
+                    <p class="help-block"
+                        ng-show="editForm.phoneNumber_{{$index}}.$error.maxlength"
+                        translate-value-max="100">
+                        This field cannot be longer than 100 characters.
+                    </p>
+                </div>
             </div>
-            <button type="button" class="btn btn-primary" ng-click="addPhoneNumber()">
+            <button type="button" class="btn btn-primary" ng-click="addItem(user.phoneNumbers,{value: null})">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
-
-            <div ng-show="editForm.phoneNumber.$invalid">
-                <p class="help-block"
-                   ng-show="editForm.phoneNumber.$error.required">
-                    This field is required.
-                </p>
-
-                <p class="help-block"
-                   ng-show="editForm.phoneNumber.$error.maxlength"
-                   translate-value-max="100">
-                    This field cannot be longer than 100 characters.
-                </p>
-            </div>
         </div>
 
         <div class="form-group">
@@ -146,25 +148,95 @@
             </label>
         </div>
 
-        <!-- <div class="form-group">
-            <label class="control-label">origin</label>
-            <input type="text" class="form-control" name="origin"
-                   ng-model="user.origin" ng-maxlength="50">
-
-            <div ng-show="editForm.origin.$invalid">
-                <p class="help-block"
-                   ng-show="editForm.origin.$error.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
-                </p>
+        <div class="form-group">
+            <label class="control-label">Origin</label>
+            <br>
+            <div class="btn-group" uib-dropdown>
+                <button id="single-button" type="button" class="btn btn-primary" 
+                    uib-dropdown-toggle ng-disabled="disabled">
+                    {{user.origin}} 
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="provider in providers.identity track by $index">
+                        <a href ng-click="user.origin = provider.originKey">{{provider.originKey}}({{provider.name}})</a>
+                    </li>
+                </ul>
             </div>
-        </div> -->
-        <!-- <div class="form-group">
-            <label>Profiles</label>
-            <select class="form-control" multiple name="authority" ng-model="user.authorities"
-                    ng-options="authority for authority in authorities">
-            </select>
-        </div> -->
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label">External Id</label>
+            <input type="text" class="form-control" name="externalId"
+                placeholder="External user ID if authenticated through an external identity provider."
+                ng-model="user.name.externalId">
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label">Salt</label>
+            <input type="text" class="form-control" name="salt"
+                placeholder="Use for create token."
+                ng-model="user.name.salt">
+        </div>
+        
+        <div class="form-group" >
+            <label class="control-label">Approvals</label>
+            <br>
+            <div class="form-inline" 
+                ng-repeat="approval in user.approvals track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(user.approvals,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                        <button type="button" class="btn"
+                            uib-tooltip="click to toggle auto approve"
+                            ng-class="approval.status === 'APPROVED' ? 'btn-primary' : 'btn-warning'"
+                            ng-click="approval.status = (approval.status === 'APPROVED' ? 'DENIED': 'APPROVED')">
+                            <span class="glyphicon"
+                                ng-class="approval.status === 'APPROVED' ? 'glyphicon-ok' : 'glyphicon-remove'"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="clientId_{{$index}}"
+                        placeholder="clientId"
+                        ng-model="approval.clientId" required>
+                    
+                    <span class="input-group-addon">
+                        Use 
+                    </span>
+
+                    <input type="text" class="form-control" name="scope_{{$index}}"
+                        placeholder="scope"
+                        ng-model="approval.scope" required ng-maxlength="100">
+                </div>
+
+                <div ng-show="editForm.clientId_{{$index}}.$invalid">
+                    <p class="help-block"
+                        ng-show="editForm.clientId_{{$index}}.$error.required">
+                        This field is required.
+                    </p>
+
+                    <p class="help-block"
+                        ng-show="editForm.clientId_{{$index}}.$error.maxlength"
+                        translate-value-max="100">
+                        This field cannot be longer than 100 characters.
+                    </p>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" 
+                ng-click="addItem(user.approvals,{})">
+                <span class="glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+
+        <!-- TODO groups -->
+
+        <!-- Not use
+        passwordLastModified
+        previousLogonTime
+        lastLogonTime -->
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">

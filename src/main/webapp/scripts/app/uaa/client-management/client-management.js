@@ -43,21 +43,14 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', function($state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/client-management/client-management-edit.html',
                         controller: 'ClientManagementEditController',
                         size: 'lg',
                         resolve: {
-                            entity: function () {
-                                return {
-                                    client_id: null, client_secret: null,  
-                                    authorized_grant_types: [], 
-                                    redirect_uri: []
-                                };
-                            },
-                            mode: function() {
-                                return 'new'
+                            entity: function (Client) {
+                                return new Client();
                             }
                         }
                     }).result.then(function(result) {
@@ -73,17 +66,14 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/client-management/client-management-edit.html',
                         controller: 'ClientManagementEditController',
                         size: 'lg',
                         resolve: {
-                            entity: ['Client', function(Client) {
+                            entity: function(Client) {
                                 return Client.get({id : $stateParams.id});
-                            }],
-                            mode: function() {
-                                return 'edit'
                             }
                         }
                     }).result.then(function(result) {
@@ -99,15 +89,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/client-management/client-management-delete.html',
                         controller: 'ClientManagementDeleteController',
                         size: 'md',
                         resolve: {
-                            entity: ['Client', function(Client) {
+                            entity: function(Client) {
                                 return Client.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('client-management', null, { reload: true });
@@ -122,15 +112,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/client-management/client-management-meta.html',
                         controller: 'ClientManagementMetaController',
                         size: 'lg',
                         resolve: {
-                            entity: ['ClientMeta', function(ClientMeta) {
+                            entity: function(ClientMeta) {
                                 return ClientMeta.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('client-management', null, { reload: true });

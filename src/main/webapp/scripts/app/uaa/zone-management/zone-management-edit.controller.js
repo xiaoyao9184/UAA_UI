@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('ZoneManagementEditController',
-    ['$scope', '$q', '$http', '$uibModalInstance', 'entity', 'Zone', 'MFAProvider', 'IdentityProvider', 'Base64', 'Setting',
-        function($scope, $q, $http, $uibModalInstance, entity, Zone, MFAProvider, IdentityProvider, Base64, Setting) {
+    ['$scope', '$q', '$http', '$uibModalInstance', 'entity', 'Zone', 'MFAProvider', 'IdentityProvider', 'Base64', 'SetUtils',
+        function($scope, $q, $http, $uibModalInstance, entity, Zone, MFAProvider, IdentityProvider, Base64, SetUtils) {
 
-        $scope.setting = Setting.get();
         $scope.zone = entity;
+
         var onSaveSuccess = function (result) {
             $scope.isSaving = false;
             $uibModalInstance.close(result);
@@ -17,18 +17,14 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
 
         $scope.save = function () {
             $scope.isSaving = true;
-            // if(typeof $scope.zone.config === 'string'){
-            //     $scope.zone.config = JSON.parse($scope.zone.config)
-            // }
 
-            angular.forEach($scope.before_save_processors,function(processor,name){
+            angular.forEach($scope.before_save_processors,function(processor){
                 processor();
             });
             
             if ($scope.zone.id != null) {
                 Zone.update({id: $scope.zone.id}, $scope.zone, onSaveSuccess, onSaveError);
             } else {
-                // $scope.zone.langKey = 'en';
                 Zone.save($scope.zone, onSaveSuccess, onSaveError);
             }
         };
@@ -37,139 +33,11 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
             $uibModalInstance.dismiss('cancel');
         };
 
-
-        $scope.initRawConfig = function() {
-            $scope.zone.$promise.then(function(zone){
-                $scope.config = JSON.stringify(zone.config,null,"  ");
-            })
-        };
-        $scope.configChange = function() {
-            $scope.zone.config = JSON.parse($scope.config)
-        };
-
-
-        $scope.http = {
-            methods: [
-                'GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'TRACE'
-            ],
-            headers: [
-                'Accept', 
-                'Accept-Charset', 
-                'Accept-Encoding', 
-                'Accept-Language', 
-                'Accept-Ranges', 
-                'Access-Control-Allow-Credentials', 
-                'Access-Control-Allow-Headers', 
-                'Access-Control-Allow-Methods', 
-                'Access-Control-Allow-Origin', 
-                'Access-Control-Expose-Headers', 
-                'Access-Control-Max-Age', 
-                'Access-Control-Request-Headers', 
-                'Access-Control-Request-Method', 
-                'Age', 
-                'Allow', 
-                'Authorization', 
-                'Cache-Control', 
-                'Connection', 
-                'Content-Encoding', 
-                'Content-Disposition', 
-                'Content-Language', 
-                'Content-Length', 
-                'Content-Location', 
-                'Content-Range', 
-                'Content-Type', 
-                'Cookie', 
-                'Date', 
-                'ETag', 
-                'Expect', 
-                'Expires', 
-                'From', 
-                'Host', 
-                'If-Match', 
-                'If-Modified-Since', 
-                'If-None-Match', 
-                'If-Range', 
-                'If-Unmodified-Since', 
-                'Last-Modified', 
-                'Link', 
-                'Location', 
-                'Max-Forwards', 
-                'Origin', 
-                'Pragma', 
-                'Proxy-Authenticate', 
-                'Proxy-Authorization', 
-                'Range', 
-                'Referer', 
-                'Retry-After', 
-                'Server', 
-                'Set-Cookie', 
-                'Set-Cookie2', 
-                'TE', 
-                'Trailer', 
-                'Transfer-Encoding', 
-                'Upgrade', 
-                'User-Agent', 
-                'Vary', 
-                'Via', 
-                'Warning', 
-                'WWW-Authenticate'
-            ]
-        };
-
-        $scope.time_units = {
-            'S': {
-                'to': function(original){
-                    return original
-                },
-                'from': function(value){
-                    return value
-                }
-            },
-            'M': {
-                'to': function(original){
-                    return original / 60
-                },
-                'from': function(value){
-                    return value * 60
-                }
-            },
-            'H': {
-                'to': function(original){
-                    return original / 3600
-                },
-                'from': function(value){
-                    return value * 3600
-                }
-            },
-            'D': {
-                'to': function(original){
-                    return original / 86400
-                },
-                'from': function(value){
-                    return value * 86400
-                }
-            }
-        };
-
-        $scope.changeUnit = function(object,unit,units) {
-            var last_unit = object.last_unit;
-            var original = units[last_unit].from(object.value);
-            object.value = units[unit].to(original);
-            object.last_unit = unit;
-        };
-        $scope.assignmentUnit = function(object,units) {
-            var now_unit = object.unit;
-            var original = units[now_unit].from(object.value);
-            object.original = original;
-            if(angular.isUndefined(original)){
-                return 0
-            }
-            return original;
-        };
-
-
         $scope.after_init_processors = {
             'tokenPolicy': function(){
+                if(angular.isUndefined($scope.tokenPolicy)){
+                    $scope.tokenPolicy = { }
+                }
                 $scope.tokenPolicy_accessTokenValidity = {
                     last_unit: 'S',
                     unit: 'S',
@@ -183,10 +51,69 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
                     original: $scope.tokenPolicy.refreshTokenValidity
                 }
             },
+            'clientSecretPolicy': function(){
+                if(angular.isUndefined($scope.clientSecretPolicy)){
+                    $scope.clientSecretPolicy = {}
+                }
+            },
+            'corsPolicy': function(){
+                if(angular.isUndefined($scope.corsPolicy)){
+                    $scope.corsPolicy = {
+                        defaultConfiguration: {
+                            allowedHeaders: [],
+                            allowedMethods: [],
+                            allowedOriginPatterns: [],
+                            allowedOrigins: [],
+                            allowedUriPatterns: [],
+                            allowedUris: []
+                        },
+                        xhrConfiguration: {
+                            allowedHeaders: [],
+                            allowedMethods: [],
+                            allowedOriginPatterns: [],
+                            allowedOrigins: [],
+                            allowedUriPatterns: [],
+                            allowedUris: []
+                        }
+                    }
+                }
+            },
             'links': function(){
                 if($scope.links.logout.whitelist === null ||
                     angular.isUndefined($scope.links.logout.whitelist)){
                     $scope.links.logout.whitelist = []
+                }
+            },
+            'userConfig': function(){
+                if(angular.isUndefined($scope.userConfig)){
+                    $scope.userConfig = { defaultGroups: [] }
+                }
+            },
+            'samlConfig': function(){
+                if(angular.isUndefined($scope.samlConfig)){
+                    $scope.samlConfig = { keys: {} }
+                }
+            },
+            'mfaConfig': function(){
+                if(angular.isUndefined($scope.mfaConfig)){
+                    $scope.mfaConfig = { identityProviders: [] }
+                }
+            },
+            'links': function(){
+                if(angular.isUndefined($scope.links)){
+                    $scope.links = {
+                        logout: { whitelist: [] },
+                        selfService: {}
+                    }
+                }
+            },
+            'prompts': function(){
+                if(angular.isUndefined($scope.prompts)){
+                    $scope.prompts = [
+                        {name: "username", type: "text", text: "Email"},
+                        {name: "password", type: "password", text: "Password"},
+                        {name: "passcode", type: "password", text: "Password"}
+                    ]
                 }
             },
             'branding': function(){
@@ -299,102 +226,136 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
             }
         };
 
-        $scope.addItem = function(listOrMap, item) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                listOrMap.push(item);
-            }else{
-                listOrMap[item.key] = item.value
-            }
-        }
+        $scope.addItem = SetUtils.addItem;
+        $scope.deleItem = SetUtils.deleItem;
+        $scope.hasItem = SetUtils.hasItem;
+        $scope.toggleItem = SetUtils.toggleItem;
 
-        $scope.deleItem = function(listOrMap, index) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                listOrMap.splice(index,1);
-            }else{
-                var key = index;
-                delete listOrMap[key];
-            }
-        };
 
-        $scope.hasItem = function(listOrMap, item) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                var index = listOrMap.indexOf(item);
-                return index !== -1
-            }else{
-                return item in listOrMap;
-            }
-        };
-
-        $scope.toggleItem = function(listOrMap, item) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                if($scope.hasItem(listOrMap,item)){
-                    var index = listOrMap.indexOf(item);
-                    listOrMap.splice(index,1);
-                    return
+        //Token Policy
+        $scope.time_units = {
+            'S': {
+                'to': function(original){
+                    return original
+                },
+                'from': function(value){
+                    return value
                 }
-                listOrMap.push(item);
-            }else{
-                if($scope.hasItem(listOrMap,item)){
-                    $scope.deleItem(listOrMap,item);
-                    return
+            },
+            'M': {
+                'to': function(original){
+                    return original / 60
+                },
+                'from': function(value){
+                    return value * 60
                 }
-                $scope.addItem(listOrMap,item);
+            },
+            'H': {
+                'to': function(original){
+                    return original / 3600
+                },
+                'from': function(value){
+                    return value * 3600
+                }
+            },
+            'D': {
+                'to': function(original){
+                    return original / 86400
+                },
+                'from': function(value){
+                    return value * 86400
+                }
             }
         };
 
-        $scope.changeKey = function(key) {
-            $scope.samlConfig.activeKeyId = key;
-            $scope.key = $scope.samlConfig.keys[key]
-        }
-
-        $scope.providers = {
-            mfa: null,
-            identity: null
-        }
-        MFAProvider.query({}, function (result) {
-            $scope.providers.mfa = result;
-        });
-        IdentityProvider.query({}, function (result, headers) {
-            $scope.providers.identity = result;
-        });
-
-        $scope.timerToDate = function(timer,date) {
-            var d = new Date((timer + new Date().getTimezoneOffset() * 60)*1000)
-            if(angular.isDefined(date)){
-                date = d
-                $scope.$apply();
-            }
-            return d;
-        }
-
-        $scope.dateToTimer = function(date,timer) {
-            var t = date.getTime() / 1000 - new Date().getTimezoneOffset() * 60
-            if(angular.isDefined(timer)){
-                timer = t
-                $scope.$apply();
-            }
-            return t;
-        }
-        $scope.increment = function(count) {
-            count = count + 1;
+        $scope.changeUnit = function(object,unit,units) {
+            var last_unit = object.last_unit;
+            var original = units[last_unit].from(object.value);
+            object.value = units[unit].to(original);
+            object.last_unit = unit;
         };
-        $scope.decrement = function() {
-            count = count - 1;
+        $scope.assignmentUnit = function(object,units) {
+            var now_unit = object.unit;
+            var original = units[now_unit].from(object.value);
+            object.original = original;
+            if(angular.isUndefined(original)){
+                return 0
+            }
+            return original;
         };
 
+        
+        //CORS Policy
+        $scope.http = {
+            methods: [
+                'GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'TRACE'
+            ],
+            headers: [
+                'Accept', 
+                'Accept-Charset', 
+                'Accept-Encoding', 
+                'Accept-Language', 
+                'Accept-Ranges', 
+                'Access-Control-Allow-Credentials', 
+                'Access-Control-Allow-Headers', 
+                'Access-Control-Allow-Methods', 
+                'Access-Control-Allow-Origin', 
+                'Access-Control-Expose-Headers', 
+                'Access-Control-Max-Age', 
+                'Access-Control-Request-Headers', 
+                'Access-Control-Request-Method', 
+                'Age', 
+                'Allow', 
+                'Authorization', 
+                'Cache-Control', 
+                'Connection', 
+                'Content-Encoding', 
+                'Content-Disposition', 
+                'Content-Language', 
+                'Content-Length', 
+                'Content-Location', 
+                'Content-Range', 
+                'Content-Type', 
+                'Cookie', 
+                'Date', 
+                'ETag', 
+                'Expect', 
+                'Expires', 
+                'From', 
+                'Host', 
+                'If-Match', 
+                'If-Modified-Since', 
+                'If-None-Match', 
+                'If-Range', 
+                'If-Unmodified-Since', 
+                'Last-Modified', 
+                'Link', 
+                'Location', 
+                'Max-Forwards', 
+                'Origin', 
+                'Pragma', 
+                'Proxy-Authenticate', 
+                'Proxy-Authorization', 
+                'Range', 
+                'Referer', 
+                'Retry-After', 
+                'Server', 
+                'Set-Cookie', 
+                'Set-Cookie2', 
+                'TE', 
+                'Trailer', 
+                'Transfer-Encoding', 
+                'Upgrade', 
+                'User-Agent', 
+                'Vary', 
+                'Via', 
+                'Warning', 
+                'WWW-Authenticate'
+            ]
+        };
 
+
+        //Branding
         $scope.base64ToImageModel = function(base64,model){
             var deferred = $q.defer();
             if(angular.isUndefined(base64) || base64 === null){
@@ -451,24 +412,42 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
                 return null;
             }
         }
-        
+
         $scope.activeTab = function(num){
             $scope.active = num
         }
-        
 
-        Object.byString = function(o, s) {
-            s = s.replace(/\[(\w+)\]/g, '.$1'); // convert indexes to properties
-            s = s.replace(/^\./, '');           // strip a leading dot
-            var a = s.split('.');
-            for (var i = 0, n = a.length; i < n; ++i) {
-                var n = a[i];
-                if (n in o) {
-                    o = o[n];
-                } else {
-                    return;
-                }
-            }
-            return o;
-        }
+
+        //Saml
+        $scope.changeKey = function(key) {
+            $scope.samlConfig.activeKeyId = key;
+            $scope.key = $scope.samlConfig.keys[key]
+        };
+
+
+        //MFA
+        $scope.providers = {
+            mfa: null,
+            identity: null
+        };
+
+        MFAProvider.query({}, function (result) {
+            $scope.providers.mfa = result;
+        });
+        IdentityProvider.query({}, function (result, headers) {
+            $scope.providers.identity = result;
+        });
+
+        
+        //Raw
+        $scope.initRawConfig = function() {
+            $scope.zone.$promise.then(function(zone){
+                $scope.config = JSON.stringify(zone.config,null,"  ");
+            })
+        };
+        $scope.configChange = function() {
+            $scope.zone.config = JSON.parse($scope.config)
+        };
+
+        
 }]);

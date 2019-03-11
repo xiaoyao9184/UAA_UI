@@ -4,13 +4,7 @@ angular.module('uaaUIApp')
     .factory('User', function ($resource) {
         return $resource('api/Users/:id', {}, {
                 'query': {method: 'GET', isArray: false},
-                'get': {
-                    method: 'GET',
-                    transformResponse: function (data) {
-                        data = angular.fromJson(data);
-                        return data;
-                    }
-                },
+                'get': { method: 'GET' },
                 'save': { method:'POST' },
                 'update': { 
                     method:'PUT',
@@ -42,7 +36,7 @@ angular.module('uaaUIApp')
                         // delete data['old_secret'];
                         delete data['token'];
                         // transform payload before sending
-                        return JSON.stringify(data);
+                        return angular.toJson(data);
                     }
                 }
             });
@@ -60,6 +54,11 @@ angular.module('uaaUIApp')
     .factory('UserVerifyLink', function ($resource) {
         return $resource('api/Users/:id/verify-link', {}, {
                 'verify': { method:'GET' }
+            });
+        })
+    .factory('UserMFARegistration', function ($resource) {
+        return $resource('api/Users/:id/mfa', {}, {
+                'delete': { method:'DELETE' }
             });
         })
     .factory('UserInvite', function ($resource) {

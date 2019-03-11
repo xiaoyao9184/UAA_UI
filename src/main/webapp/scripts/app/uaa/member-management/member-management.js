@@ -17,9 +17,9 @@ angular.module('uaaUIApp')
                     }
                 },
                 resolve: {
-                    group: ['$stateParams', 'Group', function($stateParams, Group) {
+                    group: function($stateParams, Group) {
                         return Group.get({id : $stateParams.gid});
-                    }]
+                    }
                 }
             })
             .state('member-management.add', {

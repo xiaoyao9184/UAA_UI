@@ -43,31 +43,14 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', function($state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/group-management/group-management-edit.html',
                         controller: 'GroupManagementEditController',
                         size: 'lg',
                         resolve: {
-                            entity: function () {
-                                return {
-                                    id: null, password: null, userName: null, 
-                                    name: {
-                                        familyName: null,
-                                        givenName: null
-                                    }, 
-                                    phoneNumbers: [
-                                        ""
-                                    ],
-                                    emails: [
-                                        {
-                                            value: null,
-                                            primary: true
-                                        }
-                                    ],
-                                    active: true, verified: false
-                                    // , origin: null, externalId: null
-                                };
+                            entity: function (Group) {
+                                return new Group();
                             }
                         }
                     }).result.then(function(result) {
@@ -83,15 +66,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/group-management/group-management-edit.html',
                         controller: 'GroupManagementEditController',
                         size: 'lg',
                         resolve: {
-                            entity: ['Group', function(Group) {
+                            entity: function(Group) {
                                 return Group.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('group-management', null, { reload: true });
@@ -106,15 +89,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/group-management/group-management-delete.html',
                         controller: 'GroupManagementDeleteController',
                         size: 'md',
                         resolve: {
-                            entity: ['Group', function(Group) {
+                            entity: function(Group) {
                                 return Group.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('group-management', null, { reload: true });

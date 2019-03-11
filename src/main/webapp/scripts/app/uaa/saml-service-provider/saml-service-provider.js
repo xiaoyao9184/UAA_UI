@@ -43,13 +43,13 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', function($state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/saml-service-provider/saml-service-provider-edit.html',
                         controller: 'SAMLServiceProviderEditController',
                         size: 'lg',
                         resolve: {
-                            entity: function ($q,SAMLServiceProvider) {
+                            entity: function (SAMLServiceProvider) {
                                 return new SAMLServiceProvider();
                             }
                         }
@@ -66,21 +66,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/saml-service-provider/saml-service-provider-edit.html',
                         controller: 'SAMLServiceProviderEditController',
                         size: 'lg',
                         resolve: {
-                            entity: ['SAMLServiceProvider', function(SAMLServiceProvider) {
-                                var v = SAMLServiceProvider.get({id : $stateParams.id})
-                                // v.$promise
-                                //     .then(function (z) {
-                                //         z.config = JSON.parse(z.config);
-                                //         z.config.staticCustomAttributes = JSON.stringify(z.config.staticCustomAttributes);
-                                //     });
-                                return v;
-                            }]
+                            entity: function(SAMLServiceProvider) {
+                                return SAMLServiceProvider.get({id : $stateParams.id});
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('saml-service-provider', null, { reload: true });
@@ -95,15 +89,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/saml-service-provider/saml-service-provider-delete.html',
                         controller: 'SAMLServiceProviderDeleteController',
                         size: 'md',
                         resolve: {
-                            entity: ['SAMLServiceProvider', function(SAMLServiceProvider) {
+                            entity: function(SAMLServiceProvider) {
                                 return SAMLServiceProvider.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('saml-service-provider', null, { reload: true });

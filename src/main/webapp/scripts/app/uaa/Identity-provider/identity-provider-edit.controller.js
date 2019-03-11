@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('IdentityProviderEditController',
-    ['$scope', '$http', '$uibModalInstance', '$state', 'entity', 'IdentityProvider', 'Setting',
-        function($scope, $http, $uibModalInstance, $state, entity, IdentityProvider, Setting) {
+    ['$scope', '$http', '$uibModalInstance', '$state', 'entity', 'IdentityProvider', 'Setting', 'SetUtils',
+        function($scope, $http, $uibModalInstance, $state, entity, IdentityProvider, Setting, SetUtils) {
 
         $scope.setting = Setting.get();
         $scope.provider = entity;
@@ -246,58 +246,9 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
             })
         };
         
-        $scope.addItem = function(listOrMap, item) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                listOrMap.push(item);
-            }else{
-                listOrMap[item.key] = item.value
-            }
-        }
-
-        $scope.deleItem = function(listOrMap, index) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                listOrMap.splice(index,1);
-            }else{
-                var key = index;
-                delete listOrMap[key];
-            }
-        };
-
-        $scope.hasItem = function(listOrMap, item) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                var index = listOrMap.indexOf(item);
-                return index !== -1
-            }else{
-                return item in listOrMap;
-            }
-        };
-
-        $scope.toggleItem = function(listOrMap, item) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                if($scope.hasItem(listOrMap,item)){
-                    var index = listOrMap.indexOf(item);
-                    listOrMap.splice(index,1);
-                    return
-                }
-                listOrMap.push(item);
-            }else{
-                if($scope.hasItem(listOrMap,item)){
-                    $scope.deleItem(listOrMap,item);
-                    return
-                }
-                $scope.addItem(listOrMap,item);
-            }
-        };
+        
+        $scope.addItem = SetUtils.addItem;
+        $scope.deleItem = SetUtils.deleItem;
+        $scope.hasItem = SetUtils.hasItem;
+        $scope.toggleItem = SetUtils.toggleItem;
 }]);

@@ -9,7 +9,6 @@ angular.module('uaaUIApp')
                 $scope.providers = result;
 
                 angular.forEach(result, function(provider){
-                    provider.config = JSON.parse(provider.config);
                     provider.ui = {}
 
                     //Same like https://github.com/cloudfoundry/uaa/blob/b513cb9ccd0ca23bd6e5e83bbca72a46de45a44f/model/src/main/java/org/cloudfoundry/identity/uaa/provider/saml/idp/SamlServiceProviderDefinition.java#L80

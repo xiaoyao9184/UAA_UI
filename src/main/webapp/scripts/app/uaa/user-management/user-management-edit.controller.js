@@ -1,11 +1,11 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('UserManagementEditController',
-    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'User', 
-        function($scope, $stateParams, $uibModalInstance, entity, User) {
+    ['$scope', '$q', '$uibModalInstance', 'entity', 'User', 'IdentityProvider', 'SetUtils',
+        function($scope, $q, $uibModalInstance, entity, User, IdentityProvider, SetUtils) {
 
         $scope.user = entity;
-        // $scope.authorities = ["ROLE_USER", "ROLE_ADMIN"];
+
         var onSaveSuccess = function (result) {
             $scope.isSaving = false;
             $uibModalInstance.close(result);
@@ -19,9 +19,7 @@ angular.module('uaaUIApp').controller('UserManagementEditController',
             $scope.isSaving = true;
             if ($scope.user.id != null) {
                 User.update({id: $scope.user.id}, $scope.user, onSaveSuccess, onSaveError);
-                // If-Match
             } else {
-                // $scope.user.langKey = 'en';
                 User.save($scope.user, onSaveSuccess, onSaveError);
             }
         };
@@ -30,23 +28,55 @@ angular.module('uaaUIApp').controller('UserManagementEditController',
             $uibModalInstance.dismiss('cancel');
         };
 
-        // $scope.addEmail = function() {
-        //     $scope.user.emails.push({
-        //         value: null, primary: false
-        //     })
-        // };
+        
+        $scope.addItem = SetUtils.addItem;
+        $scope.deleItem = SetUtils.deleItem;
+        
+        $scope.providers = {
+            identity: null
+        };
+        
+        var init = function() {
+            var promise;
+            if(angular.isUndefined($scope.user.$promise)){
+                var deferred = $q.defer();
+                deferred.resolve($scope.user);
+                promise = deferred.promise;
+            }else{
+                promise = $scope.user.$promise;
+            }
+            promise.then(function(user){
+                if(angular.isUndefined(user.name)){
+                    user.name = {};
+                }
+                if(angular.isUndefined(user.phoneNumbers)){
+                    user.phoneNumbers = [];
+                }
+                if(angular.isUndefined(user.emails)){
+                    user.emails = [{ value: null, primary: true}];
+                }
+                if(angular.isUndefined(user.active)){
+                    user.active = true;
+                }
+                if(angular.isUndefined(user.verified)){
+                    user.verified = false;
+                }
+                if(angular.isUndefined(user.origin)){
+                    user.origin = 'uaa';
+                }
+                if(angular.isUndefined(user.approvals)){
+                    user.approvals = [];
+                }
+            });
 
-        $scope.addPhoneNumber = function() {
-            $scope.user.phoneNumbers.push({
-                value: null
+            IdentityProvider.query({}, function (result, headers) {
+                $scope.providers.identity = result;
+            });
+
+            IdentityProvider.query({}, function (result, headers) {
+                $scope.providers.identity = result;
             });
         };
 
-        // $scope.deleEmail = function(index) {
-        //     $scope.user.emails.splice(index,1);
-        // };
-
-        $scope.delePhoneNumber = function(index) {
-            $scope.user.phoneNumbers.splice(index,1);
-        };
+        init();
 }]);

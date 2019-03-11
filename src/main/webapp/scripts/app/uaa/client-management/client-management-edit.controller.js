@@ -1,24 +1,10 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('ClientManagementEditController',
-    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'mode', 'Client', 'IdentityProvider',
-        function($scope, $stateParams, $uibModalInstance, entity, mode, Client, IdentityProvider) {
+    ['$scope', '$q', '$uibModalInstance', 'entity', 'Client', 'IdentityProvider', 'SetUtils',
+        function($scope, $q, $uibModalInstance, entity, Client, IdentityProvider, SetUtils) {
 
-        
         $scope.client = entity;
-        $scope.mode = mode;
-
-        if(mode === 'edit'){
-            entity.$promise
-                .then(function(client){
-                    if(typeof client.redirect_uri === 'undefined'){
-                        client.redirect_uri = []
-                    }
-                    if(angular.isUndefined(client.allowedproviders)){
-                        client.allowedproviders = []
-                    }
-                });
-        }
         
         var onSaveSuccess = function (result) {
             $scope.isSaving = false;
@@ -31,7 +17,7 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
 
         $scope.save = function () {
             $scope.isSaving = true;
-            if($scope.mode === 'edit'){
+            if($scope.client.id != null){
                 Client.update({id: $scope.client.client_id}, $scope.client, onSaveSuccess, onSaveError);
             } else {
                 Client.save($scope.client, onSaveSuccess, onSaveError);
@@ -42,8 +28,41 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
             $uibModalInstance.dismiss('cancel');
         };
 
-
-        $scope.default = {
+        $scope.ui = {
+            grants: {
+                "client_credentials": {
+                    name: "client_credentials",
+                    type: "oauth2"
+                },
+                "implicit": {
+                    name: "implicit",
+                    type: "oauth2"
+                },
+                "password": {
+                    name: "password",
+                    type: "oauth2"
+                },
+                "authorization_code": {
+                    name: "authorization_code",
+                    type: "oauth2"
+                },
+                "refresh_token": {
+                    name: "refresh_token",
+                    type: "flag"
+                },
+                "user_token": {
+                    name: "user_token",
+                    type: "other"
+                },
+                "urn:ietf:params:oauth:grant-type:saml2-bearer": {
+                    name: "saml2-bearer",
+                    type: "other"
+                },
+                "urn:ietf:params:oauth:grant-type:jwt-bearer": {
+                    name: "jwt-bearer",
+                    type: "other"
+                }
+            },
             groups: [
                 'zones.read',
                 'zones.write',
@@ -81,109 +100,58 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
                 'uaa'
             ]
         }
-        
-        $scope.ui = {
-            grants: {
-                "client_credentials": {
-                    name: "client_credentials",
-                    type: "oauth2"
-                },
-                "implicit": {
-                    name: "implicit",
-                    type: "oauth2"
-                },
-                "password": {
-                    name: "password",
-                    type: "oauth2"
-                },
-                "authorization_code": {
-                    name: "authorization_code",
-                    type: "oauth2"
-                },
-                "refresh_token": {
-                    name: "refresh_token",
-                    type: "flag"
-                },
-                "user_token": {
-                    name: "user_token",
-                    type: "other"
-                },
-                "urn:ietf:params:oauth:grant-type:saml2-bearer": {
-                    name: "saml2-bearer",
-                    type: "other"
-                },
-                "urn:ietf:params:oauth:grant-type:jwt-bearer": {
-                    name: "jwt-bearer",
-                    type: "other"
-                }
-            }
-        }
 
         $scope.providers = {
             identity: null
         }
-        IdentityProvider.query({}, function (result, headers) {
-            $scope.providers.identity = result;
-        });
         
-        $scope.addItem = function(listOrMap, item) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap) &&
-                angular.isArray(item)){
-                for (var i=0; i<item.length; i++){
-                    listOrMap.push(item[i]);
-                }
-            }else if(angular.isArray(listOrMap)){
-                listOrMap.push(item);
-            }else{
-                listOrMap[item.key] = item.value
-            }
-        }
+        $scope.addItem = SetUtils.addItem;
+        $scope.deleItem = SetUtils.deleItem;
+        $scope.hasItem = SetUtils.hasItem;
+        $scope.toggleItem = SetUtils.toggleItem;
 
-        $scope.deleItem = function(listOrMap, index) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                listOrMap.splice(index,1);
+        var init = function() {
+            var promise;
+            if(angular.isUndefined($scope.client.$promise)){
+                var deferred = $q.defer();
+                deferred.resolve($scope.client);
+                promise = deferred.promise;
             }else{
-                var key = index;
-                delete listOrMap[key];
+                promise = $scope.client.$promise;
             }
+            promise.then(function(client){
+                if(angular.isUndefined(client.authorized_grant_types)){
+                    client.authorized_grant_types = [];
+                }
+                if(angular.isUndefined(client.redirect_uri)){
+                    client.redirect_uri = [];
+                }
+                if(angular.isUndefined(client.scope)){
+                    client.scope = [];
+                }
+                if(angular.isUndefined(client.resource_ids)){
+                    client.resource_ids = [];
+                }
+                if(angular.isUndefined(client.authorities)){
+                    client.authorities = [];
+                }
+                if(angular.isUndefined(client.autoapprove)){
+                    client.autoapprove = ['true'];
+                }
+                if(angular.isUndefined(client.allowedproviders) || 
+                    client.allowedproviders === null){
+                    client.allowedproviders = [];
+                }
+                if(angular.isUndefined(client.required_user_groups)){
+                    client.required_user_groups = [];
+                }
+            });
+
+            IdentityProvider.query({}, function (result, headers) {
+                $scope.providers.identity = result;
+            });
         };
 
-        $scope.hasItem = function(listOrMap, item) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                var index = listOrMap.indexOf(item);
-                return index !== -1
-            }else{
-                return item in listOrMap;
-            }
-        };
-
-        $scope.toggleItem = function(listOrMap, item) {
-            if(angular.isUndefined(listOrMap)){
-                return;
-            }
-            if(angular.isArray(listOrMap)){
-                if($scope.hasItem(listOrMap,item)){
-                    var index = listOrMap.indexOf(item);
-                    listOrMap.splice(index,1);
-                    return
-                }
-                listOrMap.push(item);
-            }else{
-                if($scope.hasItem(listOrMap,item)){
-                    $scope.deleItem(listOrMap,item);
-                    return
-                }
-                $scope.addItem(listOrMap,item);
-            }
-        };
-
+        init();
+        
 }]);

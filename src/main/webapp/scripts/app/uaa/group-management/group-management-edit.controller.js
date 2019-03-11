@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('GroupManagementEditController',
-    ['$scope', '$stateParams', '$uibModalInstance', 'entity', 'Group', 
-        function($scope, $stateParams, $uibModalInstance, entity, Group) {
+    ['$scope', '$q', '$uibModalInstance', 'entity', 'Group', 
+        function($scope, $q, $uibModalInstance, entity, Group) {
 
         $scope.group = entity;
+        
         var onSaveSuccess = function (result) {
             $scope.isSaving = false;
             $uibModalInstance.close(result);
@@ -27,4 +28,19 @@ angular.module('uaaUIApp').controller('GroupManagementEditController',
             $uibModalInstance.dismiss('cancel');
         };
 
+        var init = function() {
+            var promise;
+            if(angular.isUndefined($scope.group.$promise)){
+                var deferred = $q.defer();
+                deferred.resolve($scope.group);
+                promise = deferred.promise;
+            }else{
+                promise = $scope.group.$promise;
+            }
+            promise.then(function(group){
+                
+            });
+        };
+
+        init();
 }]);

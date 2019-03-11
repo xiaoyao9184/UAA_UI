@@ -43,16 +43,14 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', function($state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/mfa-provider/mfa-provider-edit.html',
                         controller: 'MFAProviderEditController',
                         size: 'lg',
                         resolve: {
-                            entity: function ($q,MFAProvider) {
-                                var entity = new MFAProvider();
-                                entity.type = 'google-authenticator';
-                                return entity;
+                            entity: function (MFAProvider) {
+                                return new MFAProvider();
                             }
                         }
                     }).result.then(function(result) {
@@ -68,15 +66,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/mfa-provider/mfa-provider-delete.html',
                         controller: 'MFAProviderDeleteController',
                         size: 'md',
                         resolve: {
-                            entity: ['MFAProvider', function(MFAProvider) {
+                            entity: function(MFAProvider) {
                                 return MFAProvider.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('mfa-provider', null, { reload: true });

@@ -43,31 +43,14 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', function($state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/user-management/user-management-edit.html',
                         controller: 'UserManagementEditController',
                         size: 'lg',
                         resolve: {
-                            entity: function () {
-                                return {
-                                    id: null, password: null, userName: null, 
-                                    name: {
-                                        familyName: null,
-                                        givenName: null
-                                    }, 
-                                    phoneNumbers: [
-                                        ""
-                                    ],
-                                    emails: [
-                                        {
-                                            value: null,
-                                            primary: true
-                                        }
-                                    ],
-                                    active: true, verified: false
-                                    // , origin: null, externalId: null
-                                };
+                            entity: function (User) {
+                                return new User();
                             }
                         }
                     }).result.then(function(result) {
@@ -83,15 +66,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/user-management/user-management-edit.html',
                         controller: 'UserManagementEditController',
                         size: 'lg',
                         resolve: {
-                            entity: ['User', function(User) {
+                            entity: function(User) {
                                 return User.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('user-management', null, { reload: true });
@@ -106,15 +89,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/user-management/user-management-delete.html',
                         controller: 'UserManagementDeleteController',
                         size: 'md',
                         resolve: {
-                            entity: ['User', function(User) {
+                            entity: function(User) {
                                 return User.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('user-management', null, { reload: true });
@@ -129,13 +112,11 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', function($state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/user-management/user-management-invite.html',
                         controller: 'UserManagementInviteController',
-                        size: 'lg',
-                        resolve: {
-                        }
+                        size: 'lg'
                     }).result.then(function(result) {
                         $state.go('user-management', null, { reload: true });
                     }, function() {

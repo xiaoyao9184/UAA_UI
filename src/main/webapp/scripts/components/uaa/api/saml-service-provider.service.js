@@ -3,17 +3,30 @@
 
 angular.module('uaaUIApp')
     .factory('SAMLServiceProvider', function ($resource) {
+        var transformRequest = function(data) {
+            data.config = angular.toJson(data.config);
+            return angular.toJson(data);
+        }
+        var transformResponse = function(json) {
+            var data = angular.fromJson(json);
+            data.config = angular.fromJson(data.config);
+            return data;
+        }
+        
         return $resource('api/saml/service-providers/:id', {}, {
                 'query': {method: 'GET', isArray: true},
-                'get': {
+                'get': { 
                     method: 'GET',
-                    transformResponse: function (data) {
-                        data = angular.fromJson(data);
-                        return data;
-                    }
+                    transformResponse: transformResponse
                 },
-                'save': { method:'POST' },
-                'update': { method:'PUT' },
+                'save': { 
+                    method:'POST',
+                    transformRequest: transformRequest
+                },
+                'update': { 
+                    method:'PUT',
+                    transformRequest: transformRequest
+                },
                 'delete':{ method:'DELETE' }
             });
         });

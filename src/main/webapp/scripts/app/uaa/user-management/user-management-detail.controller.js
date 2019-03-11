@@ -3,7 +3,7 @@
 angular.module('uaaUIApp')
     .controller('UserManagementDetailController', 
     function ($scope, $state, $stateParams, $location, $filter,
-        User, UserPassword, UserStatus, UserVerify, UserVerifyLink, Password, Email,
+        User, UserPassword, UserStatus, UserVerify, UserVerifyLink, UserMFARegistration, Password, Email,
         TokenServerProvider, Principal, Setting, AlertService) {
          
         if($state.current.name !== 'token-user'){
@@ -112,6 +112,11 @@ angular.module('uaaUIApp')
             });
         };
         
+        $scope.deleteMFA = function(){
+            UserMFARegistration.delete({id: $scope.user.id},function() {
+                AlertService.success('UI: delete mfa success!');
+            });
+        };
 
         $scope.unlockAccount = function() {
             UserStatus.change({id: $scope.user.id}, {

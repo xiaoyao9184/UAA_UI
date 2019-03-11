@@ -27,18 +27,12 @@
             </div>
         </div>
 
-        <div class="form-group" ng-show="mode === 'new'">
+        <div class="form-group" ng-show="client.id === null">
             <label class="control-label">Secret</label>
             <input type="password" class="form-control" name="client_secret"
                 ng-model="client.client_secret" ng-maxlength="50">
-                   <!-- ng-required="mode === 'new'"> -->
 
             <div ng-show="editForm.client_secret.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.client_secret.$error.required">
-                    This field is required.
-                </p>
-
                 <p class="help-block"
                     ng-show="editForm.client_secret.$error.maxlength"
                     translate-value-max="50">
@@ -179,12 +173,12 @@
                                 </a>
                             </li>
                             <li role="menuitem">
-                                <a href ng-click="addItem(client.resource_ids,default.resourceIds)">
+                                <a href ng-click="addItem(client.resource_ids,ui.resourceIds)">
                                     Add all default
                                 </a>
                             </li>
                             <li class="divider"></li>
-                            <li role="menuitem" ng-repeat="resourceId in default.resourceIds track by $index">
+                            <li role="menuitem" ng-repeat="resourceId in ui.resourceIds track by $index">
                                 <a href ng-click="addItem(client.resource_ids,resourceId)">
                                     {{resourceId}}
                                 </a>
@@ -245,12 +239,12 @@
                                 </a>
                             </li>
                             <li role="menuitem">
-                                <a href ng-click="addItem(client.scope,default.groups)">
+                                <a href ng-click="addItem(client.scope,ui.groups)">
                                     Add all default
                                 </a>
                             </li>
                             <li class="divider"></li>
-                            <li role="menuitem" ng-repeat="group in default.groups track by $index">
+                            <li role="menuitem" ng-repeat="group in ui.groups track by $index">
                                 <a href ng-click="addItem(client.scope,group)">
                                     {{group}}
                                 </a>
@@ -288,12 +282,12 @@
                                 </a>
                             </li>
                             <li role="menuitem">
-                                <a href ng-click="addItem(client.required_user_groups,default.groups)">
+                                <a href ng-click="addItem(client.required_user_groups,ui.groups)">
                                     Add all default
                                 </a>
                             </li>
                             <li class="divider"></li>
-                            <li role="menuitem" ng-repeat="group in default.groups track by $index">
+                            <li role="menuitem" ng-repeat="group in ui.groups track by $index">
                                 <a href ng-click="addItem(client.required_user_groups,group)">
                                     {{group}}
                                 </a>
@@ -335,12 +329,12 @@
                                 </a>
                             </li>
                             <li role="menuitem">
-                                <a href ng-click="addItem(client.authorities,default.groups)">
+                                <a href ng-click="addItem(client.authorities,ui.groups)">
                                     Add all default
                                 </a>
                             </li>
                             <li class="divider"></li>
-                            <li role="menuitem" ng-repeat="group in default.groups track by $index">
+                            <li role="menuitem" ng-repeat="group in ui.groups track by $index">
                                 <a href ng-click="addItem(client.authorities,group)">
                                     {{group}}
                                 </a>
