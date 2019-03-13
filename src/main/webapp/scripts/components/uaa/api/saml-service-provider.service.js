@@ -12,9 +12,20 @@ angular.module('uaaUIApp')
             data.config = angular.fromJson(data.config);
             return data;
         }
+        var transformResponses = function(json) {
+            var list = angular.fromJson(json);
+            angular.forEach(list, function(data){
+                data.config = angular.fromJson(data.config);
+            });
+            return list;
+        }
         
         return $resource('api/saml/service-providers/:id', {}, {
-                'query': {method: 'GET', isArray: true},
+                'query': {
+                    method: 'GET', 
+                    transformResponse: transformResponses,
+                    isArray: true
+                },
                 'get': { 
                     method: 'GET',
                     transformResponse: transformResponse
