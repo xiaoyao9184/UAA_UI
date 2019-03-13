@@ -23,13 +23,17 @@
             <br>
             <div class="form-inline" 
                 ng-repeat="domain in provider.config.emailDomain track by $index">
-                <button type="button" class="btn btn-danger" 
-                    ng-click="deleItem(provider.config.emailDomain,$index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="domain_{{$index}}"
-                    ng-model="provider.config.emailDomain[$index]" required>
-
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(provider.config.emailDomain,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="domain_{{$index}}"
+                        ng-model="provider.config.emailDomain[$index]" required>
+                </div>
+                
                 <div ng-show="editForm.domain_{{$index}}.$invalid">
                     <p class="help-block"
                         ng-show="editForm.domain_{{$index}}.$error.required">

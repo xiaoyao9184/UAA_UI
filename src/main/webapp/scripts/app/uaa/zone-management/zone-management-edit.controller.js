@@ -15,10 +15,21 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
             $scope.isSaving = false;
         };
 
+        var save_processors = {
+            'branding': function(){
+                if(Object.keys($scope.branding.consent).length === 0){
+                    $scope.branding.consent = null
+                }
+                
+                $scope.branding.productLogo = $scope.imageModelToBase64($scope.branding_productLogo);
+                $scope.branding.squareLogo = $scope.imageModelToBase64($scope.branding_squareLogo);
+                $scope.branding.banner.logo = $scope.imageModelToBase64($scope.branding_banner_logo);
+            }
+        };
         $scope.save = function () {
             $scope.isSaving = true;
 
-            angular.forEach($scope.before_save_processors,function(processor){
+            angular.forEach(save_processors,function(processor){
                 processor();
             });
             
@@ -31,199 +42,6 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
 
         $scope.clear = function() {
             $uibModalInstance.dismiss('cancel');
-        };
-
-        $scope.after_init_processors = {
-            'tokenPolicy': function(){
-                if(angular.isUndefined($scope.tokenPolicy)){
-                    $scope.tokenPolicy = { }
-                }
-                $scope.tokenPolicy_accessTokenValidity = {
-                    last_unit: 'S',
-                    unit: 'S',
-                    value: $scope.tokenPolicy.accessTokenValidity,
-                    original: $scope.tokenPolicy.accessTokenValidity
-                }
-                $scope.tokenPolicy_refreshTokenValidity = {
-                    last_unit: 'S',
-                    unit: 'S',
-                    value: $scope.tokenPolicy.refreshTokenValidity,
-                    original: $scope.tokenPolicy.refreshTokenValidity
-                }
-            },
-            'clientSecretPolicy': function(){
-                if(angular.isUndefined($scope.clientSecretPolicy)){
-                    $scope.clientSecretPolicy = {}
-                }
-            },
-            'corsPolicy': function(){
-                if(angular.isUndefined($scope.corsPolicy)){
-                    $scope.corsPolicy = {
-                        defaultConfiguration: {
-                            allowedHeaders: [],
-                            allowedMethods: [],
-                            allowedOriginPatterns: [],
-                            allowedOrigins: [],
-                            allowedUriPatterns: [],
-                            allowedUris: []
-                        },
-                        xhrConfiguration: {
-                            allowedHeaders: [],
-                            allowedMethods: [],
-                            allowedOriginPatterns: [],
-                            allowedOrigins: [],
-                            allowedUriPatterns: [],
-                            allowedUris: []
-                        }
-                    }
-                }
-            },
-            'links': function(){
-                if($scope.links.logout.whitelist === null ||
-                    angular.isUndefined($scope.links.logout.whitelist)){
-                    $scope.links.logout.whitelist = []
-                }
-            },
-            'userConfig': function(){
-                if(angular.isUndefined($scope.userConfig)){
-                    $scope.userConfig = { defaultGroups: [] }
-                }
-            },
-            'samlConfig': function(){
-                if(angular.isUndefined($scope.samlConfig)){
-                    $scope.samlConfig = { keys: {} }
-                }
-            },
-            'mfaConfig': function(){
-                if(angular.isUndefined($scope.mfaConfig)){
-                    $scope.mfaConfig = { identityProviders: [] }
-                }
-            },
-            'links': function(){
-                if(angular.isUndefined($scope.links)){
-                    $scope.links = {
-                        logout: { whitelist: [] },
-                        selfService: {}
-                    }
-                }
-            },
-            'prompts': function(){
-                if(angular.isUndefined($scope.prompts)){
-                    $scope.prompts = [
-                        {name: "username", type: "text", text: "Email"},
-                        {name: "password", type: "password", text: "Password"},
-                        {name: "passcode", type: "password", text: "Password"}
-                    ]
-                }
-            },
-            'branding': function(){
-                if($scope.branding.footerLinks === null ||
-                    angular.isUndefined($scope.branding.footerLinks)){
-                    $scope.branding.footerLinks = {}
-                }
-                if($scope.branding.banner === null ||
-                    angular.isUndefined($scope.branding.banner)){
-                    $scope.branding.banner = {}
-                }
-                if($scope.branding.consent === null ||
-                    angular.isUndefined($scope.branding.consent)){
-                    $scope.branding.consent = {}
-                }
-                
-                $scope.base64ToImageModel($scope.branding.productLogo)
-                    .then(function(model){
-                        $scope.branding_productLogo = model;
-                    })
-                    .catch(function(){
-                        $http({
-                            method: 'GET',
-                            url: 'assets/images/product-logo.png',
-                            responseType: "blob"
-                        }).then(function successCallback(response) {
-                            var reader = new FileReader();
-                            reader.readAsDataURL(response.data); 
-                            reader.onloadend = function() {
-                                $scope.branding_productLogo = {
-                                    url: reader.result,
-                                    format: 'base64',
-                                    default: true
-                                }
-                            }
-                        });
-                    });
-                
-                $scope.base64ToImageModel($scope.branding.squareLogo)
-                    .then(function(model){
-                        $scope.branding_squareLogo = model;
-                    })
-                    .catch(function(){
-                        $http({
-                            method: 'GET',
-                            url: 'assets/images/square-logo.png',
-                            responseType: "blob"
-                        }).then(function successCallback(response) {
-                            var reader = new FileReader();
-                            reader.readAsDataURL(response.data); 
-                            reader.onloadend = function() {
-                                $scope.branding_squareLogo = {
-                                    url: reader.result,
-                                    format: 'base64',
-                                    default: true
-                                }
-                            }
-                        });
-                    });
-
-                $scope.base64ToImageModel($scope.branding.banner.logo)
-                    .then(function(model){
-                        $scope.branding_banner_logo = model;
-                    })
-                    .catch(function(){
-                        $scope.branding_banner_logo = {
-                            url: '',
-                            format: 'base64',
-                            default: true
-                        }
-                    });
-            }
-        };
-
-        $scope.init = function(name,object) {
-            var promise;
-            if(angular.isUndefined($scope.zone.$promise)){
-                var deferred = $q.defer();
-                deferred.resolve($scope.zone);
-                promise = deferred.promise;
-            }else{
-                promise = $scope.zone.$promise
-            }
-            promise.then(function(zone){
-                if(name in zone.config){
-                    $scope[name] = zone.config[name];
-                }else if(angular.isDefined(object)){
-                    zone.config[name] = object;
-                    $scope[name] = zone.config[name];
-                }else{
-                    $scope[name] = zone.config;
-                }
-
-                var processor = $scope.after_init_processors[name];
-                if(angular.isFunction(processor)){
-                    processor();
-                };
-            })
-        };
-
-        $scope.before_save_processors = {
-            'branding': function(){
-                if(Object.keys($scope.branding.consent).length === 0){
-                    $scope.branding.consent = null
-                }
-                
-                $scope.branding.productLogo = $scope.imageModelToBase64($scope.branding_productLogo);
-                $scope.branding.squareLogo = $scope.imageModelToBase64($scope.branding_squareLogo);
-                $scope.branding.banner.logo = $scope.imageModelToBase64($scope.branding_banner_logo);
-            }
         };
 
         $scope.addItem = SetUtils.addItem;
@@ -267,7 +85,6 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
                 }
             }
         };
-
         $scope.changeUnit = function(object,unit,units) {
             var last_unit = object.last_unit;
             var original = units[last_unit].from(object.value);
@@ -430,7 +247,6 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
             mfa: null,
             identity: null
         };
-
         MFAProvider.query({}, function (result) {
             $scope.providers.mfa = result;
         });
@@ -450,4 +266,203 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
         };
 
         
+        var init_processors = {
+            'tokenPolicy': function(){
+                $scope.tokenPolicy_accessTokenValidity = {
+                    last_unit: 'S',
+                    unit: 'S',
+                    value: $scope.tokenPolicy.accessTokenValidity,
+                    original: $scope.tokenPolicy.accessTokenValidity
+                }
+                $scope.tokenPolicy_refreshTokenValidity = {
+                    last_unit: 'S',
+                    unit: 'S',
+                    value: $scope.tokenPolicy.refreshTokenValidity,
+                    original: $scope.tokenPolicy.refreshTokenValidity
+                }
+            },
+            'clientSecretPolicy': function(){
+                
+            },
+            'corsPolicy': function(){
+                angular.merge(
+                    $scope.corsPolicy,
+                    {
+                        defaultConfiguration: {
+                            allowedHeaders: [],
+                            allowedMethods: [],
+                            allowedOriginPatterns: [],
+                            allowedOrigins: [],
+                            allowedUriPatterns: [],
+                            allowedUris: []
+                        },
+                        xhrConfiguration: {
+                            allowedHeaders: [],
+                            allowedMethods: [],
+                            allowedOriginPatterns: [],
+                            allowedOrigins: [],
+                            allowedUriPatterns: [],
+                            allowedUris: []
+                        }
+                    },
+                    $scope.corsPolicy);
+            },
+            'prompts': function(){
+                angular.merge(
+                    $scope.prompts,
+                    [
+                        {name: "username", type: "text", text: "Email"},
+                        {name: "password", type: "password", text: "Password"},
+                        {name: "passcode", type: "password", text: "Password"}
+                    ],
+                    $scope.prompts);
+            },
+            'links': function(){
+                angular.merge(
+                    $scope.links,
+                    {
+                        logout: { whitelist: [] },
+                        selfService: {}
+                    },
+                    $scope.links);
+            },
+            'branding': function(){
+                angular.merge(
+                    $scope.branding,
+                    {
+                        footerLinks: {},
+                        banner: {},
+                        consent: {}
+                    },
+                    $scope.branding);
+                
+                $scope.base64ToImageModel($scope.branding.productLogo)
+                    .then(function(model){
+                        $scope.branding_productLogo = model;
+                    })
+                    .catch(function(){
+                        $http({
+                            method: 'GET',
+                            url: 'assets/images/product-logo.png',
+                            responseType: "blob"
+                        }).then(function successCallback(response) {
+                            var reader = new FileReader();
+                            reader.readAsDataURL(response.data); 
+                            reader.onloadend = function() {
+                                $scope.branding_productLogo = {
+                                    url: reader.result,
+                                    format: 'base64',
+                                    default: true
+                                }
+                            }
+                        });
+                    });
+                
+                $scope.base64ToImageModel($scope.branding.squareLogo)
+                    .then(function(model){
+                        $scope.branding_squareLogo = model;
+                    })
+                    .catch(function(){
+                        $http({
+                            method: 'GET',
+                            url: 'assets/images/square-logo.png',
+                            responseType: "blob"
+                        }).then(function successCallback(response) {
+                            var reader = new FileReader();
+                            reader.readAsDataURL(response.data); 
+                            reader.onloadend = function() {
+                                $scope.branding_squareLogo = {
+                                    url: reader.result,
+                                    format: 'base64',
+                                    default: true
+                                }
+                            }
+                        });
+                    });
+
+                $scope.base64ToImageModel($scope.branding.banner.logo)
+                    .then(function(model){
+                        $scope.branding_banner_logo = model;
+                    })
+                    .catch(function(){
+                        $scope.branding_banner_logo = {
+                            url: '',
+                            format: 'base64',
+                            default: true
+                        }
+                    });
+            },
+            'samlConfig': function(){
+                angular.merge(
+                    $scope.samlConfig,
+                    {
+                        keys: {}
+                    },
+                    $scope.samlConfig);
+            },
+            'mfaConfig': function(){
+                angular.merge(
+                    $scope.mfaConfig,
+                    {
+                        identityProviders: []
+                    },
+                    $scope.mfaConfig);
+            },
+            'userConfig': function(){
+                angular.merge(
+                    $scope.userConfig,
+                    {
+                        defaultGroups: []
+                    },
+                    $scope.userConfig);
+            },
+            'other': function(){}
+        };
+        
+        var init = function() {
+            var promise;
+            if(angular.isUndefined($scope.zone.$promise)){
+                var deferred = $q.defer();
+                deferred.resolve($scope.zone);
+                promise = deferred.promise;
+            }else{
+                promise = $scope.zone.$promise
+            }
+            promise.then(function(zone){
+                if(angular.isUndefined(zone.config)){
+                    zone.config = {}
+                }
+                angular.merge(
+                    zone.config,
+                    {
+                        tokenPolicy: {},
+                        clientSecretPolicy: {},
+                        corsPolicy: {},
+                        prompts: {},
+                        links: {},
+                        prompts: {},
+                        branding: {},
+                        samlConfig: {},
+                        mfaConfig: {},
+                        userConfig: {}
+                    },
+                    zone.config);
+                
+                angular.forEach(init_processors,function(processor,name){
+                    if(name in zone.config){
+                        $scope[name] = zone.config[name];
+                    }else{
+                        $scope[name] = zone.config;
+                    }
+
+                    var processor = init_processors[name];
+                    if(angular.isFunction(processor)){
+                        processor();
+                    };
+                })
+                
+            })
+        };
+
+        init();
 }]);

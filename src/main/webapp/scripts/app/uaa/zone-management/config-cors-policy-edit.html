@@ -123,11 +123,13 @@
                 <br>
                 <div class="form-inline" 
                     ng-repeat="method in http.methods track by $index">
+                    <h4>
                     <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
                     <span class="label"
                         ng-class="hasItem(corsPolicy.defaultConfiguration.allowedMethods,method) ? 'label-primary' : 'label-default'"
                         ng-click="toggleItem(corsPolicy.defaultConfiguration.allowedMethods,method)">
                         {{method}}</span>
+                    </h4>
                 </div>
             </div>
             
@@ -150,7 +152,7 @@
                 <div class="btn-group" uib-dropdown>
                     <button type="button" class="btn btn-primary" id="single-button" 
                         uib-dropdown-toggle ng-disabled="disabled">
-                        +
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
@@ -284,11 +286,13 @@
                 <br>
                 <div class="form-inline" 
                     ng-repeat="method in http.methods track by $index">
+                    <h4>
                     <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
                     <span class="label"
                         ng-class="hasItem(corsPolicy.xhrConfiguration.allowedMethods,method) ? 'label-primary' : 'label-default'"
                         ng-click="toggleItem(corsPolicy.xhrConfiguration.allowedMethods,method)">
                         {{method}}</span>
+                    </h4>
                 </div>
             </div>
             
@@ -311,7 +315,7 @@
                 <div class="btn-group" uib-dropdown>
                     <button type="button" class="btn btn-primary" id="single-button" 
                         uib-dropdown-toggle ng-disabled="disabled">
-                        +
+                        <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">

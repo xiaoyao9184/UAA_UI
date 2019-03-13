@@ -1,11 +1,14 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('IdentityProviderEditController',
-    ['$scope', '$http', '$uibModalInstance', '$state', 'entity', 'IdentityProvider', 'Setting', 'SetUtils',
-        function($scope, $http, $uibModalInstance, $state, entity, IdentityProvider, Setting, SetUtils) {
+    ['$scope', '$q', '$http', '$uibModalInstance', '$state', 'entity', 'IdentityProvider', 'Setting', 'SetUtils',
+        function($scope, $q, $http, $uibModalInstance, $state, entity, IdentityProvider, Setting, SetUtils) {
 
         $scope.setting = Setting.get();
         $scope.provider = entity;
+        $scope.baseState = $state.current.name;
+
+
         var onSaveSuccess = function (result) {
             $scope.isSaving = false;
             $uibModalInstance.close(result);
@@ -28,12 +31,6 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
             $uibModalInstance.dismiss('cancel');
         };
 
-        if(angular.isDefined($scope.provider.$promise)){
-            $scope.provider.$promise.then(function(provider){
-                $scope.active = provider.type;
-            })
-        }
-        
         $scope.types = [
             "uaa",
             "oauth2.0","oidc1.0",
@@ -44,27 +41,22 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
         $scope.isUnknowType = function(type){
             return $scope.types.indexOf(type) === -1
         };
-        $scope.ui = {
-            MetaDataFormat: 'URL'
-        }
 
-        $scope.after_init_processors = {
-            'saml': function(){
-                var config;
-                if(!angular.isObject($scope.provider.config)){
-                    $scope.provider.config = {}
-                }
-                config = $scope.provider.config;
-                if(!angular.isArray(config.emailDomain)){
-                    config.emailDomain = [];
-                }
-                if(!angular.isArray(config.externalGroupsWhitelist)){
-                    config.externalGroupsWhitelist = [];
-                }
-                if(config.attributeMappings === null ||
-                    angular.isUndefined(config.attributeMappings)){
-                    config.attributeMappings = {};
-                }
+        var change_processors = {
+            'saml': function(config){
+                angular.merge(
+                    config,
+                    {
+                        emailDomain: [],
+                        externalGroupsWhitelist: [],
+                        attributeMappings: {
+                            external_groups: []
+                        },
+
+                        metaDataLocation: '',
+                        authnContext: []
+                    },
+                    config);
 
                 //Same like https://github.com/cloudfoundry/uaa/blob/b513cb9ccd0ca23bd6e5e83bbca72a46de45a44f/model/src/main/java/org/cloudfoundry/identity/uaa/provider/saml/idp/SamlServiceProviderDefinition.java#L80
                 if(config.metaDataLocation.indexOf("<?xml") == 0 ||
@@ -73,158 +65,107 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
                     $scope.ui.MetaDataFormat = 'XML'
                 }else if(config.metaDataLocation.indexOf("http") == 0){
                     $scope.ui.MetaDataFormat = 'URL'
-                }
+                }               
             },
-            'ldap': function(){
-                var config;
-                if(!angular.isObject($scope.provider.config)){
-                    $scope.provider.config = {}
-                }
-                config = $scope.provider.config;
-                if(!angular.isArray(config.emailDomain)){
-                    config.emailDomain = [];
-                }
-                if(!angular.isArray(config.externalGroupsWhitelist)){
-                    config.externalGroupsWhitelist = [];
-                }
-                if(config.attributeMappings === null ||
-                    angular.isUndefined(config.attributeMappings)){
-                    config.attributeMappings = {};
-                }
-                if(config.attributeMappings.external_groups === null ||
-                    angular.isUndefined(config.attributeMappings.external_groups)){
-                    config.attributeMappings.external_groups = []
-                }
+            'ldap': function(config){
+                angular.merge(
+                    config,
+                    {
+                        emailDomain: [],
+                        externalGroupsWhitelist: [],
+                        attributeMappings: {
+                            external_groups: []
+                        }
+                    },
+                    config);
             },
-            'oidc1.0': function(){
-                var config;
-                if(!angular.isObject($scope.provider.config)){
-                    $scope.provider.config = {}
-                }
-                config = $scope.provider.config;
-                if(!angular.isArray(config.emailDomain)){
-                    config.emailDomain = [];
-                }
-                if(!angular.isArray(config.externalGroupsWhitelist)){
-                    config.externalGroupsWhitelist = [];
-                }
-                if(config.attributeMappings === null ||
-                    angular.isUndefined(config.attributeMappings)){
-                    config.attributeMappings = {};
-                }
-                if(config.attributeMappings.external_groups === null ||
-                    angular.isUndefined(config.attributeMappings.external_groups)){
-                    config.attributeMappings.external_groups = []
-                }
-                if(!angular.isArray(config.scopes)){
-                    config.scopes = [];
-                }
-                if(!angular.isArray(config.prompts)){
-                    config.prompts = [];
-                }
-                if(angular.isUndefined(config.showLinkText)){
-                    config.showLinkText = false
-                }
+            'oidc1.0': function(config){
+                angular.merge(
+                    config,
+                    {
+                        emailDomain: [],
+                        externalGroupsWhitelist: [],
+                        attributeMappings: {
+                            external_groups: []
+                        },
+
+                        scopes: [],
+                        prompts: [],
+                        showLinkText: false
+                    },
+                    config);
             },
-            'oauth2.0': function(){
-                var config;
-                if(!angular.isObject($scope.provider.config)){
-                    $scope.provider.config = {}
-                }
-                config = $scope.provider.config;
-                if(!angular.isArray(config.emailDomain)){
-                    config.emailDomain = [];
-                }
-                if(!angular.isArray(config.externalGroupsWhitelist)){
-                    config.externalGroupsWhitelist = [];
-                }
-                if(config.attributeMappings === null ||
-                    angular.isUndefined(config.attributeMappings)){
-                    config.attributeMappings = {};
-                }
-                if(config.attributeMappings.external_groups === null ||
-                    angular.isUndefined(config.attributeMappings.external_groups)){
-                    config.attributeMappings.external_groups = []
-                }
-                if(!angular.isArray(config.scopes)){
-                    config.scopes = [];
-                }
-                if(angular.isUndefined(config.showLinkText)){
-                    config.showLinkText = false
-                }
+            'oauth2.0': function(config){
+                angular.merge(
+                    config,
+                    {
+                        emailDomain: [],
+                        externalGroupsWhitelist: [],
+                        attributeMappings: {
+                            external_groups: []
+                        },
+
+                        scopes: [],
+                        showLinkText: false
+                    },
+                    config);
             },
-            'uaa': function(){
-                var config;
-                if(!angular.isObject($scope.provider.config)){
-                    $scope.provider.config = {}
-                }
-                config = $scope.provider.config;
-                if(!angular.isArray(config.emailDomain)){
-                    config.emailDomain = [];
-                }
+            'uaa': function(config){
+                angular.merge(
+                    config,
+                    {
+                        emailDomain: []
+                    },
+                    config);
             },
-            'keystone': function(){
-                var config;
-                if(!angular.isObject($scope.provider.config)){
-                    $scope.provider.config = {}
-                }
-                config = $scope.provider.config;
-                if(!angular.isArray(config.emailDomain)){
-                    config.emailDomain = [];
-                }
-                if(!angular.isArray(config.externalGroupsWhitelist)){
-                    config.externalGroupsWhitelist = [];
-                }
-                if(config.attributeMappings === null ||
-                    angular.isUndefined(config.attributeMappings)){
-                    config.attributeMappings = {};
-                }
-                if(config.attributeMappings.external_groups === null ||
-                    angular.isUndefined(config.attributeMappings.external_groups)){
-                    config.attributeMappings.external_groups = []
-                }
+            'keystone': function(config){
+                angular.merge(
+                    config,
+                    {
+                        emailDomain: [],
+                        externalGroupsWhitelist: [],
+                        attributeMappings: {
+                            external_groups: []
+                        }
+                    },
+                    config);
             }
         };
-
-        $scope.init = function(name) {
-            // if(angular.isUndefined($scope.provider.$promise)){
-            //     var processor = $scope.after_init_processors[name];
-            //     if(angular.isFunction(processor)){
-            //         processor();
-            //     };
-            //     return
-            // }
-            // $scope.provider.$promise.then(function(provider){
-            //     var processor = $scope.after_init_processors[name];
-            //     if(angular.isFunction(processor)){
-            //         processor();
-            //     };
-            // })
-        };
-
-
-        $scope.baseState = $state.current.name 
-
         $scope.change = function(name) {
+            if(angular.isUndefined($scope.provider.type)){
+                //first active
+                $scope.active = 'none';
+                return
+            }else if($scope.provider.type !== name){
+                $scope.provider.config = {}
+            }else if($scope.provider.config === null ||
+                angular.isUndefined($scope.provider.config)){
+                $scope.provider.config = {}
+            }
             $scope.provider.type = name;
-            var processor = $scope.after_init_processors[name];
+
+            var processor = change_processors[name];
             if(angular.isFunction(processor)){
-                processor(false);
+                processor($scope.provider.config);
             };
             
             $state.go($scope.baseState + '.' + name.replace('.',''))
             return
         };
         
-        $scope.initIfNull = function(name) {
-            $scope.provider.type = name;
-            var processor = $scope.after_init_processors[name];
-            if(angular.isFunction(processor)){
-                processor(false);
-            };
-            return
-        };
+        $scope.addItem = SetUtils.addItem;
+        $scope.deleItem = SetUtils.deleItem;
+        $scope.hasItem = SetUtils.hasItem;
+        $scope.toggleItem = SetUtils.toggleItem;
 
+
+        //SAML
+        $scope.ui = {
+            MetaDataFormat: 'URL'
+        }
+
+
+        //OIDC1
         $scope.import = {
             url: $scope.setting.url + '.well-known/openid-configuration'
         };
@@ -245,10 +186,21 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
                 config.scopes = res.data.scopes_supported;
             })
         };
-        
-        
-        $scope.addItem = SetUtils.addItem;
-        $scope.deleItem = SetUtils.deleItem;
-        $scope.hasItem = SetUtils.hasItem;
-        $scope.toggleItem = SetUtils.toggleItem;
+
+
+        var init = function() {
+            var promise;
+            if(angular.isUndefined($scope.provider.$promise)){
+                var deferred = $q.defer();
+                deferred.resolve($scope.provider);
+                promise = deferred.promise;
+            }else{
+                promise = $scope.provider.$promise;
+            }
+            promise.then(function(provider){
+                $scope.active = provider.type;
+            });
+        };
+
+        init();
 }]);

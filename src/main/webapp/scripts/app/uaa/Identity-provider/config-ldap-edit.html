@@ -23,12 +23,16 @@
             <br>
             <div class="form-inline" 
                 ng-repeat="domain in provider.config.emailDomain track by $index">
-                <button type="button" class="btn btn-danger" 
-                    ng-click="deleItem(provider.config.emailDomain,$index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="domain_{{$index}}"
-                    ng-model="provider.config.emailDomain[$index]" required>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(provider.config.emailDomain,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="domain_{{$index}}"
+                        ng-model="provider.config.emailDomain[$index]" required>
+                </div>
 
                 <div ng-show="editForm.domain_{{$index}}.$invalid">
                     <p class="help-block"
@@ -357,12 +361,16 @@
             <br>
             <div class="form-inline" 
                 ng-repeat="whitelist in provider.config.externalGroupsWhitelist track by $index">
-                <button type="button" class="btn btn-danger" 
-                    ng-click="deleItem(provider.config.externalGroupsWhitelist,$index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="whitelist_{{$index}}"
-                    ng-model="provider.config.externalGroupsWhitelist[$index]" required>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(provider.config.externalGroupsWhitelist,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="whitelist_{{$index}}"
+                        ng-model="provider.config.externalGroupsWhitelist[$index]" required>
+                </div>
 
                 <div ng-show="editForm.whitelist_{{$index}}.$invalid">
                     <p class="help-block"
@@ -438,13 +446,17 @@
             <br>
             <div class="form-inline" 
                 ng-repeat="external_group in provider.config.attributeMappings.external_groups track by $index">
-                <button type="button" class="btn btn-danger" 
-                    ng-click="deleItem(provider.config.attributeMappings.external_groups,$index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="external_group_{{$index}}"
-                    ng-model="provider.config.attributeMappings.external_groups[$index]" required>
-
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(provider.config.attributeMappings.external_groups,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="external_group_{{$index}}"
+                        ng-model="provider.config.attributeMappings.external_groups[$index]" required>
+                </div>
+                
                 <div ng-show="editForm.external_group_{{$index}}.$invalid">
                     <p class="help-block"
                         ng-show="editForm.external_group_{{$index}}.$error.required">

@@ -178,8 +178,6 @@
             <br>
             <div class="form-inline" 
                 ng-repeat="prompt in provider.config.prompts track by $index">
-
-
                 <div class="input-group">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-danger" 
@@ -189,22 +187,25 @@
                     </span>
                     <span class="input-group-addon" id="prompt_name_{{$index}}-addon">Name</span>
                     <input type="text" class="form-control" id="prompt_name_{{$index}}" aria-describedby="prompt_name_{{$index}}-addon"
+                        name="prompt_{{$index}}" required 
                         ng-model="prompt.name">
-                    <span class="input-group-addon" id="prompt_name_{{$index}}-addon">Text</span>
-                    <input type="text" class="form-control" id="prompt_name_{{$index}}" aria-describedby="prompt_name_{{$index}}-addon"
+                    <span class="input-group-addon" id="prompt_text_{{$index}}-addon">Text</span>
+                    <input type="text" class="form-control" id="prompt_text_{{$index}}" aria-describedby="prompt_name_{{$index}}-addon"
+                        name="prompt_{{$index}}" required 
                         ng-model="prompt.text">
-                    <span class="input-group-addon" id="prompt_name_{{$index}}-addon">Type</span>
-                    <input type="text" class="form-control" id="prompt_name_{{$index}}" aria-describedby="prompt_name_{{$index}}-addon"
+                    <span class="input-group-addon" id="prompt_type_{{$index}}-addon">Type</span>
+                    <input type="text" class="form-control" id="prompt_type_{{$index}}" aria-describedby="prompt_name_{{$index}}-addon"
+                        name="prompt_{{$index}}" required 
                         ng-model="prompt.type">
                     </span>
                 </div>
 
-                <!-- <button type="button" class="btn btn-danger" 
-                    ng-click="deleItem(provider.config.prompts,$index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="prompt_{{$index}}"
-                    ng-model="provider.config.prompts[$index]" required> -->
+                <div ng-show="editForm.prompt_{{$index}}.$invalid">
+                    <p class="help-block"
+                        ng-show="editForm.prompt_{{$index}}.$error.required">
+                        This 3 fields are required.
+                    </p>
+                </div>
             </div>
             <button type="button" class="btn btn-primary" 
                 ng-click="addItem(provider.config.prompts,{})">
@@ -247,12 +248,16 @@
             <br>
             <div class="form-inline" 
                 ng-repeat="scope in provider.config.scopes track by $index">
-                <button type="button" class="btn btn-danger" 
-                    ng-click="deleItem(provider.config.scopes,$index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="scope_{{$index}}"
-                    ng-model="provider.config.scopes[$index]" required>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(provider.config.scopes,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="scope_{{$index}}"
+                        ng-model="provider.config.scopes[$index]" required>
+                </div>
 
                 <div ng-show="editForm.scope_{{$index}}.$invalid">
                     <p class="help-block"
@@ -329,12 +334,16 @@
             <br>
             <div class="form-inline" 
                 ng-repeat="whitelist in provider.config.externalGroupsWhitelist track by $index">
-                <button type="button" class="btn btn-danger" 
-                    ng-click="deleItem(provider.config.externalGroupsWhitelist,$index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="whitelist_{{$index}}"
-                    ng-model="provider.config.externalGroupsWhitelist[$index]" required>
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(provider.config.externalGroupsWhitelist,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="whitelist_{{$index}}"
+                        ng-model="provider.config.externalGroupsWhitelist[$index]" required>
+                </div>
 
                 <div ng-show="editForm.whitelist_{{$index}}.$invalid">
                     <p class="help-block"
@@ -411,13 +420,17 @@
             <br>
             <div class="form-inline" 
                 ng-repeat="external_group in provider.config.attributeMappings.external_groups track by $index">
-                <button type="button" class="btn btn-danger" 
-                    ng-click="deleItem(provider.config.attributeMappings.external_groups,$index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="external_group_{{$index}}"
-                    ng-model="provider.config.attributeMappings.external_groups[$index]" required>
-
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleItem(provider.config.attributeMappings.external_groups,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="external_group_{{$index}}"
+                        ng-model="provider.config.attributeMappings.external_groups[$index]" required>
+                </div>
+                
                 <div ng-show="editForm.external_group_{{$index}}.$invalid">
                     <p class="help-block"
                         ng-show="editForm.external_group_{{$index}}.$error.required">

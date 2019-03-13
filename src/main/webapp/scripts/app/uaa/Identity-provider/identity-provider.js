@@ -43,13 +43,13 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', function($state, $uibModal) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/identity-provider/identity-provider-edit.html',
                         controller: 'IdentityProviderEditController',
                         size: 'lg',
                         resolve: {
-                            entity: function ($q,IdentityProvider) {
+                            entity: function (IdentityProvider) {
                                 return new IdentityProvider();
                             }
                         }
@@ -66,15 +66,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/identity-provider/identity-provider-edit.html',
                         controller: 'IdentityProviderEditController',
                         size: 'lg',
                         resolve: {
-                            entity: ['IdentityProvider', function(IdentityProvider) {
+                            entity: function(IdentityProvider) {
                                 return IdentityProvider.get({id: $stateParams.id, rawConfig: true});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('identity-provider', null, { reload: true });
@@ -89,15 +89,15 @@ angular.module('uaaUIApp')
                 data: {
                     authorities: ['ROLE_ADMIN'],
                 },
-                onEnter: ['$stateParams', '$state', '$uibModal', function($stateParams, $state, $uibModal) {
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
                     $uibModal.open({
                         templateUrl: 'scripts/app/uaa/identity-provider/identity-provider-delete.html',
                         controller: 'IdentityProviderDeleteController',
                         size: 'md',
                         resolve: {
-                            entity: ['IdentityProvider', function(IdentityProvider) {
+                            entity: function(IdentityProvider) {
                                 return IdentityProvider.get({id : $stateParams.id});
-                            }]
+                            }
                         }
                     }).result.then(function(result) {
                         $state.go('identity-provider', null, { reload: true });

@@ -73,43 +73,43 @@
         <div class="form-group">
             <uib-tabset active="active">
                 <uib-tab index="0" heading="Token Policy">
-                    <div ng-init="init('tokenPolicy')" 
+                    <div
                         ng-include="'scripts/app/uaa/zone-management/config-token-policy-edit.html'"></div>
                 </uib-tab>
                 <uib-tab index="1" heading="Client Secret Policy">
-                    <div ng-init="init('clientSecretPolicy')" 
+                    <div
                         ng-include="'scripts/app/uaa/zone-management/config-client-policy-edit.html'"></div>
                 </uib-tab>
                 <uib-tab index="2" heading="CORS Policy">
-                    <div ng-init="init('corsPolicy')" 
+                    <div
                         ng-include="'scripts/app/uaa/zone-management/config-cors-policy-edit.html'"></div>
                 </uib-tab>
                 <uib-tab index="3" heading="Prompts">
-                    <div ng-init="init('prompts')" 
+                    <div
                         ng-include="'scripts/app/uaa/zone-management/config-prompts-edit.html'"></div>
                 </uib-tab>
                 <uib-tab index="4" heading="Links">
-                    <div ng-init="init('links')" 
+                    <div
                         ng-include="'scripts/app/uaa/zone-management/config-links-edit.html'"></div>
                 </uib-tab>
                 <uib-tab index="5" heading="Branding">
-                    <div ng-init="init('branding',{})" 
+                    <div
                         ng-include="'scripts/app/uaa/zone-management/config-branding-edit.html'"></div>
                 </uib-tab>
                 <uib-tab index="6" heading="Saml" select="changeKey(samlConfig.activeKeyId)">
-                    <div ng-init="init('samlConfig')" 
+                    <div
                         ng-include="'scripts/app/uaa/zone-management/config-saml-edit.html'"></div>
                 </uib-tab>
                 <uib-tab index="7" heading="MFA">
-                    <div ng-init="init('mfaConfig')" 
+                    <div
                         ng-include="'scripts/app/uaa/zone-management/config-mfa-edit.html'"></div>
                 </uib-tab>
                 <uib-tab index="8" heading="User">
-                    <div ng-init="init('userConfig')" 
+                    <div 
                         ng-include="'scripts/app/uaa/zone-management/config-user-edit.html'"></div>
                 </uib-tab>
                 <uib-tab index="9" heading="Other">
-                    <div ng-init="init('other')" 
+                    <div
                         ng-include="'scripts/app/uaa/zone-management/config-other-edit.html'"></div>
                 </uib-tab>
                 <uib-tab index="10" heading="Raw" select="initRawConfig()">

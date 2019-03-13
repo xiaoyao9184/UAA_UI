@@ -15,6 +15,26 @@
         </div>
 
         <div class="form-group">
+            <label class="control-label">Origin Key</label>
+            <input type="text" class="form-control" name="originKey"
+                required
+                ng-model="provider.originKey">
+            
+            <div ng-show="editForm.originKey.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.originKey.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.originKey.$error.maxlength"
+                   translate-value-max="50">
+                    This field cannot be longer than 50 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
             <label class="control-label">Name</label>
             <input type="text" class="form-control" name="name"
                    ng-model="provider.name" required ng-maxlength="50">
@@ -38,26 +58,6 @@
                 <input type="checkbox" id="active" ng-model="provider.active">
                 <span>Activated</span>
             </label>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Origin Key</label>
-            <input type="text" class="form-control" name="originKey"
-                required
-                ng-model="provider.originKey">
-            
-            <div ng-show="editForm.originKey.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.originKey.$error.required">
-                    This field is required.
-                </p>
-
-                <p class="help-block"
-                   ng-show="editForm.originKey.$error.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
-                </p>
-            </div>
         </div>
 
         <div class="form-group"
