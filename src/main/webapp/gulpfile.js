@@ -12,6 +12,11 @@ var wiredep = require('wiredep').stream;
 var connect = require('gulp-connect');
 
 
+var config = {
+    //https://symfonycasts.com/screencast/gulp/minify-only-production
+    dev: !!gutil.env.dev
+};
+
 gulp.task('clean', function() {
     return gulp.src(['./dist','./temp'])
        .pipe(clean({force: true}));
@@ -20,23 +25,19 @@ gulp.task('clean', function() {
 gulp.task('bower', function () {
     return gulp.src(['./*.html','!./home.html'])
         .pipe(wiredep({
-            // cwd: './dist',
-            // bowerJson: '../bower.json',
             optional: 'configuration',
-            goes: 'here',
-            // fileTypes: {
-            //   html:{
-            //     replace: {
-            //       js: '<script src="{{filePath}}"></script>',
-            //       css: '<link rel="stylesheet" href="{{filePath}}" />'
-            //     }
-            //   }
-            // }
+            goes: 'here'
         }))
         .pipe(gulp.dest('./temp'));
 });
 
 gulp.task('usemin-index', function () {
+    if(config.dev){
+        return gulp.src(['./temp/*.html'])
+            .pipe(usemin())
+            .pipe(gulp.dest('./dist'))
+            .pipe(connect.reload());
+    }
     return gulp.src(['./temp/*.html'])
         .pipe(usemin({
             css: [ cleanCSS(), 'concat' ],
@@ -54,6 +55,7 @@ gulp.task('usemin-index', function () {
                     removeOptionalTags: true
                 });
             } ],
+            //https://github.com/zont/gulp-usemin/issues/60
             vendorjs: [
                 sourcemaps.init(),
                 uglify(),
@@ -61,6 +63,8 @@ gulp.task('usemin-index', function () {
             ],
             js: [ 
                 sourcemaps.init(), 
+                //https://stackoverflow.com/questions/32741259/angular-unknown-provider-after-minification
+                //https://stackoverflow.com/questions/26854817/how-to-troubleshoot-angular-js-unknown-provider-error-in-minified-code
                 ngAnnotate(),
                 uglify(), 
                 sourcemaps.write('./')
@@ -74,7 +78,7 @@ gulp.task('usemin-index', function () {
 
 gulp.task('min-templates', function () {
     return gulp.src(['./scripts/**/*.html'])
-        .pipe(htmlmin())
+        .pipe(config.dev ?  gutil.noop() : htmlmin())
         .pipe(gulp.dest('./dist/scripts'))
         .pipe(connect.reload());
 });

@@ -21,5 +21,9 @@
     "wiredep": "^4.0.0"
   },
   "author": "xiaoyao9184@gmail.com",
-  "license": "GPL"
+  "license": "GPL",
+  "scripts": {
+    "build": "gulp build",
+    "server": "gulp build & gulp --dev"
+  }
 }
