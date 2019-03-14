@@ -9,7 +9,12 @@
 
 *.iml
 .vscode/
+.stfolder/
 
 **/*.class
+/target
 
-**/bower_components/
+**/node_modules
+**/bower_components
+**/dist
+**/temp

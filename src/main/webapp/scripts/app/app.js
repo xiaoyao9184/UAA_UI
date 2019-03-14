@@ -1,8 +1,10 @@
 'use strict';
 
-angular.module('uaaUIApp', ['LocalStorageModule', 
-    'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'ngPostMessage', 'angular-clipboard',
-    'ui.bootstrap', 'ui.router',  'infinite-scroll', 'angular-loading-bar', 'file'])
+angular.module('uaaUIApp', [
+    'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'ngPostMessage', 
+    'ui.bootstrap', 'ui.router', 
+    'infinite-scroll', 'LocalStorageModule', 
+    'angular-loading-bar', 'angular-clipboard', 'file'])
 
     .run(function ($rootScope, $location, $window, $http, $state, Principal, ENV, VERSION) {
         

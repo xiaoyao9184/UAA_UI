@@ -140,9 +140,10 @@ angular.module('uaaUIApp')
             get_redirect_data: function(stateParams){
                 var urlParams = {}
                 var searchParams = new URL(location.href).searchParams;
-                for (var p of searchParams.entries()){
-                    urlParams[p[0]] = p[1]
-                }
+                var arrayParams = Array.from(searchParams.entries());
+                angular.forEach(arrayParams, function(param){
+                    urlParams[param[0]] = param[1]
+                });
 
                 for (var n in stateParams) { 
                     if (stateParams[n] === null) {

@@ -23,7 +23,7 @@ angular.module('uaaUIApp').controller('MemberManagementDeleteController',
             // reflash
             var path = $scope.paths[$index];
             return Member.list({gid: path.id}, function (result) {
-                result.forEach(element => {
+                angular.forEach(result, function(element) {
                     element.id = element.value
                     MemberType.getName(element)
                         .then(function(name){

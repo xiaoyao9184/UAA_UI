@@ -74,7 +74,7 @@ angular.module('uaaUIApp')
 
         var getSubItem = function(member) {
             return Member.list({gid: member.value}, function (result) {
-                result.forEach(element => {
+                angular.forEach(result, function(element){
                     element.id = element.value
                     MemberType.getName(element)
                         .then(function(name){

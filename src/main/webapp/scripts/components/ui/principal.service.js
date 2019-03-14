@@ -19,12 +19,12 @@ angular.module('uaaUIApp')
             },
             isClient: function(){
                 return angular.isDefined(_token) &&
-                    _token.grant_type === 'client_credentials'
+                    _token.grant_type === 'client_credentials';
             },
             isRedirect: function(){
                 return angular.isDefined(_token) &&
                     (_token.grant_type === 'authorization_code' ||
-                    _token.grant_type === 'implicit')
+                    _token.grant_type === 'implicit');
             },
             userName: function() {
                 return this.identity().then(function(_id) {
@@ -76,13 +76,13 @@ angular.module('uaaUIApp')
 
                 return false;
             },
-            uaaLogin(flag){
-                _uaaLogin = flag
+            uaaLogin: function(flag){
+                _uaaLogin = flag;
             },
             token: function(token){
-                _token = token
+                _token = token;
                 if(this.isRedirect()){
-                    _uaaLogin = true
+                    _uaaLogin = true;
                 }
 
                 if(this.isClient()){
@@ -90,7 +90,7 @@ angular.module('uaaUIApp')
                         user_name: token.client_id
                     })
                 }else{
-                    this.userName()
+                    this.userName();
                 }
                 return this;
             },
