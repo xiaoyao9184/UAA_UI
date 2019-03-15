@@ -33,6 +33,7 @@ gulp.task('bower', function () {
 
 gulp.task('usemin-index', function () {
     if(config.dev){
+        console.info('DEV mode!');
         return gulp.src(['./temp/*.html'])
             .pipe(usemin())
             .pipe(gulp.dest('./dist'))

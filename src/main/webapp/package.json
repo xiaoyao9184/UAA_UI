@@ -24,6 +24,6 @@
   "license": "GPL",
   "scripts": {
     "build": "gulp build",
-    "server": "gulp build & gulp --dev"
+    "dev": "gulp build --dev & gulp --dev"
   }
 }

@@ -1,18 +1,19 @@
 /.gradle
 /.settings
 /.idea
-/build
-/classes
+/.vscode
+/.stfolder
+/.node
 
 .classpath
 .project
 
-*.iml
-.vscode/
-.stfolder/
-
-**/*.class
+/build
 /target
+/classes
+
+*.iml
+**/*.class
 
 **/node_modules
 **/bower_components
