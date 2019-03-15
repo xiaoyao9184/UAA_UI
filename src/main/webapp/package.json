@@ -23,7 +23,9 @@
   "author": "xiaoyao9184@gmail.com",
   "license": "GPL",
   "scripts": {
+    "bower": "bower install",
     "build": "gulp build",
-    "dev": "gulp build --dev & gulp --dev"
+    "server": "bower install & gulp build & gulp",
+    "dev": "bower install & gulp build --dev & gulp --dev"
   }
 }

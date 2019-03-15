@@ -37,7 +37,7 @@ gulp.task('usemin-index', function () {
         return gulp.src(['./temp/*.html'])
             .pipe(usemin())
             .pipe(gulp.dest('./dist'))
-            .pipe(connect.reload());
+            .pipe(config.dev ? connect.reload(): gutil.noop());
     }
     return gulp.src(['./temp/*.html'])
         .pipe(usemin({
@@ -74,14 +74,14 @@ gulp.task('usemin-index', function () {
             inlinecss: [ cleanCSS(), 'concat' ]
         }))
         .pipe(gulp.dest('./dist'))
-        .pipe(connect.reload());
+        .pipe(config.dev ? connect.reload(): gutil.noop());
 });
 
 gulp.task('min-templates', function () {
     return gulp.src(['./scripts/**/*.html'])
-        .pipe(config.dev ?  gutil.noop() : htmlmin())
+        .pipe(config.dev ? gutil.noop() : htmlmin())
         .pipe(gulp.dest('./dist/scripts'))
-        .pipe(connect.reload());
+        .pipe(config.dev ? connect.reload(): gutil.noop());
 });
 
 gulp.task('copy-fonts', function () {
@@ -109,7 +109,7 @@ gulp.task('connect', function () {
     connect.server({
         root: './dist/',
         port: 3000,
-        livereload: true
+        livereload: config.dev
     });
 });
 
@@ -121,4 +121,8 @@ gulp.task('watch', function () {
     gulp.watch(['./scripts/**/*.js', './temp/*.html'], ['usemin-index']);
 });
 
-gulp.task('default', ['connect', 'watch']);
+if(config.dev){
+    gulp.task('default', ['connect', 'watch']);
+}else{
+    gulp.task('default', ['connect']);
+}
