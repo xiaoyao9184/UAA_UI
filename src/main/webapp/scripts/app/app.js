@@ -90,7 +90,7 @@ angular.module('uaaUIApp', [
         $httpProvider.interceptors.push('zoneInterceptor');
         $httpProvider.interceptors.push('authExpiredInterceptor');
         $httpProvider.interceptors.push('authInterceptor');
-        $httpProvider.interceptors.push('notificationInterceptor');
+        // $httpProvider.interceptors.push('notificationInterceptor');
         
     })
     .config(['$urlMatcherFactoryProvider', function($urlMatcherFactory) {

@@ -1,483 +1,462 @@
 <form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
-
-    <div class="modal-header">
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                ng-click="clear()">&times;</button>
-        <h6 class="modal-title" id="myUserLabel">
-            TokenPolicy</h6> -->
+    <div class="form-group">
+        <label class="control-label">Provider Description</label>
+        <input type="text" class="form-control" name="providerDescription"
+            uib-tooltip="Description"
+            ng-model="provider.config.providerDescription">
     </div>
-    <div class="modal-body">
-        <jh-alert-error></jh-alert-error>
+    
+    <!-- additionalConfiguration not used -->
 
-        <div class="form-group">
-            <label class="control-label">Provider Description</label>
-            <input type="text" class="form-control" name="providerDescription"
-                uib-tooltip="Description"
-                ng-model="provider.config.providerDescription">
-        </div>
-        
-        <!-- additionalConfiguration not used -->
-
-        <div class="form-group">
-            <label class="control-label">Email Domain</label>
-            <br>
-            <div class="form-inline" 
-                ng-repeat="domain in provider.config.emailDomain track by $index">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-danger" 
-                            ng-click="deleItem(provider.config.emailDomain,$index)">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                    </span>
-                    <input type="text" class="form-control" name="domain_{{$index}}"
-                        ng-model="provider.config.emailDomain[$index]" required>
-                </div>
-
-                <div ng-show="editForm.domain_{{$index}}.$invalid">
-                    <p class="help-block"
-                        ng-show="editForm.domain_{{$index}}.$error.required">
-                        This field is required.
-                    </p>
-                </div>
+    <div class="form-group">
+        <label class="control-label">Email Domain</label>
+        <br>
+        <div class="form-inline" 
+            ng-repeat="domain in provider.config.emailDomain track by $index">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-danger" 
+                        ng-click="deleItem(provider.config.emailDomain,$index)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </span>
+                <input type="text" class="form-control" name="domain_{{$index}}"
+                    ng-model="provider.config.emailDomain[$index]" required>
             </div>
-            <button type="button" class="btn btn-primary" 
-                ng-click="addItem(provider.config.emailDomain,'')">
-                <span class="glyphicon glyphicon glyphicon-plus"></span>
-            </button>
-        </div>
 
-        
-        <div class="form-group">
-            <div class="alert alert-info" role="alert">
-                <!-- You can imort openid config like issuer, urls and scopes form url, or set it to discovery
-                <div class="input-group">
-                    <span class="input-group-addon" id="import-config-url-addon">URL</span>
-                    <input type="text" class="form-control" id="import-config-url" 
-                        aria-describedby="import-config-url-addon"
-                        placeholder="like https://accounts.google.com/.well-known/openid-configuration"
-                        ng-model="import.url">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
-                            ng-click="importConfig()">Import only</button>
-                        <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
-                            ng-click="importConfig();provider.config.discoveryUrl = import.url">Set Discovery</button>
-                    </span>
-                </div> -->
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">ldap Profile File</label>
-            <input type="text" class="form-control" name="ldapProfileFile"
-                ng-model="provider.config.ldapProfileFile">
-
-            <div ng-show="editForm.ldapProfileFile.$invalid">
+            <div ng-show="editForm.domain_{{$index}}.$invalid">
                 <p class="help-block"
-                    ng-show="editForm.ldapProfileFile.$error.required">
+                    ng-show="editForm.domain_{{$index}}.$error.required">
                     This field is required.
                 </p>
             </div>
         </div>
-
-        <div class="form-group">
-            <label class="control-label">Base Url</label>
-            <input type="text" class="form-control" name="baseUrl"
-                ng-model="provider.config.baseUrl">
-            
-            <div ng-show="editForm.baseUrl.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.baseUrl.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Referral</label>
-            <input type="text" class="form-control" name="referral"
-                ng-model="provider.config.referral">
-            
-            <div ng-show="editForm.referral.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.referral.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="skipSSLVerification" 
-                    ng-model="provider.config.skipSSLVerification">
-                <span>Skip Ssl Validation</span>
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">User DN Pattern</label>
-            <input type="text" class="form-control" name="userDNPattern"
-                ng-model="provider.config.userDNPattern">
-            
-            <div ng-show="editForm.userDNPattern.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.userDNPattern.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">User DN Pattern Delimiter</label>
-            <input type="text" class="form-control" name="userDNPatternDelimiter"
-                ng-model="provider.config.userDNPatternDelimiter">
-            
-            <div ng-show="editForm.userDNPatternDelimiter.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.userDNPatternDelimiter.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Bind User Dn</label>
-            <input type="text" class="form-control" name="bindUserDn"
-                ng-model="provider.config.bindUserDn">
-            
-            <div ng-show="editForm.bindUserDn.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.bindUserDn.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Bind Password</label>
-            <input type="text" class="form-control" name="bindPassword"
-                ng-model="provider.config.bindPassword">
-            
-            <div ng-show="editForm.bindPassword.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.bindPassword.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">User Search Base</label>
-            <input type="text" class="form-control" name="userSearchBase"
-                ng-model="provider.config.userSearchBase">
-            
-            <div ng-show="editForm.userSearchBase.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.userSearchBase.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">User Search Filter</label>
-            <input type="text" class="form-control" name="userSearchFilter"
-                ng-model="provider.config.userSearchFilter">
-            
-            <div ng-show="editForm.userSearchFilter.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.userSearchFilter.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Password Attribute Name</label>
-            <input type="text" class="form-control" name="passwordAttributeName"
-                ng-model="provider.config.passwordAttributeName">
-            
-            <div ng-show="editForm.passwordAttributeName.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.passwordAttributeName.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Password Encoder</label>
-            <input type="text" class="form-control" name="passwordEncoder"
-                ng-model="provider.config.passwordEncoder">
-            
-            <div ng-show="editForm.passwordEncoder.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.passwordEncoder.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="localPasswordCompare" 
-                    ng-model="provider.config.localPasswordCompare">
-                <span>Local Password Compare</span>
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Mail Attribute Name</label>
-            <input type="text" class="form-control" name="mailAttributeName"
-                ng-model="provider.config.mailAttributeName">
-            
-            <div ng-show="editForm.mailAttributeName.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.mailAttributeName.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Mail Substitute</label>
-            <input type="text" class="form-control" name="mailSubstitute"
-                ng-model="provider.config.mailSubstitute">
-            
-            <div ng-show="editForm.mailSubstitute.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.mailSubstitute.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="mailSubstituteOverridesLdap" 
-                    ng-model="provider.config.mailSubstituteOverridesLdap">
-                <span>Mail Substitute Overrides Ldap</span>
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">ldap Group File</label>
-            <input type="text" class="form-control" name="ldapGroupFile"
-                ng-model="provider.config.ldapGroupFile">
-            
-            <div ng-show="editForm.ldapGroupFile.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.ldapGroupFile.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Group Search Base</label>
-            <input type="text" class="form-control" name="groupSearchBase"
-                ng-model="provider.config.groupSearchBase">
-            
-            <div ng-show="editForm.groupSearchBase.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.groupSearchBase.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Group Search Filter</label>
-            <input type="text" class="form-control" name="groupSearchFilter"
-                ng-model="provider.config.groupSearchFilter">
-            
-            <div ng-show="editForm.groupSearchFilter.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.groupSearchFilter.$error.required">
-                    This field is required.
-                </p>
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="groupsIgnorePartialResults" 
-                    ng-model="provider.config.groupsIgnorePartialResults">
-                <span>Groups Ignore Partial Results</span>
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="autoAddGroups" 
-                    ng-model="provider.config.autoAddGroups">
-                <span>Auto Add Groups</span>
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="groupSearchSubTree" 
-                    ng-model="provider.config.groupSearchSubTree">
-                <span>Group Search Sub Tree</span>
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Max Group Search Depth</label>
-            <input type="numbner" class="form-control" name="maxGroupSearchDepth"
-                ng-model="provider.config.maxGroupSearchDepth">
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Group Role Attribute</label>
-            <input type="text" class="form-control" name="groupRoleAttribute"
-                ng-model="provider.config.groupRoleAttribute">
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">TLS Configuration</label>
-            <input type="text" class="form-control" name="tlsConfiguration"
-                ng-model="provider.config.tlsConfiguration">
-        </div>
-
-        
-        <div class="form-group">
-            <div class="alert alert-info" role="alert">
-                Usually enable 'addShadowUserOnLogin' will create same user on frist login.
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="addShadowUserOnLogin" 
-                    ng-model="provider.config.addShadowUserOnLogin">
-                <span>Add Shadow User On Login</span>
-            </label>
-        </div>
-        
-        <div class="form-group">
-            <label class="control-label">External Groups Whitelist</label>
-            <br>
-            <div class="form-inline" 
-                ng-repeat="whitelist in provider.config.externalGroupsWhitelist track by $index">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-danger" 
-                            ng-click="deleItem(provider.config.externalGroupsWhitelist,$index)">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                    </span>
-                    <input type="text" class="form-control" name="whitelist_{{$index}}"
-                        ng-model="provider.config.externalGroupsWhitelist[$index]" required>
-                </div>
-
-                <div ng-show="editForm.whitelist_{{$index}}.$invalid">
-                    <p class="help-block"
-                        ng-show="editForm.whitelist_{{$index}}.$error.required">
-                        This field is required.
-                    </p>
-                </div>
-            </div>
-            <button type="button" class="btn btn-primary" 
-                ng-click="addItem(provider.config.externalGroupsWhitelist,'')">
-                <span class="glyphicon glyphicon glyphicon-plus"></span>
-            </button>
-        </div>
-
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="storeCustomAttributes" 
-                    ng-model="provider.config.storeCustomAttributes">
-                <span>Store Custom Attributes</span>
-            </label>
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Mapping:user_name</label>
-            <input type="text" class="form-control" name="user_name"
-                uib-tooltip="Map user_name to the attribute for user name in the provider assertion or token."
-                ng-model="provider.config.attributeMappings.user_name">
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Mapping:email</label>
-            <input type="text" class="form-control" name="email"
-                uib-tooltip="Map email to the attribute for email in the provider assertion or token."
-                ng-model="provider.config.attributeMappings.email">
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Mapping:given_name</label>
-            <input type="text" class="form-control" name="given_name"
-                uib-tooltip="Map given_name to the attribute for given name in the provider assertion or token."
-                ng-model="provider.config.attributeMappings.given_name">
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Mapping:family_name</label>
-            <input type="text" class="form-control" name="family_name"
-                uib-tooltip="Map family_name to the attribute for family name in the provider assertion or token."
-                ng-model="provider.config.attributeMappings.family_name">
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Mapping:phone_number</label>
-            <input type="text" class="form-control" name="phone_number"
-                uib-tooltip="Map phone_number to the attribute for phone number in the provider assertion or token."
-                ng-model="provider.config.attributeMappings.phone_number">
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Mapping:email_verified</label>
-            <input type="text" class="form-control" name="email_verified"
-                uib-tooltip="Maps the attribute on the assertion to the email_verified user record at the time of authentication."
-                ng-model="provider.config.attributeMappings.email_verified">
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Mapping:department</label>
-            <input type="text" class="form-control" name="department"
-                ng-model="provider.config.attributeMappings['user.attribute.department']">
-        </div>
-
-        <div class="form-group">
-            <label class="control-label">Mapping:external_groups</label>
-            <br>
-            <div class="form-inline" 
-                ng-repeat="external_group in provider.config.attributeMappings.external_groups track by $index">
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-danger" 
-                            ng-click="deleItem(provider.config.attributeMappings.external_groups,$index)">
-                            <span class="glyphicon glyphicon-minus"></span>
-                        </button>
-                    </span>
-                    <input type="text" class="form-control" name="external_group_{{$index}}"
-                        ng-model="provider.config.attributeMappings.external_groups[$index]" required>
-                </div>
-                
-                <div ng-show="editForm.external_group_{{$index}}.$invalid">
-                    <p class="help-block"
-                        ng-show="editForm.external_group_{{$index}}.$error.required">
-                        This field is required.
-                    </p>
-                </div>
-            </div>
-            <button type="button" class="btn btn-primary" 
-                ng-click="addItem(provider.config.attributeMappings.external_groups,'')">
-                <span class="glyphicon glyphicon glyphicon-plus"></span>
-            </button>
-        </div>
-        
-    </div>
-    <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
-           >Cancel</span>
+        <button type="button" class="btn btn-primary" 
+            ng-click="addItem(provider.config.emailDomain,'')">
+            <span class="glyphicon glyphicon glyphicon-plus"></span>
         </button>
-        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
-        </button> -->
+    </div>
+
+    
+    <div class="form-group">
+        <div class="alert alert-info" role="alert">
+            <!-- You can imort openid config like issuer, urls and scopes form url, or set it to discovery
+            <div class="input-group">
+                <span class="input-group-addon" id="import-config-url-addon">URL</span>
+                <input type="text" class="form-control" id="import-config-url" 
+                    aria-describedby="import-config-url-addon"
+                    placeholder="like https://accounts.google.com/.well-known/openid-configuration"
+                    ng-model="import.url">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                        ng-click="importConfig()">Import only</button>
+                    <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                        ng-click="importConfig();provider.config.discoveryUrl = import.url">Set Discovery</button>
+                </span>
+            </div> -->
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">ldap Profile File</label>
+        <input type="text" class="form-control" name="ldapProfileFile"
+            ng-model="provider.config.ldapProfileFile">
+
+        <div ng-show="editForm.ldapProfileFile.$invalid">
+            <p class="help-block"
+                ng-show="editForm.ldapProfileFile.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Base Url</label>
+        <input type="text" class="form-control" name="baseUrl"
+            ng-model="provider.config.baseUrl">
+        
+        <div ng-show="editForm.baseUrl.$invalid">
+            <p class="help-block"
+                ng-show="editForm.baseUrl.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Referral</label>
+        <input type="text" class="form-control" name="referral"
+            ng-model="provider.config.referral">
+        
+        <div ng-show="editForm.referral.$invalid">
+            <p class="help-block"
+                ng-show="editForm.referral.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="skipSSLVerification" 
+                ng-model="provider.config.skipSSLVerification">
+            <span>Skip Ssl Validation</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">User DN Pattern</label>
+        <input type="text" class="form-control" name="userDNPattern"
+            ng-model="provider.config.userDNPattern">
+        
+        <div ng-show="editForm.userDNPattern.$invalid">
+            <p class="help-block"
+                ng-show="editForm.userDNPattern.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">User DN Pattern Delimiter</label>
+        <input type="text" class="form-control" name="userDNPatternDelimiter"
+            ng-model="provider.config.userDNPatternDelimiter">
+        
+        <div ng-show="editForm.userDNPatternDelimiter.$invalid">
+            <p class="help-block"
+                ng-show="editForm.userDNPatternDelimiter.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Bind User Dn</label>
+        <input type="text" class="form-control" name="bindUserDn"
+            ng-model="provider.config.bindUserDn">
+        
+        <div ng-show="editForm.bindUserDn.$invalid">
+            <p class="help-block"
+                ng-show="editForm.bindUserDn.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Bind Password</label>
+        <input type="text" class="form-control" name="bindPassword"
+            ng-model="provider.config.bindPassword">
+        
+        <div ng-show="editForm.bindPassword.$invalid">
+            <p class="help-block"
+                ng-show="editForm.bindPassword.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">User Search Base</label>
+        <input type="text" class="form-control" name="userSearchBase"
+            ng-model="provider.config.userSearchBase">
+        
+        <div ng-show="editForm.userSearchBase.$invalid">
+            <p class="help-block"
+                ng-show="editForm.userSearchBase.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">User Search Filter</label>
+        <input type="text" class="form-control" name="userSearchFilter"
+            ng-model="provider.config.userSearchFilter">
+        
+        <div ng-show="editForm.userSearchFilter.$invalid">
+            <p class="help-block"
+                ng-show="editForm.userSearchFilter.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Password Attribute Name</label>
+        <input type="text" class="form-control" name="passwordAttributeName"
+            ng-model="provider.config.passwordAttributeName">
+        
+        <div ng-show="editForm.passwordAttributeName.$invalid">
+            <p class="help-block"
+                ng-show="editForm.passwordAttributeName.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Password Encoder</label>
+        <input type="text" class="form-control" name="passwordEncoder"
+            ng-model="provider.config.passwordEncoder">
+        
+        <div ng-show="editForm.passwordEncoder.$invalid">
+            <p class="help-block"
+                ng-show="editForm.passwordEncoder.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="localPasswordCompare" 
+                ng-model="provider.config.localPasswordCompare">
+            <span>Local Password Compare</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mail Attribute Name</label>
+        <input type="text" class="form-control" name="mailAttributeName"
+            ng-model="provider.config.mailAttributeName">
+        
+        <div ng-show="editForm.mailAttributeName.$invalid">
+            <p class="help-block"
+                ng-show="editForm.mailAttributeName.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mail Substitute</label>
+        <input type="text" class="form-control" name="mailSubstitute"
+            ng-model="provider.config.mailSubstitute">
+        
+        <div ng-show="editForm.mailSubstitute.$invalid">
+            <p class="help-block"
+                ng-show="editForm.mailSubstitute.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="mailSubstituteOverridesLdap" 
+                ng-model="provider.config.mailSubstituteOverridesLdap">
+            <span>Mail Substitute Overrides Ldap</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">ldap Group File</label>
+        <input type="text" class="form-control" name="ldapGroupFile"
+            ng-model="provider.config.ldapGroupFile">
+        
+        <div ng-show="editForm.ldapGroupFile.$invalid">
+            <p class="help-block"
+                ng-show="editForm.ldapGroupFile.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Group Search Base</label>
+        <input type="text" class="form-control" name="groupSearchBase"
+            ng-model="provider.config.groupSearchBase">
+        
+        <div ng-show="editForm.groupSearchBase.$invalid">
+            <p class="help-block"
+                ng-show="editForm.groupSearchBase.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Group Search Filter</label>
+        <input type="text" class="form-control" name="groupSearchFilter"
+            ng-model="provider.config.groupSearchFilter">
+        
+        <div ng-show="editForm.groupSearchFilter.$invalid">
+            <p class="help-block"
+                ng-show="editForm.groupSearchFilter.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="groupsIgnorePartialResults" 
+                ng-model="provider.config.groupsIgnorePartialResults">
+            <span>Groups Ignore Partial Results</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="autoAddGroups" 
+                ng-model="provider.config.autoAddGroups">
+            <span>Auto Add Groups</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="groupSearchSubTree" 
+                ng-model="provider.config.groupSearchSubTree">
+            <span>Group Search Sub Tree</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Max Group Search Depth</label>
+        <input type="numbner" class="form-control" name="maxGroupSearchDepth"
+            ng-model="provider.config.maxGroupSearchDepth">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Group Role Attribute</label>
+        <input type="text" class="form-control" name="groupRoleAttribute"
+            ng-model="provider.config.groupRoleAttribute">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">TLS Configuration</label>
+        <input type="text" class="form-control" name="tlsConfiguration"
+            ng-model="provider.config.tlsConfiguration">
+    </div>
+
+    
+    <div class="form-group">
+        <div class="alert alert-info" role="alert">
+            Usually enable 'addShadowUserOnLogin' will create same user on frist login.
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="addShadowUserOnLogin" 
+                ng-model="provider.config.addShadowUserOnLogin">
+            <span>Add Shadow User On Login</span>
+        </label>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label">External Groups Whitelist</label>
+        <br>
+        <div class="form-inline" 
+            ng-repeat="whitelist in provider.config.externalGroupsWhitelist track by $index">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-danger" 
+                        ng-click="deleItem(provider.config.externalGroupsWhitelist,$index)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </span>
+                <input type="text" class="form-control" name="whitelist_{{$index}}"
+                    ng-model="provider.config.externalGroupsWhitelist[$index]" required>
+            </div>
+
+            <div ng-show="editForm.whitelist_{{$index}}.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.whitelist_{{$index}}.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" 
+            ng-click="addItem(provider.config.externalGroupsWhitelist,'')">
+            <span class="glyphicon glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="storeCustomAttributes" 
+                ng-model="provider.config.storeCustomAttributes">
+            <span>Store Custom Attributes</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mapping:user_name</label>
+        <input type="text" class="form-control" name="user_name"
+            uib-tooltip="Map user_name to the attribute for user name in the provider assertion or token."
+            ng-model="provider.config.attributeMappings.user_name">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mapping:email</label>
+        <input type="text" class="form-control" name="email"
+            uib-tooltip="Map email to the attribute for email in the provider assertion or token."
+            ng-model="provider.config.attributeMappings.email">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mapping:given_name</label>
+        <input type="text" class="form-control" name="given_name"
+            uib-tooltip="Map given_name to the attribute for given name in the provider assertion or token."
+            ng-model="provider.config.attributeMappings.given_name">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mapping:family_name</label>
+        <input type="text" class="form-control" name="family_name"
+            uib-tooltip="Map family_name to the attribute for family name in the provider assertion or token."
+            ng-model="provider.config.attributeMappings.family_name">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mapping:phone_number</label>
+        <input type="text" class="form-control" name="phone_number"
+            uib-tooltip="Map phone_number to the attribute for phone number in the provider assertion or token."
+            ng-model="provider.config.attributeMappings.phone_number">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mapping:email_verified</label>
+        <input type="text" class="form-control" name="email_verified"
+            uib-tooltip="Maps the attribute on the assertion to the email_verified user record at the time of authentication."
+            ng-model="provider.config.attributeMappings.email_verified">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mapping:department</label>
+        <input type="text" class="form-control" name="department"
+            ng-model="provider.config.attributeMappings['user.attribute.department']">
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Mapping:external_groups</label>
+        <br>
+        <div class="form-inline" 
+            ng-repeat="external_group in provider.config.attributeMappings.external_groups track by $index">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-danger" 
+                        ng-click="deleItem(provider.config.attributeMappings.external_groups,$index)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </span>
+                <input type="text" class="form-control" name="external_group_{{$index}}"
+                    ng-model="provider.config.attributeMappings.external_groups[$index]" required>
+            </div>
+            
+            <div ng-show="editForm.external_group_{{$index}}.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.external_group_{{$index}}.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" 
+            ng-click="addItem(provider.config.attributeMappings.external_groups,'')">
+            <span class="glyphicon glyphicon glyphicon-plus"></span>
+        </button>
     </div>
 </form>

@@ -151,32 +151,53 @@
         </table>
     </div>
 
-    
-            
     <div class="panel panel-danger">
         <div class="panel-heading">Change Secret</div>
         <div class="panel-body">
-            <div class="col-md-6 col-md-offset-3">
-                <jh-alert-error></jh-alert-error>
-                <jh-alert></jh-alert>
-                
-                <div class="input-group">
-                    <span class="input-group-addon" id="old-secret-addon">Old Secret</span>
-                    <input type="password" ng-model="secret.old_secret" class="form-control" id="old-secret" aria-describedby="old-secret-addon">
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="secret-addon">Secret</span>
-                    <input type="password" ng-model="secret.secret" class="form-control" id="secret" aria-describedby="secret-addon">
-                </div>
-
-                <button type="button" ng-click="changeSecret()" class="btn btn-danger" aria-haspopup="true" aria-expanded="false">Change it</button>
+            <jh-alert-error></jh-alert-error>
+            <jh-alert></jh-alert>
+            <div class="col-md-6 col-md-offset-3"> 
+                <form name="secretForm" role="form" novalidate ng-submit="changeSecret()" show-validation>              
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="old-secret-addon">Old Secret</span>
+                            <input type="password" class="form-control" id="old-secret" 
+                                aria-describedby="old-secret-addon"
+                                ng-model="secret.old_secret">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="new-secret-addon">Secret</span>
+                            <input type="password" class="form-control" id="new_secret" name="new_secret"
+                                aria-describedby="new-secret-addon"
+                                required ng-maxlength=50 
+                                ng-model="secret.secret">
+                        </div>
+                        <div ng-show="secretForm.new_secret.$invalid">
+                            <p class="help-block"
+                                ng-show="secretForm.new_secret.$error.required">
+                                Your password is required.
+                            </p>
+                            <p class="help-block"
+                                ng-show="secretForm.new_secret.$error.maxlength">
+                                Your password cannot be longer than 50 characters.
+                            </p>
+                        </div>
+                        <password-strength-bar password-to-check="secret.secret"></password-strength-bar>
+                    </div>
+                    <button type="submit" class="btn btn-danger" 
+                        aria-haspopup="true" aria-expanded="false">
+                        <span>Change it</span>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
 
     <div class="panel panel-info">
         <div class="panel-heading">Tokens Manage</div>
-        <div ui-view="token"></div>
+        <div class="panel-body" ui-view="token"></div>
     </div>
 
     <button type="submit"

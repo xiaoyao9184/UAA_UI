@@ -30,8 +30,10 @@
             <div class="panel panel-danger">
                 <div class="panel-heading">Change password</div>
                 <div class="panel-body">
-                    <form name="editForm" role="form" novalidate ng-submit="changePassword()" show-validation>
-                        <div class="col-md-6 col-md-offset-3">
+                    <jh-alert-error></jh-alert-error>
+                    <jh-alert></jh-alert>
+                    <div class="col-md-8 col-md-offset-2">
+                        <form name="passwordForm" role="form" novalidate ng-submit="changePassword()" show-validation>
                             <div class="form-group">
                                 <div class="input-group">
                                     <span class="input-group-addon" id="old-password-addon">Old Password</span>
@@ -49,24 +51,24 @@
                                         required ng-maxlength=50 
                                         ng-model="password.password">
                                 </div>
-                                <div ng-show="editForm.new_password.$invalid">
+                                <div ng-show="passwordForm.new_password.$invalid">
                                     <p class="help-block"
-                                        ng-show="editForm.new_password.$error.required">
+                                        ng-show="passwordForm.new_password.$error.required">
                                         Your password is required.
                                     </p>
                                     <p class="help-block"
-                                        ng-show="editForm.new_password.$error.maxlength">
+                                        ng-show="passwordForm.new_password.$error.maxlength">
                                         Your password cannot be longer than 50 characters.
                                     </p>
                                 </div>
                                 <password-strength-bar password-to-check="password.password"></password-strength-bar>
                             </div>
                             <button type="submit" class="btn btn-danger"
-                                ng-disabled="editForm.$invalid">
+                                ng-disabled="passwordForm.$invalid">
                                 <span>Change it</span>
                             </button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </div>
             
@@ -77,7 +79,7 @@
                         1. Go to UAA
                         <button type="button" class="btn btn-default" 
                             aria-haspopup="true" aria-expanded="false"
-                            ng-click="getPasscode()" >Go get it</button>
+                            ng-click="getPasscode()">Go get it</button>
                         <br>
                         2. Other clients can get token using only passcode
                     </div>

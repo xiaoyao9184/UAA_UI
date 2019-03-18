@@ -111,23 +111,42 @@
     <div class="panel panel-danger">
         <div class="panel-heading">Change Password</div>
         <div class="panel-body">
+            <!-- TODO use one Instance jh-alert-error -->
+            <jh-alert-error></jh-alert-error>
+            <jh-alert></jh-alert>
             <div class="col-md-6 col-md-offset-3">
-                <jh-alert-error></jh-alert-error>
-                <jh-alert></jh-alert>
-                
-                <div class="input-group">
-                    <span class="input-group-addon" id="old-password-addon">Old Password</span>
-                    <input type="password" class="form-control" id="old-password" aria-describedby="old-password-addon"
-                        ng-model="secret.old_password">
-                </div>
-                <div class="input-group">
-                    <span class="input-group-addon" id="password-addon">Password</span>
-                    <input type="password" class="form-control" id="password" aria-describedby="password-addon"
-                        ng-model="secret.password" >
-                </div>
-
-                <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false"
-                    ng-click="changePassword()">Change it</button>
+                <form name="passwordForm" role="form" novalidate ng-submit="changePassword()" show-validation>              
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="old-password-addon">Old Password</span>
+                            <input type="password" class="form-control" id="old-password" aria-describedby="old-password-addon"
+                                ng-model="secret.old_password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="password-addon">Password</span>
+                            <input type="password" class="form-control" id="new-password" name="new_password"
+                                aria-describedby="password-addon"
+                                ng-model="secret.password" >
+                        </div>
+                        <div ng-show="passwordForm.new_password.$invalid">
+                            <p class="help-block"
+                                ng-show="passwordForm.new_password.$error.required">
+                                Your password is required.
+                            </p>
+                            <p class="help-block"
+                                ng-show="passwordForm.new_password.$error.maxlength">
+                                Your password cannot be longer than 50 characters.
+                            </p>
+                        </div>
+                        <password-strength-bar password-to-check="secret.password"></password-strength-bar>
+                    </div>
+                    <button type="submit" class="btn btn-danger" 
+                        aria-haspopup="true" aria-expanded="false">
+                        <span>Change it</span>
+                    </button>
+                </form>
             </div>
         </div>
     </div>
@@ -135,10 +154,10 @@
     <div class="panel panel-danger">
         <div class="panel-heading">Reset Password</div>
         <div class="panel-body">
+            <!-- TODO use one Instance jh-alert-error -->
+            <jh-alert-error></jh-alert-error>
+            <jh-alert></jh-alert>
             <div class="col-md-6 col-md-offset-3">
-                <jh-alert-error></jh-alert-error>
-                <jh-alert></jh-alert>
-                
                 <div class="input-group">
                     <span class="input-group-addon" id="reset-password-addon">New Password</span>
                     <input type="password" class="form-control" id="reset-password" aria-describedby="reset-password-addon"
@@ -148,7 +167,6 @@
                             ng-click="resetPassword(true)">Reset</button>
                     </span>
                 </div>
-                
                 <div class="input-group">
                     <span class="input-group-btn">
                         <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
@@ -165,11 +183,10 @@
     <div class="panel panel-danger">
         <div class="panel-heading">Change Email</div>
         <div class="panel-body">
-            <div class="col-md-6 col-md-offset-3">
-                <!-- TODO use one Instance jh-alert-error -->
-                <jh-alert-error></jh-alert-error>
-                <jh-alert></jh-alert>
-                
+            <!-- TODO use one Instance jh-alert-error -->
+            <jh-alert-error></jh-alert-error>
+            <jh-alert></jh-alert>
+            <div class="col-md-6 col-md-offset-3">                
                 <div class="input-group">
                     <span class="input-group-addon" id="change-email-addon">New Email</span>
                     <input type="text" class="form-control" id="change-email" aria-describedby="change-email-addon"
@@ -199,10 +216,10 @@
     <div class="panel panel-danger">
         <div class="panel-heading">Delete MFA registration</div>
         <div class="panel-body">
+            <!-- TODO use one Instance jh-alert-error -->
+            <jh-alert-error></jh-alert-error>
+            <jh-alert></jh-alert>
             <div class="col-md-6 col-md-offset-3">
-                <jh-alert-error></jh-alert-error>
-                <jh-alert></jh-alert>
-                
                 <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false"
                     ng-click="deleteMFA()">Delete</button>
             </div>
@@ -212,10 +229,10 @@
     <div class="panel panel-info">
         <div class="panel-heading">Status</div>
         <div class="panel-body">
+            <!-- TODO use one Instance jh-alert-error -->
+            <jh-alert-error></jh-alert-error>
+            <jh-alert></jh-alert>
             <div class="col-md-6 col-md-offset-3">
-                <jh-alert-error></jh-alert-error>
-                <jh-alert></jh-alert>
-                
                 <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
                     ng-click="unlockAccount()">Unlock Account</button>
 
@@ -228,10 +245,10 @@
     <div class="panel panel-info">
         <div class="panel-heading">Verify</div>
         <div class="panel-body">
+            <!-- TODO use one Instance jh-alert-error -->
+            <jh-alert-error></jh-alert-error>
+            <jh-alert></jh-alert>
             <div class="col-md-6 col-md-offset-3">
-                <jh-alert-error></jh-alert-error>
-                <jh-alert></jh-alert>
-                
                 <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
                     ng-click="verifyUser()">Verify</button>
                 
@@ -247,14 +264,13 @@
                             ng-click="verifyLink()">Create verify link</button>
                     </span>
                 </div>
-                    
             </div>
         </div>
     </div>
 
     <div class="panel panel-info">
         <div class="panel-heading">Tokens Manage</div>
-        <div ui-view="token"></div>
+        <div class="panel-body" ui-view="token"></div>
     </div>
 
     <button type="submit"

@@ -1,134 +1,118 @@
 <form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
-
-    <div class="modal-header">
-        <!-- <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
-                ng-click="clear()">&times;</button>
-        <h6 class="modal-title" id="myUserLabel">
-            TokenPolicy</h6> -->
-    </div>
-    <div class="modal-body">
-        <jh-alert-error></jh-alert-error>
-
-        <div class="form-group">
-            <label class="control-label">Access Token Validity</label>
-            <div class="input-group col-md-6">
-                <input type="number" class="form-control" name="accessTokenValidity_value"
-                    ng-model="tokenPolicy_accessTokenValidity.value"
-                    ng-change="tokenPolicy.accessTokenValidity = assignmentUnit(tokenPolicy_accessTokenValidity,time_units)">
-                <span class="input-group-btn" id="d-addon">
-                    <label class="btn btn-default" 
-                        ng-model="tokenPolicy_accessTokenValidity.unit" 
-                        ng-change="changeUnit(tokenPolicy_accessTokenValidity,'D',time_units)"
-                        uib-btn-radio="'D'">Day</label>
-                    <label class="btn btn-default" 
-                        ng-model="tokenPolicy_accessTokenValidity.unit" 
-                        ng-change="changeUnit(tokenPolicy_accessTokenValidity,'H',time_units)"
-                        uib-btn-radio="'H'">Hour</label>
-                    <label class="btn btn-default" 
-                        ng-model="tokenPolicy_accessTokenValidity.unit" 
-                        ng-change="changeUnit(tokenPolicy_accessTokenValidity,'M',time_units)"
-                        uib-btn-radio="'M'">Minute</label>
-                    <label class="btn btn-default" 
-                        ng-model="tokenPolicy_accessTokenValidity.unit"
-                        ng-change="changeUnit(tokenPolicy_accessTokenValidity,'S',time_units)"
-                        uib-btn-radio="'S'">Second</label>
-                </span>
-            </div>
-
-            <input type="number" class="form-control" name="accessTokenValidity"
-                ng-model="tokenPolicy.accessTokenValidity"     
-                ng-min="1"
-                ng-show="false">
-
-            <div ng-show="editForm.accessTokenValidity.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.accessTokenValidity.$error.required">
-                    This field is required.
-                </p>
-
-                <p class="help-block"
-                    ng-show="editForm.accessTokenValidity.$error.min"
-                    translate-value-max="255">
-                    This field cannot be smaller than -1.
-                </p>
-            </div>
+    <div class="form-group">
+        <label class="control-label">Access Token Validity</label>
+        <div class="input-group col-md-6">
+            <input type="number" class="form-control" name="accessTokenValidity_value"
+                ng-model="tokenPolicy_accessTokenValidity.value"
+                ng-change="tokenPolicy.accessTokenValidity = assignmentUnit(tokenPolicy_accessTokenValidity,time_units)">
+            <span class="input-group-btn" id="d-addon">
+                <label class="btn btn-default" 
+                    ng-model="tokenPolicy_accessTokenValidity.unit" 
+                    ng-change="changeUnit(tokenPolicy_accessTokenValidity,'D',time_units)"
+                    uib-btn-radio="'D'">Day</label>
+                <label class="btn btn-default" 
+                    ng-model="tokenPolicy_accessTokenValidity.unit" 
+                    ng-change="changeUnit(tokenPolicy_accessTokenValidity,'H',time_units)"
+                    uib-btn-radio="'H'">Hour</label>
+                <label class="btn btn-default" 
+                    ng-model="tokenPolicy_accessTokenValidity.unit" 
+                    ng-change="changeUnit(tokenPolicy_accessTokenValidity,'M',time_units)"
+                    uib-btn-radio="'M'">Minute</label>
+                <label class="btn btn-default" 
+                    ng-model="tokenPolicy_accessTokenValidity.unit"
+                    ng-change="changeUnit(tokenPolicy_accessTokenValidity,'S',time_units)"
+                    uib-btn-radio="'S'">Second</label>
+            </span>
         </div>
-        <div class="form-group">
-            <label class="control-label">Refresh Token Validity</label>
-            <div class="input-group col-md-6">
-                <input type="number" class="form-control" name="refreshTokenValidity_value"
-                    ng-model="tokenPolicy_refreshTokenValidity.value"
-                    ng-change="tokenPolicy.refreshTokenValidity = assignmentUnit(tokenPolicy_refreshTokenValidity,time_units)">
-                <span class="input-group-btn" id="d-addon">
-                    <label class="btn btn-default" 
-                        ng-model="tokenPolicy_refreshTokenValidity.unit" 
-                        ng-change="changeUnit(tokenPolicy_refreshTokenValidity,'D',time_units)"
-                        uib-btn-radio="'D'">Day</label>
-                    <label class="btn btn-default" 
-                        ng-model="tokenPolicy_refreshTokenValidity.unit" 
-                        ng-change="changeUnit(tokenPolicy_refreshTokenValidity,'H',time_units)"
-                        uib-btn-radio="'H'">Hour</label>
-                    <label class="btn btn-default" 
-                        ng-model="tokenPolicy_refreshTokenValidity.unit" 
-                        ng-change="changeUnit(tokenPolicy_refreshTokenValidity,'M',time_units)"
-                        uib-btn-radio="'M'">Minute</label>
-                    <label class="btn btn-default" 
-                        ng-model="tokenPolicy_refreshTokenValidity.unit"
-                        ng-change="changeUnit(tokenPolicy_refreshTokenValidity,'S',time_units)"
-                        uib-btn-radio="'S'">Second</label>
-                </span>
-            </div>
 
-            <input type="number" class="form-control" name="refreshTokenValidity"
-                ng-model="tokenPolicy.refreshTokenValidity"     
-                ng-min="1"
-                ng-show="false">
-        
-            <div ng-show="editForm.refreshTokenValidity.$invalid">
-                <p class="help-block"
-                    ng-show="editForm.refreshTokenValidity.$error.required">
-                    This field is required.
-                </p>
+        <input type="number" class="form-control" name="accessTokenValidity"
+            ng-model="tokenPolicy.accessTokenValidity"     
+            ng-min="1"
+            ng-show="false">
 
-                <p class="help-block"
-                    ng-show="editForm.refreshTokenValidity.$error.min"
-                    translate-value-max="255">
-                    This field cannot be smaller than 1.
-                </p>
-            </div>
-        </div>
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="jwtRevocable" 
-                    ng-model="tokenPolicy.jwtRevocable">
-                <span>Jwt Revocable</span>
-            </label>
-        </div>
-        <div class="form-group">
-            <label for="active">
-                <input type="checkbox" id="refreshTokenUnique" 
-                    ng-model="tokenPolicy.refreshTokenUnique">
-                <span>Refresh Token Unique</span>
-            </label>
-        </div>
-        <div class="form-group">
-            <label class="control-label">Refresh Token Format</label>
-            <br>
-            <div class="btn-group">
-                <label class="btn btn-primary" 
-                    ng-model="tokenPolicy.refreshTokenFormat" uib-btn-radio="'jwt'">jwt</label>
-                <label class="btn btn-primary" 
-                    ng-model="tokenPolicy.refreshTokenFormat" uib-btn-radio="'opaque'">opaque</label>
-            </div>
+        <div ng-show="editForm.accessTokenValidity.$invalid">
+            <p class="help-block"
+                ng-show="editForm.accessTokenValidity.$error.required">
+                This field is required.
+            </p>
+
+            <p class="help-block"
+                ng-show="editForm.accessTokenValidity.$error.min"
+                translate-value-max="255">
+                This field cannot be smaller than -1.
+            </p>
         </div>
     </div>
-    <div class="modal-footer">
-        <!-- <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
-           >Cancel</span>
-        </button>
-        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
-        </button> -->
+    
+    <div class="form-group">
+        <label class="control-label">Refresh Token Validity</label>
+        <div class="input-group col-md-6">
+            <input type="number" class="form-control" name="refreshTokenValidity_value"
+                ng-model="tokenPolicy_refreshTokenValidity.value"
+                ng-change="tokenPolicy.refreshTokenValidity = assignmentUnit(tokenPolicy_refreshTokenValidity,time_units)">
+            <span class="input-group-btn" id="d-addon">
+                <label class="btn btn-default" 
+                    ng-model="tokenPolicy_refreshTokenValidity.unit" 
+                    ng-change="changeUnit(tokenPolicy_refreshTokenValidity,'D',time_units)"
+                    uib-btn-radio="'D'">Day</label>
+                <label class="btn btn-default" 
+                    ng-model="tokenPolicy_refreshTokenValidity.unit" 
+                    ng-change="changeUnit(tokenPolicy_refreshTokenValidity,'H',time_units)"
+                    uib-btn-radio="'H'">Hour</label>
+                <label class="btn btn-default" 
+                    ng-model="tokenPolicy_refreshTokenValidity.unit" 
+                    ng-change="changeUnit(tokenPolicy_refreshTokenValidity,'M',time_units)"
+                    uib-btn-radio="'M'">Minute</label>
+                <label class="btn btn-default" 
+                    ng-model="tokenPolicy_refreshTokenValidity.unit"
+                    ng-change="changeUnit(tokenPolicy_refreshTokenValidity,'S',time_units)"
+                    uib-btn-radio="'S'">Second</label>
+            </span>
+        </div>
+
+        <input type="number" class="form-control" name="refreshTokenValidity"
+            ng-model="tokenPolicy.refreshTokenValidity"     
+            ng-min="1"
+            ng-show="false">
+    
+        <div ng-show="editForm.refreshTokenValidity.$invalid">
+            <p class="help-block"
+                ng-show="editForm.refreshTokenValidity.$error.required">
+                This field is required.
+            </p>
+
+            <p class="help-block"
+                ng-show="editForm.refreshTokenValidity.$error.min"
+                translate-value-max="255">
+                This field cannot be smaller than 1.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="jwtRevocable" 
+                ng-model="tokenPolicy.jwtRevocable">
+            <span>Jwt Revocable</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="refreshTokenUnique" 
+                ng-model="tokenPolicy.refreshTokenUnique">
+            <span>Refresh Token Unique</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Refresh Token Format</label>
+        <br>
+        <div class="btn-group">
+            <label class="btn btn-primary" 
+                ng-model="tokenPolicy.refreshTokenFormat" uib-btn-radio="'jwt'">jwt</label>
+            <label class="btn btn-primary" 
+                ng-model="tokenPolicy.refreshTokenFormat" uib-btn-radio="'opaque'">opaque</label>
+        </div>
     </div>
 </form>
