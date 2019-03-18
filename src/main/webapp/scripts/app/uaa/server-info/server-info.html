@@ -8,16 +8,16 @@
                 <div class="panel-body">
                     <ul class="list-group">
                         <li class="list-group-item list-group-item-info">
-                            App version is {{serverInfo.app.version}}
+                            App version is <kbd>{{serverInfo.app.version}}</kbd>
                         </li>
                         <li class="list-group-item list-group-item-info">
-                            App time is {{serverInfo.timestamp | date:'dd/MM/yy HH:mm' }}
+                            App time is <kbd>{{serverInfo.timestamp | date:'dd/MM/yy HH:mm' }}</kbd>
                         </li>
                         <li class="list-group-item list-group-item-info">
-                            App Git commit id is {{serverInfo.commit_id}}
+                            App Git commit id is <kbd>{{serverInfo.commit_id}}</kbd>
                         </li>
                         <li class="list-group-item list-group-item-info">
-                            Zone name is {{serverInfo.zone_name}}
+                            Zone name is <kbd>{{serverInfo.zone_name}}</kbd>
                         </li>
                         <li class="list-group-item"
                             ng-class="serverInfo.showLoginLinks ? 'list-group-item-success' : 'list-group-item-danger'">
