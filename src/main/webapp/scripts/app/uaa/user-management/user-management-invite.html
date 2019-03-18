@@ -10,26 +10,51 @@
         <jh-alert-error></jh-alert-error>
         
         <div class="form-group">
-            <label>Client id</label>
+            <label class="control-label">Client id</label>
             <input type="text" class="form-control" name="client_id"
+                required
                 ng-model="params.client_id">
+
+            <div ng-show="editForm.client_id.$invalid">
+                <p class="help-block"
+                        ng-show="editForm.client_id.$error.required">
+                    Invite e-mail is required.
+                </p>
+            </div>
         </div>
         <div class="form-group">
-            <label>Redirect uri</label>
-            <input type="text" class="form-control" name="redirect_uri"
+            <label class="control-label">Redirect uri</label>
+            <input type="url" class="form-control" name="redirect_uri"
                 uib-tooltip="Cannot jump to a non-UAA url"
                 ng-model="params.redirect_uri">
+
+            <div ng-show="editForm.redirect_uri.$invalid">
+                <p class="help-block"
+                        ng-show="editForm.redirect_uri.$error.url">
+                    Invite URL is invalid.
+                </p>
+            </div>
         </div>
 
-        <div class="form-group" >
+        <div class="form-group">
             <label class="control-label">Invite emails</label>
-            <div class="form-inline" ng-repeat="invite in invites track by $index">
-                <button type="button" class="btn btn-danger" ng-click="deleInvite($index)">
-                    <span class="glyphicon glyphicon-minus"></span>
-                </button>
-                <input type="text" class="form-control" name="invite.email"
-                   ng-model="invite.email" required ng-maxlength="100">
-                   
+            <br>
+            <div class="form-inline"
+                ng-repeat="invite in invites track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" 
+                            ng-click="deleInvite($index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="email" class="form-control" name="email_{{$index}}"
+                        placeholder="e-mail"
+                        ng-minlength=5 ng-maxlength=100 required maxlength="100"
+                        ng-model="invite.email">
+                </div>
+
+                
                 <span class="label glyphicon glyphicon-info-sign"
                     ng-show="invite.done"
                     ng-class="invite.success ? 'label-success' : 'label-danger'">
@@ -42,28 +67,43 @@
                         ng-model="invite.inviteLink">
                 </div>
 
-                <div class="input-group">
-                    <div class="alert-danger" role="alert"
-                        ng-show="invite.done && !invite.success">
+                <div class="input-group"
+                    ng-show="invite.done && !invite.success">
+                    <div class="alert-danger" role="alert">
                         {{invite.errorMessage}}
                     </div>
+                </div>
+
+                <div ng-show="editForm.email_{{$index}}.$invalid">
+                    <p class="help-block"
+                            ng-show="editForm.email_{{$index}}.$error.required">
+                        Invite e-mail is required.
+                    </p>
+                    <p class="help-block"
+                            ng-show="editForm.email_{{$index}}.$error.email">
+                        Invite e-mail is invalid.
+                    </p>
+                    <p class="help-block"
+                            ng-show="editForm.email_{{$index}}.$error.minlength">
+                        Invite e-mail is required to be at least 5 characters.
+                    </p>
+                    <p class="help-block"
+                            ng-show="editForm.email_{{$index}}.$error.maxlength">
+                        Invite e-mail cannot be longer than 100 characters.
+                    </p>
                 </div>
             </div>
             <button type="button" class="btn btn-primary" ng-click="addInvite()">
                 <span class="glyphicon glyphicon glyphicon-plus"></span>
             </button>
-            
         </div>
-        
-        
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
-            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span
-           >Cancel</span>
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
         </button>
         <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
-            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Invite</span>
         </button>
     </div>
 </form>
