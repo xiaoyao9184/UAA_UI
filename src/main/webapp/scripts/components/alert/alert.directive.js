@@ -6,7 +6,7 @@ angular.module('uaaUIApp')
             restrict: 'E',
             template: '<div class="alerts" ng-cloak="">' +
                             '<div ng-repeat="alert in alerts" ng-class="[alert.position, {\'toast\': alert.toast}]">' +
-                                '<uib-alert ng-cloak="" type="{{alert.type}}" close="alert.close()"><pre>{{ alert.msg }}</pre></uib-alert>' +
+                                '<div uib-alert ng-cloak="" ng-class="\'alert-{{alert.type}}\'" close="alert.close()"><pre>{{ alert.msg }}</pre></div>' +
                             '</div>' +
                       '</div>',
             controller: ['$scope',
@@ -24,7 +24,7 @@ angular.module('uaaUIApp')
             restrict: 'E',
             template: '<div class="alerts" ng-cloak="">' +
                             '<div ng-repeat="alert in error_alerts" ng-class="[alert.position, {\'toast\': alert.toast}]">' +
-                                '<uib-alert ng-cloak="" type="{{alert.type}}" close="alert.close(error_alerts)"><pre>{{ alert.msg }}</pre></uib-alert>' +
+                                '<div uib-alert ng-cloak="" ng-class="\'alert-{{alert.type}}\'" close="alert.close(error_alerts)"><pre>{{ alert.msg }}</pre></div>' +
                             '</div>' +
                       '</div>',
             controller: ['$scope',
