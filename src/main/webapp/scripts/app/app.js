@@ -6,7 +6,7 @@ angular.module('uaaUIApp', [
     'infinite-scroll', 'LocalStorageModule', 
     'angular-loading-bar', 'angular-clipboard', 'file'])
 
-    .run(function ($rootScope, $location, $window, $http, $state, Principal, ENV, VERSION) {
+    .run(function ($rootScope, $location, $window, $http, $state, ENV, VERSION) {
         
         $rootScope.ENV = ENV;
         $rootScope.VERSION = VERSION;
@@ -63,7 +63,7 @@ angular.module('uaaUIApp', [
     .config(function ($stateProvider, $urlRouterProvider, $httpProvider, $locationProvider,
       httpRequestInterceptorCacheBusterProvider, AlertServiceProvider) {
         // uncomment below to make alerts look like toast
-        //AlertServiceProvider.showAsToast(true);
+        // AlertServiceProvider.showAsToast(true);
 
         //Cache everything except rest api requests
         httpRequestInterceptorCacheBusterProvider.setMatchlist([/.*api.*/, /.*protected.*/], true);

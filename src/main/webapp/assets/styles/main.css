@@ -115,10 +115,10 @@ only screen and (                min-resolution: 2dppx) {
 Custom alerts for notification
 ========================================================================== */
 
-.alerts .alert{
+.alerts .alert {
     text-overflow: ellipsis;
 }
-.alert pre{
+.alert pre {
     background: none;
     border: none;
     font: inherit;
@@ -134,6 +134,7 @@ Custom alerts for notification
 .alerts .toast {
     position: fixed;
     width: 100%;
+    z-index: 9;
 }
 
 .alerts .toast.left {
@@ -152,9 +153,23 @@ Custom alerts for notification
     bottom: 55px;
 }
 
+
+.alert-over {
+    position: fixed;
+    right: 00px;
+    top: 100px;
+    padding: 10px;
+    width: 100%;
+    z-index: 9;
+}
+
 @media screen and (min-width: 480px) {
     .alerts .toast {
         width: 50%;
+    }
+
+    .alert-over {
+        width: 30%;
     }
 }
 
