@@ -108,165 +108,148 @@
         </table>
     </div>
  
-    <div class="panel panel-danger">
-        <div class="panel-heading">Change Password</div>
-        <div class="panel-body">
-            <!-- TODO use one Instance jh-alert-error -->
-            <!-- <jh-alert-error></jh-alert-error> -->
-            <!-- <jh-alert></jh-alert> -->
-            <div class="col-md-6 col-md-offset-3">
-                <form name="passwordForm" role="form" novalidate ng-submit="changePassword()" show-validation>              
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="old-password-addon">Old Password</span>
-                            <input type="password" class="form-control" id="old-password" aria-describedby="old-password-addon"
-                                ng-model="secret.old_password">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-warning">
+                <div class="panel-heading">Delete MFA registration</div>
+                <div class="panel-body">
+                    <button type="button" class="btn btn-warning" aria-haspopup="true" aria-expanded="false"
+                        ng-click="deleteMFA()">Delete</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Change Password</div>
+                <div class="panel-body">
+                    <form name="passwordForm" role="form" novalidate ng-submit="changePassword()" show-validation>              
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="old-password-addon">Old Password</span>
+                                <input type="password" class="form-control" id="old-password" aria-describedby="old-password-addon"
+                                    ng-model="secret.old_password">
+                            </div>
                         </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="password-addon">Password</span>
+                                <input type="password" class="form-control" id="new-password" name="new_password"
+                                    aria-describedby="password-addon"
+                                    ng-model="secret.password" >
+                            </div>
+                            <div ng-show="passwordForm.new_password.$invalid">
+                                <p class="help-block"
+                                    ng-show="passwordForm.new_password.$error.required">
+                                    Your password is required.
+                                </p>
+                                <p class="help-block"
+                                    ng-show="passwordForm.new_password.$error.maxlength">
+                                    Your password cannot be longer than 50 characters.
+                                </p>
+                            </div>
+                            <password-strength-bar password-to-check="secret.password"></password-strength-bar>
+                        </div>
+                        <button type="submit" class="btn btn-danger" 
+                            aria-haspopup="true" aria-expanded="false">
+                            <span>Change it</span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div> 
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Status</div>
+                <div class="panel-body">
+                    <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                        ng-click="unlockAccount()">Unlock Account</button>
+    
+                    <button type="button" class="btn btn-warning" aria-haspopup="true" aria-expanded="false"
+                        ng-click="expirePassword()">Expire Password</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Reset Password</div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="reset-password-addon">New Password</span>
+                        <input type="password" class="form-control" id="reset-password" aria-describedby="reset-password-addon"
+                            ng-model="reset.password">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false"
+                                ng-click="resetPassword(true)">Reset</button>
+                        </span>
                     </div>
-                    <div class="form-group">
-                        <div class="input-group">
-                            <span class="input-group-addon" id="password-addon">Password</span>
-                            <input type="password" class="form-control" id="new-password" name="new_password"
-                                aria-describedby="password-addon"
-                                ng-model="secret.password" >
-                        </div>
-                        <div ng-show="passwordForm.new_password.$invalid">
-                            <p class="help-block"
-                                ng-show="passwordForm.new_password.$error.required">
-                                Your password is required.
-                            </p>
-                            <p class="help-block"
-                                ng-show="passwordForm.new_password.$error.maxlength">
-                                Your password cannot be longer than 50 characters.
-                            </p>
-                        </div>
-                        <password-strength-bar password-to-check="secret.password"></password-strength-bar>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                                ng-click="resetPassword(false)">Get</button>
+                        </span>
+                        <span class="input-group-addon" id="reset-password-code-addon">Reset Password Code</span>
+                        <input type="text" class="form-control" id="reset-password-code" aria-describedby="reset-password-code-addon"
+                            ng-model="reset.code">
                     </div>
-                    <button type="submit" class="btn btn-danger" 
-                        aria-haspopup="true" aria-expanded="false">
-                        <span>Change it</span>
-                    </button>
-                </form>
-            </div>
-        </div>
-    </div>
- 
-    <div class="panel panel-danger">
-        <div class="panel-heading">Reset Password</div>
-        <div class="panel-body">
-            <!-- TODO use one Instance jh-alert-error -->
-            <!-- <jh-alert-error></jh-alert-error> -->
-            <!-- <jh-alert></jh-alert> -->
-            <div class="col-md-6 col-md-offset-3">
-                <div class="input-group">
-                    <span class="input-group-addon" id="reset-password-addon">New Password</span>
-                    <input type="password" class="form-control" id="reset-password" aria-describedby="reset-password-addon"
-                        ng-model="reset.password">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false"
-                            ng-click="resetPassword(true)">Reset</button>
-                    </span>
-                </div>
-                <div class="input-group">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
-                            ng-click="resetPassword(false)">Get</button>
-                    </span>
-                    <span class="input-group-addon" id="reset-password-code-addon">Reset Password Code</span>
-                    <input type="text" class="form-control" id="reset-password-code" aria-describedby="reset-password-code-addon"
-                        ng-model="reset.code">
                 </div>
             </div>
         </div>
     </div>
- 
-    <div class="panel panel-danger">
-        <div class="panel-heading">Change Email</div>
-        <div class="panel-body">
-            <!-- TODO use one Instance jh-alert-error -->
-            <!-- <jh-alert-error></jh-alert-error> -->
-            <!-- <jh-alert></jh-alert> -->
-            <div class="col-md-6 col-md-offset-3">                
-                <div class="input-group">
-                    <span class="input-group-addon" id="change-email-addon">New Email</span>
-                    <input type="text" class="form-control" id="change-email" aria-describedby="change-email-addon"
-                        ng-model="email.email">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false"
-                            ng-click="changeEmail(true)">Change</button>
-                    </span>
-                </div>
-                
-                <div class="input-group">
-                    <span class="input-group-addon" id="change-email-addon">New Email</span>
-                    <input type="text" class="form-control" id="change-email" aria-describedby="change-email-addon"
-                        ng-model="email.email">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
-                            ng-click="changeEmail(false)">Get</button>
-                    </span>
-                    <span class="input-group-addon" id="change-email-code-addon">Change Email Code</span>
-                    <input type="text" class="form-control" id="change-email-code" aria-describedby="change-email-code-addon"
-                        ng-model="email.code">
+    <div class="row">
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Verify</div>
+                <div class="panel-body">
+                    <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                        ng-click="verifyUser()">Verify</button>
+                    
+                    <div class="input-group">
+                        <span class="input-group-addon" id="verify-redirect-addon">Redirect uri</span>
+                        <input type="text" class="form-control" id="redirect_uri" aria-describedby="verify-redirect-addon"
+                            ng-model="verify.redirect_uri">
+                        <span class="input-group-addon" id="verify-link-addon">Verify link</span>
+                        <input type="text" class="form-control" id="verify_link" aria-describedby="verify-link-addon"
+                            ng-model="verify.verify_link">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                                ng-click="verifyLink()">Create verify link</button>
+                        </span>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
- 
-    <div class="panel panel-warning">
-        <div class="panel-heading">Delete MFA registration</div>
-        <div class="panel-body">
-            <!-- TODO use one Instance jh-alert-error -->
-            <!-- <jh-alert-error></jh-alert-error> -->
-            <!-- <jh-alert></jh-alert> -->
-            <div class="col-md-6 col-md-offset-3">
-                <button type="button" class="btn btn-warning" aria-haspopup="true" aria-expanded="false"
-                    ng-click="deleteMFA()">Delete</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="panel panel-info">
-        <div class="panel-heading">Status</div>
-        <div class="panel-body">
-            <!-- TODO use one Instance jh-alert-error -->
-            <!-- <jh-alert-error></jh-alert-error> -->
-            <!-- <jh-alert></jh-alert> -->
-            <div class="col-md-6 col-md-offset-3">
-                <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
-                    ng-click="unlockAccount()">Unlock Account</button>
-
-                <button type="button" class="btn btn-warning" aria-haspopup="true" aria-expanded="false"
-                    ng-click="expirePassword()">Expire Password</button>
-            </div>
-        </div>
-    </div>
-
-    <div class="panel panel-info">
-        <div class="panel-heading">Verify</div>
-        <div class="panel-body">
-            <!-- TODO use one Instance jh-alert-error -->
-            <!-- <jh-alert-error></jh-alert-error> -->
-            <!-- <jh-alert></jh-alert> -->
-            <div class="col-md-6 col-md-offset-3">
-                <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
-                    ng-click="verifyUser()">Verify</button>
-                
-                <div class="input-group">
-                    <span class="input-group-addon" id="verify-redirect-addon">Redirect uri</span>
-                    <input type="text" class="form-control" id="redirect_uri" aria-describedby="verify-redirect-addon"
-                        ng-model="verify.redirect_uri">
-                    <span class="input-group-addon" id="verify-link-addon">Verify link</span>
-                    <input type="text" class="form-control" id="verify_link" aria-describedby="verify-link-addon"
-                        ng-model="verify.verify_link">
-                    <span class="input-group-btn">
-                        <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
-                            ng-click="verifyLink()">Create verify link</button>
-                    </span>
+        <div class="col-md-6">
+            <div class="panel panel-danger">
+                <div class="panel-heading">Change Email</div>
+                <div class="panel-body">
+                    <div class="input-group">
+                        <span class="input-group-addon" id="change-email-addon">New Email</span>
+                        <input type="text" class="form-control" id="change-email" aria-describedby="change-email-addon"
+                            ng-model="email.email">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-danger" aria-haspopup="true" aria-expanded="false"
+                                ng-click="changeEmail(true)">Change</button>
+                        </span>
+                    </div>
+                    
+                    <div class="input-group">
+                        <span class="input-group-addon" id="change-email-addon">New Email</span>
+                        <input type="text" class="form-control" id="change-email" aria-describedby="change-email-addon"
+                            ng-model="email.email">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                                ng-click="changeEmail(false)">Get</button>
+                        </span>
+                        <span class="input-group-addon" id="change-email-code-addon">Change Email Code</span>
+                        <input type="text" class="form-control" id="change-email-code" aria-describedby="change-email-code-addon"
+                            ng-model="email.code">
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 
     <div class="panel panel-info">
         <div class="panel-heading">Tokens Manage</div>
