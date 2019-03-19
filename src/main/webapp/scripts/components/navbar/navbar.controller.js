@@ -6,7 +6,12 @@ angular.module('uaaUIApp')
         $scope.inProduction = ENV === 'prod';
         
         //revert
-        Principal.identity(true);
+        Principal.identity(true)
+            .catch(function() {
+                if($state.current.name !== 'home'){
+                    $state.go('home');
+                }
+            });
 
         $scope.isAuthenticated = Principal.isAuthenticated;
         $scope.isClient = Principal.isClient;

@@ -123,7 +123,7 @@ angular.module('uaaUIApp')
                     .catch(function() {
                         _identity = undefined;
                         _authenticated = false;
-                        deferred.resolve(null);
+                        deferred.reject(null);
                     });
                 return deferred.promise;
             }
