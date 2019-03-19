@@ -50,7 +50,7 @@ angular.module('uaaUIApp')
                         size: 'lg',
                         resolve: {
                             entity: function (IdentityProvider) {
-                                return new IdentityProvider();
+                                return new IdentityProvider({type:'uaa'});
                             }
                         }
                     }).result.then(function(result) {
