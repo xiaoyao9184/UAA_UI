@@ -33,7 +33,16 @@
         <div class="form-group">
             <label class="control-label">App Launch Url</label>
             <input type="text" class="form-control" name="appLaunchUrl"
-                   ng-model="client.appLaunchUrl">
+                ng-maxlength="1024"
+                ng-model="client.appLaunchUrl">
+
+            <div ng-show="editForm.appLaunchUrl.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.appLaunchUrl.$error.maxlength"
+                    translate-value-max="1024">
+                    This field cannot be longer than 1024 characters.
+                </p>
+            </div>
         </div>
 
         <div class="form-group">

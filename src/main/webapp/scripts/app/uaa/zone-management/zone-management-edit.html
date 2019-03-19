@@ -58,15 +58,7 @@
         <div class="form-group">
             <label>Description</label>
             <input type="text" class="form-control" name="description"
-                   ng-model="zone.description" ng-maxlength="10000">
-
-            <div ng-show="editForm.description.$invalid">
-                <p class="help-block"
-                   ng-show="editForm.description.$error.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 10000 characters.
-                </p>
-            </div>
+                   ng-model="zone.description">
         </div>
 
         <div class="form-group">

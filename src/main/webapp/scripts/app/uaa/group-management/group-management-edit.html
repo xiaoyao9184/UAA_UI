@@ -16,7 +16,7 @@
         <div class="form-group">
             <label class="control-label">DisplayName</label>
             <input type="text" class="form-control" name="displayName"
-                   ng-model="group.displayName" ng-maxlength="50">
+                   ng-model="group.displayName" ng-maxlength="255">
 
             <div ng-show="editForm.displayName.$invalid">
                 <p class="help-block"
@@ -26,8 +26,8 @@
 
                 <p class="help-block"
                    ng-show="editForm.displayName.$error.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
+                   translate-value-max="255">
+                    This field cannot be longer than 255 characters.
                 </p>
             </div>
         </div>
@@ -35,13 +35,13 @@
         <div class="form-group">
             <label class="control-label">Description</label>
             <input type="text" class="form-control" name="description"
-                   ng-model="group.description" ng-maxlength="50">
+                ng-model="group.description" ng-maxlength="255">
 
             <div ng-show="editForm.description.$invalid">
                 <p class="help-block"
-                   ng-show="editForm.description.$error.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
+                    ng-show="editForm.description.$error.maxlength"
+                    translate-value-max="255">
+                    This field cannot be longer than 255 characters.
                 </p>
             </div>
         </div>

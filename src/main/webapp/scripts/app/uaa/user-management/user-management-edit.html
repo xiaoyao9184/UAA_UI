@@ -16,7 +16,7 @@
         <div class="form-group">
             <label class="control-label">UserName</label>
             <input type="text" class="form-control" name="userName"
-                   ng-model="user.userName" required ng-maxlength="50">
+                   ng-model="user.userName" required ng-maxlength="255">
 
             <div ng-show="editForm.userName.$invalid">
                 <p class="help-block"
@@ -26,8 +26,8 @@
 
                 <p class="help-block"
                    ng-show="editForm.userName.$error.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
+                   translate-value-max="255">
+                    This field cannot be longer than 255 characters.
                 </p>
             </div>
         </div>
@@ -36,7 +36,7 @@
             <label class="control-label">Password</label>
             <input type="password" class="form-control" name="password"
                    ng-model="user.password" 
-                   ng-required="user.id == null" ng-maxlength="50">
+                   ng-required="user.id == null" ng-maxlength="255">
 
             <div ng-show="editForm.password.$invalid">
                 <p class="help-block"
@@ -46,8 +46,8 @@
 
                 <p class="help-block"
                    ng-show="editForm.password.$error.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
+                   translate-value-max="255">
+                    This field cannot be longer than 255 characters.
                 </p>
             </div>
             <password-strength-bar password-to-check="user.password"></password-strength-bar>
@@ -55,26 +55,26 @@
         <div class="form-group">
             <label class="control-label">FamilyName</label>
             <input type="text" class="form-control" name="familyName"
-                   ng-model="user.name.familyName" ng-maxlength="50">
+                   ng-model="user.name.familyName" ng-maxlength="255">
 
             <div ng-show="editForm.familyName.$invalid">
                 <p class="help-block"
                    ng-show="editForm.familyName.$error.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
+                   translate-value-max="255">
+                    This field cannot be longer than 255 characters.
                 </p>
             </div>
         </div>
         <div class="form-group">
             <label class="control-label">GivenName</label>
             <input type="text" class="form-control" name="givenName"
-                   ng-model="user.name.givenName" ng-maxlength="50">
+                   ng-model="user.name.givenName" ng-maxlength="255">
 
             <div ng-show="editForm.givenName.$invalid">
                 <p class="help-block"
                    ng-show="editForm.givenName.$error.maxlength"
-                   translate-value-max="50">
-                    This field cannot be longer than 50 characters.
+                   translate-value-max="255">
+                    This field cannot be longer than 255 characters.
                 </p>
             </div>
         </div>
@@ -220,6 +220,19 @@
 
                     <p class="help-block"
                         ng-show="editForm.clientId_{{$index}}.$error.maxlength"
+                        translate-value-max="100">
+                        This field cannot be longer than 100 characters.
+                    </p>
+                </div>
+
+                <div ng-show="editForm.scope_{{$index}}.$invalid">
+                    <p class="help-block"
+                        ng-show="editForm.scope_{{$index}}.$error.required">
+                        This field is required.
+                    </p>
+
+                    <p class="help-block"
+                        ng-show="editForm.scope_{{$index}}.$error.maxlength"
                         translate-value-max="100">
                         This field cannot be longer than 100 characters.
                     </p>

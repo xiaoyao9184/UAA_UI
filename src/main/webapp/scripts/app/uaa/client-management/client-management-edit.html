@@ -10,7 +10,7 @@
         <div class="form-group">
             <label>ID</label>
             <input type="text" class="form-control" name="client_id"
-                ng-model="client.client_id" ng-maxlength="50" ng-required="true">
+                ng-model="client.client_id" ng-maxlength="255" ng-required="true">
 
             <div ng-show="editForm.client_id.$invalid">
                 <p class="help-block"
@@ -20,8 +20,8 @@
 
                 <p class="help-block"
                     ng-show="editForm.client_id.$error.maxlength"
-                    translate-value-max="50">
-                    This field cannot be longer than 50 characters.
+                    translate-value-max="255">
+                    This field cannot be longer than 255 characters.
                 </p>
             </div>
         </div>
@@ -29,13 +29,13 @@
         <div class="form-group" ng-show="client.id === null">
             <label class="control-label">Secret</label>
             <input type="password" class="form-control" name="client_secret"
-                ng-model="client.client_secret" ng-maxlength="50">
+                ng-model="client.client_secret" ng-maxlength="256">
 
             <div ng-show="editForm.client_secret.$invalid">
                 <p class="help-block"
                     ng-show="editForm.client_secret.$error.maxlength"
-                    translate-value-max="50">
-                    This field cannot be longer than 50 characters.
+                    translate-value-max="256">
+                    This field cannot be longer than 256 characters.
                 </p>
             </div>
         </div>
