@@ -30,6 +30,16 @@
                   <span class="glyphicon glyphicon-flash"></span> <span>Create a new Client</span>
               </button>
           </div>
+          <div class="col-md-4 input-group">
+              <input type="text" class="form-control" placeholder="id, url, grant or scope"
+                  ng-model="search">
+              <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"
+                      ng-click="loadPage()">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  </button>
+              </span>
+          </div>
         </div>
     </div>
     <div class="table-responsive">

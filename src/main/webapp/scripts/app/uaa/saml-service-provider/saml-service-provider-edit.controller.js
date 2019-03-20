@@ -49,7 +49,7 @@ angular.module('uaaUIApp').controller('SAMLServiceProviderEditController',
 
                 $scope.config_staticCustomAttributes = angular.toJson(provider.config.staticCustomAttributes,true);
             
-                //Same like https://github.com/cloudfoundry/uaa/blob/b513cb9ccd0ca23bd6e5e83bbca72a46de45a44f/model/src/main/java/org/cloudfoundry/identity/uaa/provider/saml/idp/SamlServiceProviderDefinition.java#L80
+                //Same like https://github.com/cloudfoundry/uaa/blob/4.26.0/model/src/main/java/org/cloudfoundry/identity/uaa/provider/saml/idp/SamlServiceProviderDefinition.java#L80
                 if(provider.config.metaDataLocation.indexOf("<?xml") == 0 ||
                     provider.config.metaDataLocation.indexOf("<md:EntityDescriptor") == 0 ||
                     provider.config.metaDataLocation.indexOf("<EntityDescriptor") == 0){

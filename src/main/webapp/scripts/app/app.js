@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('uaaUIApp', [
-    'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'ngPostMessage', 
-    'ui.bootstrap', 'ui.router', 
+    'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'ngPostMessage', 'ngSanitize',
+    'ui.bootstrap', 'ui.router', 'ui.select',
     'infinite-scroll', 'LocalStorageModule', 
     'angular-loading-bar', 'angular-clipboard', 'file'])
 

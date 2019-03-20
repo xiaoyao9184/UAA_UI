@@ -1,31 +1,28 @@
 'use strict';
 
 angular.module('uaaUIApp')
-    .controller('UserManagementController', function ($scope, User, ParseLinks) {
+    .controller('UserManagementController', function ($scope, User) {
         $scope.users = [];
-
-        $scope.page = 1;
-        $scope.size = 5;
-        $scope.loadAll = function () {
-            var startIndex = ($scope.page - 1) * $scope.size + 1
-            User.query({startIndex: startIndex, count: $scope.size}, function (result, headers) {
-                if(headers('link') && headers('X-Total-Count')){
-                    $scope.links = ParseLinks.parse(headers('link'));
-                    $scope.totalItems = headers('X-Total-Count');
-                    $scope.users = result;
-                }else{
-                    //TODO not
-                    // $scope.links = ParseLinks.parse(headers('link'));
-                    $scope.totalItems = result.totalResults;
-                    $scope.users = result.resources;
-                }
+        $scope.search = '';
+        $scope.pageTotal = 0
+        $scope.pageNumber = 1;
+        $scope.pageSize = 5;
+        $scope.loadPage = function () {
+            var filter = 
+                'id co \'' + $scope.search + '\'' +
+                ' or userName co \'' + $scope.search + '\'' +
+                ' or email co \'' + $scope.search + '\'';
+            if($scope.search.length === 0){
+                filter = null
+            }
+            var startIndex = ($scope.pageNumber - 1) * $scope.pageSize + 1
+            User.query({startIndex: startIndex, count: $scope.pageSize, filter: filter}, function (result, headers) {
+                $scope.totalItems = result.totalResults;
+                $scope.users = result.resources;
             });
         };
 
-        $scope.loadPage = function () {
-            $scope.loadAll();
-        };
-        $scope.loadAll();
+        $scope.loadPage();
 
         $scope.setActive = function (user, isActivated) {
             user.active = isActivated;
@@ -36,12 +33,7 @@ angular.module('uaaUIApp')
         };
 
         $scope.clear = function () {
-            $scope.user = {
-                id: null, login: null, firstName: null, lastName: null, email: null,
-                activated: null, langKey: null, createdBy: null, createdDate: null,
-                lastModifiedBy: null, lastModifiedDate: null, resetDate: null,
-                resetKey: null, authorities: null
-            };
+            $scope.user = {};
             $scope.editForm.$setPristine();
             $scope.editForm.$setUntouched();
         };

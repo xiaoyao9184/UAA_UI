@@ -3,11 +3,21 @@
     <!-- <jh-alert></jh-alert> -->
     <div class="container">
         <div class="row">
-          <div class="col-md-4">
-              <button class="btn btn-primary" ui-sref="group-management.new">
-                  <span class="glyphicon glyphicon-flash"></span> <span>Create a new Group</span>
-              </button>
-          </div>
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="group-management.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new Group</span>
+                </button>
+            </div>
+            <div class="col-md-4 input-group">
+                <input type="text" class="form-control" placeholder="id, name or description"
+                    ng-model="search">
+                <span class="input-group-btn">
+                    <button class="btn btn-default" type="button"
+                        ng-click="loadPage()">
+                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                    </button>
+                </span>
+            </div>
         </div>
     </div>
     <div class="table-responsive">
@@ -66,26 +76,9 @@
             </tr>
             </tbody>
         </table>
-
-
-        <!-- <ul class="list-group">
-            <li class="list-group-item" ng-repeat="group in groups track by group.id">
-
-                
-            </li>
-            <li class="list-group-item">Dapibus ac facilisis in</li>
-            <li class="list-group-item">Morbi leo risus</li>
-            <li class="list-group-item">Porta ac consectetur ac</li>
-            <li class="list-group-item">Vestibulum at eros</li>
-        </ul>
-        <ol class="breadcrumb">
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Library</a></li>
-            <li class="active">Data</li>
-        </ol> -->
     </div>
     <div class="text-center">
-        <ul uib-pagination class="pagination-sm" total-items="totalItems" items-per-page="size"
-            ng-model="page" ng-change="loadPage()"></ul>
+        <ul uib-pagination class="pagination-sm" total-items="pageTotal" items-per-page="pageSize"
+            ng-model="pageNumber" ng-change="loadPage()"></ul>
     </div>
 </div>

@@ -11,6 +11,16 @@
                   <span class="glyphicon glyphicon-flash"></span> <span>Invite users</span>
               </button>
           </div>
+          <div class="col-md-4 input-group">
+              <input type="text" class="form-control" placeholder="id, name, or email"
+                  ng-model="search">
+              <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"
+                      ng-click="loadPage()">
+                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                  </button>
+              </span>
+          </div>
         </div>
     </div>
     <div class="table-responsive">
@@ -97,7 +107,7 @@
         </table>
     </div>
     <div class="text-center">
-        <ul uib-pagination class="pagination-sm" total-items="totalItems" items-per-page="size"
-            ng-model="page" ng-change="loadPage()"></ul>
+        <ul uib-pagination class="pagination-sm" total-items="pageTotal" items-per-page="pageSize"
+            ng-model="pageNumber" ng-change="loadPage()"></ul>
     </div>
 </div>
