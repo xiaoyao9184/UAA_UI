@@ -25,21 +25,36 @@
 
     <div class="container">
         <div class="row">
-          <div class="col-md-4">
-              <button class="btn btn-primary" ui-sref="client-management.new">
-                  <span class="glyphicon glyphicon-flash"></span> <span>Create a new Client</span>
-              </button>
-          </div>
-          <div class="col-md-4 input-group">
-              <input type="text" class="form-control" placeholder="id, url, grant or scope"
-                  ng-model="search">
-              <span class="input-group-btn">
-                  <button class="btn btn-default" type="button"
-                      ng-click="loadPage()">
-                      <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                  </button>
-              </span>
-          </div>
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="client-management.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new Client</span>
+                </button>
+            </div>
+            <div class="col-md-6">
+                <ui-select multiple theme="bootstrap" title="Choose a filter"
+                    close-on-select="false" 
+                    on-select="selectOne($item, $model, $select, this)" on-remove="selectOne($item, $model, $select, this)"
+                    tagging="tagging"
+                    ng-model="selected.value" 
+                    >
+                    <ui-select-match placeholder="Search...">
+                        <span class="glyphicon" aria-hidden="true"
+                            ng-class="$item.icon">
+                        </span>
+                        {{$item.name}}
+                    </ui-select-match>
+                    <ui-select-choices repeat="filter in filters | filter: $select.search">
+                        <span class="glyphicon" aria-hidden="true"
+                            ng-class="filter.icon">
+                        </span>
+                        {{filter.name}}
+                        <div></div>
+                        <small>
+                            <code>{{filter.field}} <strong>{{filter.operator}}</strong> {{filter.value}}</code>
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
         </div>
     </div>
     <div class="table-responsive">
@@ -49,7 +64,24 @@
                 <th>ID</th>
                 <th>Url</th>
                 <!-- <th>Scope</th> -->
-                <th>Grant</th>
+                <th>Grant
+                        <ui-select multiple theme="bootstrap" title="Choose a filter"
+                        close-on-select="false" style="width: 300px;" 
+                        on-select="selectOne($item, $model, $select, this)"
+                        tagging="newOne"
+                        ng-model="search" 
+                        >
+                        <ui-select-match placeholder="Select filter...">
+                              {{$item.tip}} {{$item.operator}} {{$item.value}} {{$select.search}}
+                        </ui-select-match>
+                        <ui-select-choices repeat="filter in filters">
+                              <div ng-bind-html="filter.name"></div>
+                              <small>
+                                  {{filter.operator}} {{filter.value}} {{$select.search}}
+                              </small>
+                        </ui-select-choices>
+                    </ui-select>
+                </th>
                 <!-- <th>AutoApprove</th> -->
                 <th>LastModified</th>
                 <th></th>

@@ -6,4 +6,90 @@ angular.module('uaaUIApp')
 
 .constant('VERSION', '0.0.1-SNAPSHOT')
 
+.constant('GROUPS', [
+    'zones.read',
+    'zones.write',
+    'idps.read',
+    'idps.write',
+    'clients.admin',
+    'clients.write',
+    'clients.read',
+    'clients.secret',
+    'scim.write',
+    'scim.read',
+    'scim.create',
+    'scim.userids',
+    'scim.zones',
+    'scim.invite',
+    'password.write',
+    'oauth.approval',
+    'oauth.login', 
+    'approvals.me', 
+    'openid', 
+    'groups.update',
+    'uaa.user',
+    'uaa.resource',
+    'uaa.admin'
+    ])
+
+.constant('GRANTS', [
+        {
+            name: "client_credentials",
+            type: "oauth2",
+            token: true,
+            grant: true
+        },
+        {
+            name: "implicit",
+            type: "oauth2",
+            token: true,
+            grant: true
+        },
+        {
+            name: "password",
+            type: "oauth2",
+            token: true,
+            grant: true
+        },
+        {
+            name: "authorization_code",
+            type: "oauth2",
+            token: true,
+            grant: true
+        },
+        {
+            name: "auto_login",
+            type: "oauth2",
+            token: true,
+            grant: false
+        },
+        {
+            name: "passcode",
+            type: "oauth2",
+            token: true,
+            grant: false
+        },
+        {
+            name: "refresh_token",
+            type: "flag",
+            grant: true
+        },
+        {
+            name: "user_token",
+            type: "other",
+            grant: true
+        },
+        {
+            name: "saml2-bearer",
+            type: "other",
+            value: "urn:ietf:params:oauth:grant-type:saml2-bearer",
+            grant: true
+        },
+        {
+            name: "jwt-bearer",
+            type: "other",
+            value: "urn:ietf:params:oauth:grant-type:jwt-bearer",
+            grant: true
+        }
+    ])
 ;

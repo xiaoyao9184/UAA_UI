@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('ClientManagementEditController',
-    ['$scope', '$q', '$uibModalInstance', 'entity', 'Client', 'IdentityProvider', 'SetUtils',
-        function($scope, $q, $uibModalInstance, entity, Client, IdentityProvider, SetUtils) {
+    ['$scope', '$q', '$uibModalInstance', 'entity', 'Client', 'IdentityProvider', 'SetUtils', 'GRANTS', 'GROUPS',
+        function($scope, $q, $uibModalInstance, entity, Client, IdentityProvider, SetUtils, GRANTS, GROUPS) {
 
         $scope.client = entity;
         
@@ -29,65 +29,8 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
         };
 
         $scope.ui = {
-            grants: {
-                "client_credentials": {
-                    name: "client_credentials",
-                    type: "oauth2"
-                },
-                "implicit": {
-                    name: "implicit",
-                    type: "oauth2"
-                },
-                "password": {
-                    name: "password",
-                    type: "oauth2"
-                },
-                "authorization_code": {
-                    name: "authorization_code",
-                    type: "oauth2"
-                },
-                "refresh_token": {
-                    name: "refresh_token",
-                    type: "flag"
-                },
-                "user_token": {
-                    name: "user_token",
-                    type: "other"
-                },
-                "urn:ietf:params:oauth:grant-type:saml2-bearer": {
-                    name: "saml2-bearer",
-                    type: "other"
-                },
-                "urn:ietf:params:oauth:grant-type:jwt-bearer": {
-                    name: "jwt-bearer",
-                    type: "other"
-                }
-            },
-            groups: [
-                'zones.read',
-                'zones.write',
-                'idps.read',
-                'idps.write',
-                'clients.admin',
-                'clients.write',
-                'clients.read',
-                'clients.secret',
-                'scim.write',
-                'scim.read',
-                'scim.create',
-                'scim.userids',
-                'scim.zones',
-                'scim.invite',
-                'password.write',
-                'oauth.approval',
-                'oauth.login', 
-                'approvals.me', 
-                'openid', 
-                'groups.update',
-                'uaa.user',
-                'uaa.resource',
-                'uaa.admin'
-            ],
+            grants: {},
+            groups: GROUPS,
             resourceIds: [
                 'zones',
                 'idps',
@@ -99,7 +42,13 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
                 'groups',
                 'uaa'
             ]
-        }
+        };
+        angular.forEach(GRANTS,function(grant){
+            if(grant.grant){
+                var value = grant.value ? grant.value: grant.name;
+                $scope.ui.grants[value] = grant
+            }
+        });
 
         $scope.providers = {
             identity: null
