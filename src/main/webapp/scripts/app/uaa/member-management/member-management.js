@@ -39,7 +39,7 @@ angular.module('uaaUIApp')
                             }
                         }
                     }).result.then(function(result) {
-                        $state.go('member-management', null, { reload: true });
+                        $state.go('member-management', null, { reload: false });
                     }, function() {
                         $state.go('member-management');
                     })
@@ -62,7 +62,7 @@ angular.module('uaaUIApp')
                             }
                         }
                     }).result.then(function(result) {
-                        $state.go('member-management', null, { reload: true });
+                        $state.go('member-management', null, { reload: false });
                     }, function() {
                         $state.go('^');
                     })

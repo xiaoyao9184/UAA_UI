@@ -30,10 +30,10 @@ angular.module('uaaUIApp', [
             // previousState is already set in the authExpiredInterceptor. If we're going
             // previousState is already set in the authExpiredInterceptor. If we're going
             // to login directly, we don't want to be sent to some previous state anyway
-            if (toState.name != 'login' && $rootScope.previousStateName) {
+            // if (toState.name != 'login' && $rootScope.previousStateName) {
               $rootScope.previousStateName = fromState.name;
               $rootScope.previousStateParams = fromParams;
-            }
+            // }
 
             // Set the page title key to the one configured in state or use default one
             if (toState.data.pageTitle) {
@@ -42,15 +42,6 @@ angular.module('uaaUIApp', [
             $window.document.title = titleKey;
         });
 
-        $rootScope.istokendpresent = function(){
-            return $rootScope.uaatokendetails ? true : false;
-        }
-
-        // $rootScope.parseJwt = function(token) {
-        //     var base64Url = token.split('.')[1];
-        //     var base64 = base64Url.replace('-', '+').replace('_', '/');
-        //     return JSON.parse($window.atob(base64));
-        // }
         $rootScope.back = function() {
             // If previous state is 'activate' or do not exist go to 'home'
             if ($rootScope.previousStateName === 'activate' || $state.get($rootScope.previousStateName) === null) {

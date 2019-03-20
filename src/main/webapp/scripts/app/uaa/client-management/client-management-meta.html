@@ -64,7 +64,7 @@
         <div class="form-group">
             <label class="control-label">Created By</label>
             <br>
-            <a ui-sref="user-management-detail({id:client.createdBy})">
+            <a ui-sref="user-management-detail({id:client.createdBy})" ng-click="clear()">
                 {{client.createdBy | limitTo:8}}
             </a>
         </div>
