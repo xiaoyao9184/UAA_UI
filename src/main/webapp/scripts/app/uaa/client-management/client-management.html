@@ -30,20 +30,19 @@
                     <span class="glyphicon glyphicon-flash"></span> <span>Create a new Client</span>
                 </button>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-6 form-group">
                 <ui-select multiple theme="bootstrap" title="Choose a filter"
                     close-on-select="false" 
                     on-select="selectOne($item, $model, $select, this)" on-remove="selectOne($item, $model, $select, this)"
-                    tagging="tagging"
-                    ng-model="selected.value" 
-                    >
+                    tagging="tagging" tagging-tokens="SPACE|,|/"
+                    ng-model="selected.value">
                     <ui-select-match placeholder="Search...">
                         <span class="glyphicon" aria-hidden="true"
                             ng-class="$item.icon">
                         </span>
                         {{$item.name}}
                     </ui-select-match>
-                    <ui-select-choices repeat="filter in filters | filter: $select.search">
+                    <ui-select-choices group-by="'field'" repeat="filter in filters | filter: $select.search">
                         <span class="glyphicon" aria-hidden="true"
                             ng-class="filter.icon">
                         </span>
@@ -63,26 +62,7 @@
             <tr>
                 <th>ID</th>
                 <th>Url</th>
-                <!-- <th>Scope</th> -->
-                <th>Grant
-                        <ui-select multiple theme="bootstrap" title="Choose a filter"
-                        close-on-select="false" style="width: 300px;" 
-                        on-select="selectOne($item, $model, $select, this)"
-                        tagging="newOne"
-                        ng-model="search" 
-                        >
-                        <ui-select-match placeholder="Select filter...">
-                              {{$item.tip}} {{$item.operator}} {{$item.value}} {{$select.search}}
-                        </ui-select-match>
-                        <ui-select-choices repeat="filter in filters">
-                              <div ng-bind-html="filter.name"></div>
-                              <small>
-                                  {{filter.operator}} {{filter.value}} {{$select.search}}
-                              </small>
-                        </ui-select-choices>
-                    </ui-select>
-                </th>
-                <!-- <th>AutoApprove</th> -->
+                <th>Grant</th>
                 <th>LastModified</th>
                 <th></th>
             </tr>
@@ -99,22 +79,11 @@
                     {{client.redirect_uri.join(' ')}}
                 </td>
                 
-                <!-- <td>
-                    {{client.scope.join(' ')}}
-                </td> -->
-                
                 <td>
-                    <!-- {{client.authorized_grant_types.join('\n')}} -->
-                    <ul>
-                        <li ng-repeat="grant in client.authorized_grant_types">
-                            <span>{{grants[grant].name}}</span>
-                        </li>
-                    </ul>
+                    <div ng-repeat="grant in client.authorized_grant_types">
+                        <span class="glyphicon glyphicon-tag"></span> {{grants[grant].name}}
+                    </div>
                 </td>
-
-                <!-- <td>
-                    {{client.autoapprove.join(' ')}}
-                </td> -->
 
                 <td>{{client.lastModified | date:'dd/MM/yy HH:mm'}}</td>
 
@@ -142,7 +111,42 @@
                 </td>
             </tr>
             <tr ng-repeat-end>
-                <td colspan="9">{{client.scope.join(' ')}}</td>
+                <td colspan="9">
+                    <span class="label hand"
+                        uib-tooltip="{{['Auto approve scope','Wild match scope','Base scope'][getScopeTipIndex(scope,client.autoapprove)]}}" 
+                        ng-class="getScopeLabel(scope,client.autoapprove)"
+                        ng-click="goGroupListOrDetail(scope)"
+                        ng-repeat-start="scope in client.scope">
+                        <span class="glyphicon"
+                            ng-class="getScopeIcon(scope,client.autoapprove)"></span>
+                        {{scope}}
+                    </span>
+                    <span ng-repeat-end>
+                        &nbsp;
+                    </span>
+
+                    <span class="label label-info hand" 
+                        uib-tooltip="Authoritie as user" 
+                        ng-click="goGroupListOrDetail(authoritie)"
+                        ng-repeat-start="authoritie in client.authorities">
+                        <span class="glyphicon glyphicon-text-background"></span>
+                        {{authoritie}}
+                    </span>
+                    <span ng-repeat-end>
+                        &nbsp;
+                    </span>
+
+                    <span class="label label-warning hand"
+                        uib-tooltip="Provider must allowed"
+                        ng-click="goIdentityProviderDetail(allowedprovider)"
+                        ng-repeat-start="allowedprovider in client.allowedproviders">
+                        <span class="glyphicon glyphicon-cloud"></span>
+                        {{allowedprovider}}
+                    </span>
+                    <span ng-repeat-end>
+                        &nbsp;
+                    </span>
+                </td>
             </tr>
             </tbody>
         </table>
