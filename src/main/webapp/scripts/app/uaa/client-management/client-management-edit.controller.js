@@ -17,7 +17,7 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
 
         $scope.save = function () {
             $scope.isSaving = true;
-            if($scope.client.id != null){
+            if($scope.client.client_id != null){
                 Client.update({id: $scope.client.client_id}, $scope.client, onSaveSuccess, onSaveError);
             } else {
                 Client.save($scope.client, onSaveSuccess, onSaveError);
@@ -69,31 +69,18 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
                 promise = $scope.client.$promise;
             }
             promise.then(function(client){
-                if(angular.isUndefined(client.authorized_grant_types)){
-                    client.authorized_grant_types = [];
-                }
-                if(angular.isUndefined(client.redirect_uri)){
-                    client.redirect_uri = [];
-                }
-                if(angular.isUndefined(client.scope)){
-                    client.scope = [];
-                }
-                if(angular.isUndefined(client.resource_ids)){
-                    client.resource_ids = [];
-                }
-                if(angular.isUndefined(client.authorities)){
-                    client.authorities = [];
-                }
-                if(angular.isUndefined(client.autoapprove)){
-                    client.autoapprove = ['true'];
-                }
-                if(angular.isUndefined(client.allowedproviders) || 
-                    client.allowedproviders === null){
-                    client.allowedproviders = [];
-                }
-                if(angular.isUndefined(client.required_user_groups)){
-                    client.required_user_groups = [];
-                }
+                angular.merge(
+                    client,
+                    {
+                        authorized_grant_types: [],
+                        redirect_uri: [],
+                        scope: [],
+                        resource_ids: [],
+                        authorities: [],
+                        autoapprove: ['true'],
+                        allowedproviders: [],
+                        required_user_groups: []
+                    });
             });
 
             IdentityProvider.query({}, function (result, headers) {
