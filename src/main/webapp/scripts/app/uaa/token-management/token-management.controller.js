@@ -2,8 +2,8 @@
 
 angular.module('uaaUIApp')
     .controller('TokenManagementController', 
-    function ($scope, $stateParams, $location,
-        Token,
+    function ($scope, $stateParams, $state, $filter,
+        Token, Group,
         TokenHolder, ZoneHolder, Principal, AlertService) {
         
         $scope.init = function (id,type) {
@@ -34,10 +34,16 @@ angular.module('uaaUIApp')
             if($scope.type === 'user'){
                 Token.userList({id: $scope.id}, function (result) {
                     $scope.tokens = result;
+                    angular.forEach(result, function(item){
+                        item.scope = item.scope.replace(/\[|\]/g,"").split(", ");
+                    });
                 });
             }else if($scope.type === 'client'){
                 Token.clientList({id: $scope.id}, function (result) {
                     $scope.tokens = result;
+                    angular.forEach(result, function(item){
+                        item.scope = item.scope.replace(/\[|\]/g,"").split(", ");
+                    });
                 });
             }
         };
@@ -69,4 +75,26 @@ angular.module('uaaUIApp')
         };
 
         $scope.init($stateParams.id, $stateParams.type);
+
+        
+        $scope.goGroupListOrDetail = function(displayName){
+            var wild = false;
+            var operator = 'eq';
+            if(displayName.indexOf('*') !== -1){
+                wild = true;
+                operator = 'co';
+                displayName = displayName.replace('*','');
+            }
+
+            Group.query({filter: 'displayname ' + operator + ' \'' + displayName + '\''}, function (result) {
+                var find = $filter('filter')(result.resources, {'displayName':displayName}, !wild);
+                if(find.length === 1){
+                    $state.go("group-management-detail",{id: find[0].id});
+                }else if(find.length > 1){
+                    $state.go("group-management",{search: displayName});
+                }else{
+                    AlertService.warning('<strong>UI: </strong>' + displayName + ' is not Group!',{timeout:1000000});
+                }
+            });
+        };
     });
