@@ -77,7 +77,7 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
                         scope: [],
                         resource_ids: [],
                         authorities: [],
-                        autoapprove: ['true'],
+                        autoapprove: angular.isUndefined($scope.client.$promise) ? ['true'] : [],
                         allowedproviders: [],
                         required_user_groups: []
                     });
