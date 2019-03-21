@@ -6,9 +6,10 @@ angular.module('uaaUIApp')
             restrict: 'E',
             template: '<div class="alerts" ng-cloak="">' +
                             '<div ng-repeat="alert in alerts" ng-class="[alert.position, {\'toast\': alert.toast}]">' +
-                                '<div uib-alert ng-cloak="" ng-class="\'alert-{{alert.type}}\'" close="alert.close()">' +
+                                '<div uib-alert ng-bind-html="alert.msg" ng-cloak="" ng-class="\'alert-{{alert.type}}\'" close="alert.close()">' +
                                     // '<pre>{{ alert.msg }}</pre>' +
-                                    '{{ alert.msg }}' + 
+                                    // '{{ alert.msg }}' + 
+                                    // '<pre ng-bind-html="alert.msg"></pre>' + 
                                 '</div>' +
                             '</div>' +
                       '</div>',
@@ -27,9 +28,10 @@ angular.module('uaaUIApp')
             restrict: 'E',
             template: '<div class="alerts" ng-cloak="">' +
                             '<div ng-repeat="alert in error_alerts" ng-class="[alert.position, {\'toast\': alert.toast}]">' +
-                                '<div uib-alert ng-cloak="" ng-class="\'alert-{{alert.type}}\'" close="alert.close(error_alerts)">' + 
+                                '<div uib-alert ng-bind-html="alert.msg" ng-cloak="" ng-class="\'alert-{{alert.type}}\'" close="alert.close(error_alerts)">' + 
                                     // '<pre>{{ alert.msg }}</pre>' + 
-                                    '{{ alert.msg }}' + 
+                                    // '{{ alert.msg }}' + 
+                                    // '<pre ng-bind-html="alert.msg"></pre>' + 
                                 '</div>' +
                             '</div>' +
                       '</div>',
