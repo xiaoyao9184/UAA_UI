@@ -250,7 +250,7 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
         MFAProvider.query({}, function (result) {
             $scope.providers.mfa = result;
         });
-        IdentityProvider.query({}, function (result, headers) {
+        IdentityProvider.query({}, function (result) {
             $scope.providers.identity = result;
         });
 

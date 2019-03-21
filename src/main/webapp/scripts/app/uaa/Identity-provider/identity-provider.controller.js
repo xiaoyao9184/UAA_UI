@@ -4,7 +4,7 @@ angular.module('uaaUIApp')
     .controller('IdentityProviderController', function ($scope, IdentityProvider) {
         $scope.providers = [];
         $scope.loadAll = function () {
-            IdentityProvider.query({}, function (result, headers) {
+            IdentityProvider.query({}, function (result) {
                 $scope.providers = result;
             });
         };

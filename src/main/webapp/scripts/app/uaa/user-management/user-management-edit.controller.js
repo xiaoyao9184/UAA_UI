@@ -69,11 +69,7 @@ angular.module('uaaUIApp').controller('UserManagementEditController',
                 }
             });
 
-            IdentityProvider.query({}, function (result, headers) {
-                $scope.providers.identity = result;
-            });
-
-            IdentityProvider.query({}, function (result, headers) {
+            IdentityProvider.query({}, function (result) {
                 $scope.providers.identity = result;
             });
         };

@@ -4,7 +4,7 @@ angular.module('uaaUIApp')
     .controller('MFAProviderController', function ($scope, MFAProvider) {
         $scope.providers = [];
         $scope.loadAll = function () {
-            MFAProvider.query({}, function (result, headers) {
+            MFAProvider.query({}, function (result) {
                 $scope.providers = result;
             });
         };

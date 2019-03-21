@@ -83,7 +83,7 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
                     });
             });
 
-            IdentityProvider.query({}, function (result, headers) {
+            IdentityProvider.query({}, function (result) {
                 $scope.providers.identity = result;
             });
         };

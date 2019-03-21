@@ -4,7 +4,7 @@ angular.module('uaaUIApp')
     .controller('SAMLServiceProviderController', function ($scope, clipboard, SAMLServiceProvider) {
         $scope.providers = [];
         $scope.loadAll = function () {
-            SAMLServiceProvider.query({}, function (result, headers) {
+            SAMLServiceProvider.query({}, function (result) {
                 $scope.providers = result;
 
                 angular.forEach(result, function(provider){

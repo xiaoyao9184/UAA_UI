@@ -16,7 +16,7 @@ angular.module('uaaUIApp')
                 filter = null
             }
             var startIndex = ($scope.pageNumber - 1) * $scope.pageSize + 1
-            User.query({startIndex: startIndex, count: $scope.pageSize, filter: filter}, function (result, headers) {
+            User.query({startIndex: startIndex, count: $scope.pageSize, filter: filter}, function (result) {
                 $scope.pageTotal = result.totalResults;
                 $scope.users = result.resources;
             });
