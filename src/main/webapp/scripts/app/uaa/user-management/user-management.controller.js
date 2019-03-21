@@ -1,9 +1,9 @@
 'use strict';
 
 angular.module('uaaUIApp')
-    .controller('UserManagementController', function ($scope, User) {
+    .controller('UserManagementController', function ($scope, $stateParams, User) {
         $scope.users = [];
-        $scope.search = '';
+        $scope.search = $stateParams.search;
         $scope.pageTotal = 0
         $scope.pageNumber = 1;
         $scope.pageSize = 5;
@@ -17,7 +17,7 @@ angular.module('uaaUIApp')
             }
             var startIndex = ($scope.pageNumber - 1) * $scope.pageSize + 1
             User.query({startIndex: startIndex, count: $scope.pageSize, filter: filter}, function (result, headers) {
-                $scope.totalItems = result.totalResults;
+                $scope.pageTotal = result.totalResults;
                 $scope.users = result.resources;
             });
         };

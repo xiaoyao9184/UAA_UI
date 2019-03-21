@@ -5,7 +5,10 @@ angular.module('uaaUIApp')
         $stateProvider
             .state('group-management', {
                 parent: 'uaa',
-                url: '/group-management',
+                url: '/group-management?search',
+                params: {
+                    search: ''
+                },
                 data: {
                     authorities: ['ROLE_ADMIN'],
                     pageTitle: 'GroupManagement@UaaUI'
