@@ -4,7 +4,7 @@ angular.module('uaaUIApp', [
     'ngResource', 'ngCookies', 'ngAria', 'ngCacheBuster', 'ngFileUpload', 'ngPostMessage', 'ngSanitize',
     'ui.bootstrap', 'ui.router', 'ui.select',
     'infinite-scroll', 'LocalStorageModule', 
-    'angular-loading-bar', 'angular-clipboard', 'file'])
+    'angular-loading-bar', 'angular-clipboard', 'angularMoment', 'file'])
 
     .run(function ($rootScope, $location, $window, $http, $state, ENV, VERSION) {
         

@@ -8,15 +8,30 @@
                     <span class="glyphicon glyphicon-flash"></span> <span>Create a new Group</span>
                 </button>
             </div>
-            <div class="col-md-4 input-group">
-                <input type="text" class="form-control" placeholder="id, name or description"
-                    ng-model="search">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button"
-                        ng-click="loadPage()">
-                        <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
-                    </button>
-                </span>
+            <div class="col-md-6 form-group">
+                <ui-select multiple theme="bootstrap" title="Choose a filter"
+                    close-on-select="false" 
+                    on-select="filtering($item, $model, $select, this)" 
+                    on-remove="filtering($item, $model, $select, this)"
+                    tagging="tagging" tagging-tokens="SPACE|,|/"
+                    ng-model="selected.value">
+                    <ui-select-match placeholder="Search...">
+                        <span class="glyphicon" aria-hidden="true"
+                            ng-class="$item.icon">
+                        </span>
+                        {{$item.name}}
+                    </ui-select-match>
+                    <ui-select-choices group-by="'field'" repeat="filter in filters | filter: $select.search">
+                        <span class="glyphicon" aria-hidden="true"
+                            ng-class="filter.icon">
+                        </span>
+                        {{filter.name}}
+                        <div></div>
+                        <small>
+                            <code>{{filter.field}} <strong>{{filter.operator}}</strong> {{filter.value}}</code>
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
             </div>
         </div>
     </div>

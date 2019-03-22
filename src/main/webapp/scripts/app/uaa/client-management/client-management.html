@@ -33,7 +33,8 @@
             <div class="col-md-6 form-group">
                 <ui-select multiple theme="bootstrap" title="Choose a filter"
                     close-on-select="false" 
-                    on-select="selectOne($item, $model, $select, this)" on-remove="selectOne($item, $model, $select, this)"
+                    on-select="filtering($item, $model, $select, this)" 
+                    on-remove="filtering($item, $model, $select, this)"
                     tagging="tagging" tagging-tokens="SPACE|,|/"
                     ng-model="selected.value">
                     <ui-select-match placeholder="Search...">

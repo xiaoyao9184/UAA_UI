@@ -2,10 +2,10 @@
 
 angular.module('uaaUIApp')
     .controller('ClientManagementController', 
-    function ($scope, $q, $state, $filter,
+    function ($scope, $q, $state, $filter, moment,
         Client, ClientMeta, 
         Group, IdentityProvider,
-        AlertService, Base64, SetUtils, GRANTS, GROUPS) {
+        AlertService, Base64, SetUtils, GuessSearch, GRANTS, GROUPS) {
         $scope.apps = [];
         $scope.loadAllApp = function () {
             return ClientMeta.query().$promise
@@ -121,35 +121,97 @@ angular.module('uaaUIApp')
             }
         });
 
-        $scope.filters = [];
-        angular.forEach(GRANTS,function(grant){
-            if(grant.grant){
-                var item = {
-                    icon: "glyphicon-tag"
-                };
-                angular.merge(item,grant);
-                item.field = "authorized_grant_types",
-                item.operator = 'co';
-                item.value = grant.value ? grant.value: grant.name;
-                $scope.filters.push(item);
-            }
-        });
-        angular.forEach(GROUPS,function(group){
-            var item = {
-                name: group,
-                icon: "glyphicon-folder-close"
-            };
-            item.field = "scope",
-            item.operator = 'co';
-            item.value = group;
-            $scope.filters.push(item);
-        });
         
-
+        GuessSearch.config([
+            {
+                support: 'string',
+                data: {
+                    name: function(context){
+                        return 'ANY:' + context;
+                    },
+                    icon: 'glyphicon-search',
+                    field: "ANY",
+                    operator: "co",
+                    value: function(context){
+                        return context;
+                    }
+                }
+            },
+            {
+                support: 'moment',
+                data: [{
+                    name: function(context){
+                        return 'After ' + context.moment.fromNow();
+                    },
+                    text: function(context){
+                        return context.text;
+                    },
+                    icon: 'glyphicon-time',
+                    field: "lastModified",
+                    operator: "ge",
+                    value: function(context){
+                        return context.moment.toISOString();
+                    }
+                },
+                {
+                    name: function(context){
+                        return 'Before ' + context.moment.fromNow()
+                    },
+                    text: function(context){
+                        return context.text;
+                    },
+                    icon: 'glyphicon-time',
+                    field: "lastModified",
+                    operator: "le",
+                    value: function(context){
+                        return context.moment.toISOString();
+                    }
+                }]
+            },
+            {
+                support: true,
+                data: function(context){
+                    var grants = [];
+                    angular.forEach(GRANTS,function(grant){
+                        if(grant.grant){
+                            var item = {
+                                icon: "glyphicon-tag"
+                            };
+                            angular.merge(item,grant);
+                            item.field = "authorized_grant_types",
+                            item.operator = 'co';
+                            item.value = grant.value ? grant.value: grant.name;
+                            grants.push(item);
+                        }
+                    });
+                    return grants;
+                }
+            },
+            {
+                support: true,
+                data: function(context){
+                    var groups = [];
+                    angular.forEach(GROUPS,function(group){
+                        var item = {
+                            name: group,
+                            icon: "glyphicon-folder-close"
+                        };
+                        item.field = "scope",
+                        item.operator = 'co';
+                        item.value = group;
+                        groups.push(item);
+                    });
+                    return groups;
+                }
+            }
+            
+        ]);
+        $scope.filters = GuessSearch.guess();
         $scope.selected = {
             value: []
         }
         $scope.tagging = function(text){
+            $scope.filters = GuessSearch.guess(text);
             return {
                 name: 'ANY:' + text,
                 icon: 'glyphicon-search',
@@ -158,27 +220,32 @@ angular.module('uaaUIApp')
                 value: text
             };
         }
-        $scope.selectOne = function(item, model, search){
+        $scope.filtering = function(item, model, search){
             var filters = [];
+            var find = $filter('filter')(search.selected, {'field':'EXACT'}, true);
+            var and = (find.length > 0);
             angular.forEach(search.selected,function(select){
                 var filter = '';
-                if(select.field === 'ANY'){
+                if(select.field === 'EXACT'){
+                    return;
+                }else if(select.field === 'ANY'){
                     filter = 
-                        '(client_id co \'' + select.value + '\'' + 
+                        (and ? '(' : '') +
+                        'client_id co \'' + select.value + '\'' + 
                         ' or web_server_redirect_uri co \'' + select.value + '\'' +
                         ' or authorized_grant_types co \'' + select.value + '\'' +
-                        ' or scope co \'' + select.value + '\')';
+                        ' or scope co \'' + select.value + '\'' +
+                        (and ? ')' : '');
                 }else{
                     filter = 
                         select.field + ' ' +
                         select.operator + ' ' +
-                        '\'' + select.value + '\''
+                        (angular.isString(select.value) ? '\'' + select.value + '\'' :  select.value);
                 }
-                
                 filters.push(filter);
             });
 
-            var filter = filters.join(' or ');
+            var filter = filters.join(and ? ' and ' : ' or ');
             $scope.loadPage(filter);
         }
         
