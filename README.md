@@ -70,3 +70,7 @@ You can enable MFA, although only GoogleAuthenticator(totp) is currently support
 No one will use SAML service at present.
 
 ![Alt text](/doc/saml.png?raw=true "SAML")
+
+Exciting with guess search.
+
+![Alt text](/doc/guess-search.gif?raw=true "GuessSearch")

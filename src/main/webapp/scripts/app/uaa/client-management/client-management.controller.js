@@ -203,8 +203,18 @@ angular.module('uaaUIApp')
                     });
                     return groups;
                 }
+            },
+            {
+                support: true,
+                data: [{
+                    name: 'EXACT',
+                    text: 'exact and',
+                    icon: 'glyphicon-random',
+                    field: "EXACT",
+                    operator: "",
+                    value: "with 'AND' operator"
+                }]
             }
-            
         ]);
         $scope.filters = GuessSearch.guess();
         $scope.selected = {

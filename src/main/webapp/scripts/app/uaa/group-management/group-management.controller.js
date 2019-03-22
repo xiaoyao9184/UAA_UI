@@ -103,7 +103,7 @@ angular.module('uaaUIApp')
                 support: true,
                 data: [{
                     name: 'EXACT',
-                    text: 'EXACT',
+                    text: 'exact and',
                     icon: 'glyphicon-random',
                     field: "EXACT",
                     operator: "",
