@@ -287,14 +287,16 @@ angular.module('uaaUIApp')
                 this.filtering(_selected.value);
             },
             searching: function(text){
-                _selected.value = [{
-                    group: 'Search',
-                    icon: 'glyphicon-search',
-                    name: 'ANY:' + text,
-                    field: "ANY",
-                    operator: "co",
-                    value: text
-                }]
+                if(!!text){
+                    _selected.value = [{
+                        group: 'Search',
+                        icon: 'glyphicon-search',
+                        name: 'ANY:' + text,
+                        field: "ANY",
+                        operator: "co",
+                        value: text
+                    }];
+                }
                 this.refreshing();
             },
             usingText: getText
