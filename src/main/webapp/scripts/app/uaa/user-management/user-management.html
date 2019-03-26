@@ -111,10 +111,16 @@
                             class="btn btn-primary btn-sm">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </button>
+                    <br>
                     <button type="submit"
                             ui-sref="user-management.delete({id:user.id})"
                             class="btn btn-danger btn-sm">
                         <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+                    <button type="submit"
+                            ui-sref="user-management.location({id:user.id})"
+                            class="btn btn-info btn-sm">
+                        <span class="glyphicon glyphicon-map-marker"></span>
                     </button>
                 </td>
             </tr>

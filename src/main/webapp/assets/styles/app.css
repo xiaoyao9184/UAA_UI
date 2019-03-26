@@ -41,3 +41,8 @@ div[ui-view=navbar] {
     top: 0px;
     z-index: 10;
 }
+
+.tree {
+    padding: 0px; 
+    padding-left: 15px
+}

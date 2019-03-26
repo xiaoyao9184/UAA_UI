@@ -40,6 +40,30 @@ angular.module('uaaUIApp')
                     
                 }
             })
+            .state('user-management.location', {
+                parent: 'uaa',
+                url: '/user/:id/location',
+                data: {
+                    authorities: ['ROLE_ADMIN'],
+                    pageTitle: 'UserManagementDetail@UaaUI'
+                },
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
+                    $uibModal.open({
+                        templateUrl: 'scripts/app/uaa/user-management/user-management-location.html',
+                        controller: 'UserManagementLocationController',
+                        size: 'lg',
+                        resolve: {
+                            entity: function(User) {
+                                return User.get({id : $stateParams.id});
+                            }
+                        }
+                    }).result.then(function(result) {
+                        $state.go('user-management', null, { reload: true });
+                    }, function() {
+                        $state.go('user-management');
+                    })
+                }]
+            })
             .state('user-management.new', {
                 parent: 'user-management',
                 url: '/new',

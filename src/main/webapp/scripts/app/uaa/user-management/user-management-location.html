@@ -1,0 +1,29 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myUserLabel">
+            User Location</h4>
+    </div>
+    <div class="modal-body">
+        <ul class="list-group">
+            <li class="list-group-item hand tree"
+                ng-repeat="member in roots track by member.id"
+                ng-click="expandItem(member,$event)">
+                <span class="glyphicon" 
+                    ng-class="member.show ? 'glyphicon-folder-open' : 'glyphicon-folder-close'"
+                    ng-click="expandItem(member,$event)"></span>
+                {{member.name}}
+
+                <div ng-show="member.show" ng-init="member = member" ng-include="'scripts/app/uaa/member-management/member-item.html'"></div>
+            </li>
+        </ul>
+    </div>
+    <div class="modal-footer">
+        <jh-alert-error></jh-alert-error>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Close</span>
+        </button>
+    </div>
+</form>
