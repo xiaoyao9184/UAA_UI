@@ -168,7 +168,7 @@ angular.module('uaaUIApp')
 
                 //
                 if(angular.isDefined(configs)){
-                    angular.merge(_configs,configs);
+                    _configs.concat(configs);
                 }
                 
                 //sort 
