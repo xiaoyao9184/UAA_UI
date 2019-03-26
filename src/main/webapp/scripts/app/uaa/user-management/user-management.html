@@ -117,6 +117,7 @@
                             <span class="glyphicon glyphicon-remove-circle"></span>
                         </button>
                         <button type="submit" class="btn btn-success btn-sm"
+                            uib-tooltip="Locate user groups"
                             ui-sref="user-management.location({id:user.id})"
                             ng-class="{'disabled': user.groups.length === 0}">
                             <span class="glyphicon glyphicon-map-marker"></span>
