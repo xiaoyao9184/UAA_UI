@@ -5,7 +5,6 @@ angular.module('uaaUIApp')
     function ($scope, $stateParams, 
         Group, Search) {
         $scope.groups = [];
-        $scope.search = $stateParams.search;
         $scope.pageTotal = 0
         $scope.pageNumber = 1;
         $scope.pageSize = 5;
@@ -16,8 +15,7 @@ angular.module('uaaUIApp')
                 $scope.pageTotal = result.totalResults;
                 $scope.groups = result.resources;
             });
-        };
-        $scope.loadPage();
+        };        
 
         $scope.clear = function () {
             $scope.group = {};
@@ -65,4 +63,7 @@ angular.module('uaaUIApp')
         $scope.tagging = Search.tagging;
         $scope.filtering = Search.filtering;
         $scope.pagging = Search.refreshing;
+
+        
+        Search.searching($stateParams.search);
     });

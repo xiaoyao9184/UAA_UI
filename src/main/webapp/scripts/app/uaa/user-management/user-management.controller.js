@@ -5,7 +5,6 @@ angular.module('uaaUIApp')
     function ($scope, $stateParams, 
         User, Search) {
         $scope.users = [];
-        $scope.search = $stateParams.search;
         $scope.pageTotal = 0
         $scope.pageNumber = 1;
         $scope.pageSize = 5;
@@ -18,7 +17,11 @@ angular.module('uaaUIApp')
             });
         };
 
-        $scope.loadPage();
+        $scope.clear = function () {
+            $scope.user = {};
+            $scope.editForm.$setPristine();
+            $scope.editForm.$setUntouched();
+        };
 
         $scope.setActive = function (user, isActivated) {
             user.active = isActivated;
@@ -26,12 +29,6 @@ angular.module('uaaUIApp')
                 $scope.loadAll();
                 $scope.clear();
             });
-        };
-
-        $scope.clear = function () {
-            $scope.user = {};
-            $scope.editForm.$setPristine();
-            $scope.editForm.$setUntouched();
         };
 
 
@@ -146,4 +143,7 @@ angular.module('uaaUIApp')
         $scope.tagging = Search.tagging;
         $scope.filtering = Search.filtering;
         $scope.pagging = Search.refreshing;
+
+
+        Search.searching($stateParams.search);
     });
