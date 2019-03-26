@@ -3,6 +3,7 @@
 angular.module('uaaUIApp')
     .service('GuessSearch', function (moment) {
 
+        moment.suppressDeprecationWarnings = true;
         var configs = [];
 
 
@@ -47,13 +48,13 @@ angular.module('uaaUIApp')
             } 
         }
     
-        this.guess = function(search) {
+        this.guess = function(search, current) {
             var result = [];
             angular.forEach(configs, function(config){
                 var data = null;
                 var context = search;
                 if(angular.isFunction(config.support)){
-                    if(config.support(search)){
+                    if(config.support(search,current)){
                         data = angular.copy(config.data);
                     }
                 }else if (config.support === 'moment'){
@@ -70,6 +71,16 @@ angular.module('uaaUIApp')
                 }else if (config.support === 'string'){
                     if(angular.isString(search) &&
                         search !== ''){
+                        data = angular.copy(config.data);
+                    }
+                }else if (config.support === 'url'){
+                    try{
+                        new URL(search)
+                        data = angular.copy(config.data);
+                    }catch{}
+                }else if (config.support === 'email'){
+                    if(angular.isString(search) &&
+                        search.indexOf('@') !== -1){
                         data = angular.copy(config.data);
                     }
                 }else if (config.support === true){

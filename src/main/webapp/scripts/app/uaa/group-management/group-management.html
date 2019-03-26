@@ -11,8 +11,8 @@
             <div class="col-md-6 form-group">
                 <ui-select multiple theme="bootstrap" title="Choose a filter"
                     close-on-select="false" 
-                    on-select="filtering($item, $model, $select, this)" 
-                    on-remove="filtering($item, $model, $select, this)"
+                    on-select="filtering($select.selected)" 
+                    on-remove="filtering($select.selected)"
                     tagging="tagging" tagging-tokens="SPACE|,|/"
                     ng-model="selected.value">
                     <ui-select-match placeholder="Search...">
@@ -21,7 +21,7 @@
                         </span>
                         {{$item.name}}
                     </ui-select-match>
-                    <ui-select-choices group-by="'field'" repeat="filter in filters | filter: $select.search">
+                    <ui-select-choices group-by="'group'" repeat="filter in filters | filter: $select.search">
                         <span class="glyphicon" aria-hidden="true"
                             ng-class="filter.icon">
                         </span>
@@ -94,6 +94,6 @@
     </div>
     <div class="text-center">
         <ul uib-pagination class="pagination-sm" total-items="pageTotal" items-per-page="pageSize"
-            ng-model="pageNumber" ng-change="loadPage()"></ul>
+            ng-model="pageNumber" ng-change="pagging()"></ul>
     </div>
 </div>

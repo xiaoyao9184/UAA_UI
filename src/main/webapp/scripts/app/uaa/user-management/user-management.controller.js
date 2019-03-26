@@ -2,16 +2,17 @@
 
 angular.module('uaaUIApp')
     .controller('UserManagementController', 
-    function ($scope, $stateParams, $filter, 
-        User, GuessSearch) {
+    function ($scope, $stateParams, 
+        User, Search) {
         $scope.users = [];
         $scope.search = $stateParams.search;
         $scope.pageTotal = 0
         $scope.pageNumber = 1;
         $scope.pageSize = 5;
-        $scope.loadPage = function (filter) {
+        $scope.loadPage = function (filter,sortBy,sortOrder) {
             var startIndex = ($scope.pageNumber - 1) * $scope.pageSize + 1
-            User.query({startIndex: startIndex, count: $scope.pageSize, filter: filter}, function (result) {
+            User.query({startIndex: startIndex, count: $scope.pageSize, 
+                filter: filter, sortBy: sortBy, sortOrder: sortOrder}, function (result) {
                 $scope.pageTotal = result.totalResults;
                 $scope.users = result.resources;
             });
@@ -34,227 +35,115 @@ angular.module('uaaUIApp')
         };
 
 
-        GuessSearch.config([
-            {
-                support: 'string',
-                data: {
-                    name: function(context){
-                        return 'ANY:' + context;
-                    },
-                    icon: 'glyphicon-search',
-                    field: "ANY",
-                    operator: "co",
-                    value: function(context){
-                        return context;
-                    }
-                }
-            },
-            {
-                support: 'moment',
-                data: [{
-                    type: 'guess',
-                    name: function(context){
-                        return 'After ' + context.moment.fromNow();
-                    },
-                    text: function(context){
-                        return context.text;
-                    },
-                    icon: 'glyphicon-time',
-                    field: "lastLogonTime",
-                    operator: "ge",
-                    value: function(context){
-                        return context.moment.toISOString();
-                    }
-                },
-                {
-                    name: function(context){
-                        return 'Before ' + context.moment.fromNow()
-                    },
-                    text: function(context){
-                        return context.text;
-                    },
-                    icon: 'glyphicon-time',
-                    field: "lastLogonTime",
-                    operator: "le",
-                    value: function(context){
-                        return context.moment.toISOString();
-                    }
-                },
-                {
-                    type: 'guess',
-                    name: function(context){
-                        return 'After ' + context.moment.fromNow();
-                    },
-                    text: function(context){
-                        return context.text;
-                    },
-                    icon: 'glyphicon-time',
-                    field: "lastLogonTime",
-                    operator: "ge",
-                    value: function(context){
-                        return context.moment.toISOString();
-                    }
-                },
-                {
-                    name: function(context){
-                        return 'Before ' + context.moment.fromNow()
-                    },
-                    text: function(context){
-                        return context.text;
-                    },
-                    icon: 'glyphicon-time',
-                    field: "lastLogonTime",
-                    operator: "le",
-                    value: function(context){
-                        return context.moment.toISOString();
-                    }
-                },
-                {
-                    type: 'guess',
-                    name: function(context){
-                        return 'After ' + context.moment.fromNow();
-                    },
-                    text: function(context){
-                        return context.text;
-                    },
-                    icon: 'glyphicon-time',
-                    field: "lastModified",
-                    operator: "ge",
-                    value: function(context){
-                        return context.moment.toISOString();
-                    }
-                },
-                {
-                    name: function(context){
-                        return 'Before ' + context.moment.fromNow()
-                    },
-                    text: function(context){
-                        return context.text;
-                    },
-                    icon: 'glyphicon-time',
-                    field: "lastModified",
-                    operator: "le",
-                    value: function(context){
-                        return context.moment.toISOString();
-                    }
-                },
-                {
-                    name: function(context){
-                        return 'After ' + context.moment.fromNow()
-                    },
-                    text: function(context){
-                        return context.text;
-                    },
-                    icon: 'glyphicon-time',
-                    field: "created",
-                    operator: "ge",
-                    value: function(context){
-                        return context.moment.toISOString();
-                    }
-                },
-                {
-                    name: function(context){
-                        return 'Before ' + context.moment.fromNow()
-                    },
-                    text: function(context){
-                        return context.text;
-                    },
-                    icon: 'glyphicon-time',
-                    field: "created",
-                    operator: "le",
-                    value: function(context){
-                        return context.moment.toISOString();
-                    }
-                }]
-            },
-            {
-                support: true,
-                data: [{
-                    name: 'Activated',
-                    text: 'Activated',
-                    icon: 'glyphicon-lock',
-                    field: "active",
-                    operator: "eq",
-                    value: true
-                },{
-                    name: 'Desactivated',
-                    text: 'Desactivated',
-                    icon: 'glyphicon-lock',
-                    field: "active",
-                    operator: "eq",
-                    value: false
-                }]
-            },
-            {
-                support: true,
-                data: [{
-                    name: 'Verified',
-                    text: 'Verified',
-                    icon: 'glyphicon-flag',
-                    field: "verified",
-                    operator: "eq",
-                    value: true
-                },{
-                    name: 'Desverified',
-                    text: 'Desverified',
-                    icon: 'glyphicon-flag',
-                    field: "verified",
-                    operator: "eq",
-                    value: false
-                }]
-            },
-            {
-                support: true,
-                data: [{
-                    name: 'EXACT',
-                    text: 'exact and',
-                    icon: 'glyphicon-random',
-                    field: "EXACT",
-                    operator: "",
-                    value: "with 'AND' operator"
-                }]
-            }
-        ]);
-        $scope.filters = GuessSearch.guess();
         $scope.selected = {
             value: []
         }
-        $scope.tagging = function(text){
-            $scope.filters = GuessSearch.guess(text);
-            return {
-                name: 'ANY:' + text,
-                icon: 'glyphicon-search',
-                field: "ANY",
-                operator: "co",
-                value: text
-            };
-        }
-        $scope.filtering = function(item, model, search){
-            var filters = [];
-            var find = $filter('filter')(search.selected, {'field':'EXACT'}, true);
-            var and = (find.length > 0);
-
-            angular.forEach(search.selected,function(select){
-                var filter = '';
-                if(select.field === 'EXACT'){
-                    return;
-                }else if(select.field === 'ANY'){
-                    filter = 
-                        (and ? '(' : '') +
-                        'id co \'' + select.value + '\'' +
-                        ' or userName co \'' + select.value + '\'' +
-                        ' or email co \'' + select.value + '\'' +
-                        (and ? ')' : '');
-                }else{
-                    filter = 
-                        select.field + ' ' +
-                        select.operator + ' ' + 
-                        (angular.isString(select.value) ? '\'' + select.value + '\'' :  select.value);
+        $scope.filters = Search.init(
+            $scope.loadPage,
+            $scope.selected,
+            [{
+                name: 'ID',
+                field: "id",
+                sort: true,
+                any: true
+            },{
+                name: 'Name',
+                field: "userName",
+                sort: true,
+                any: true
+            },{
+                name: 'GivenName',
+                field: "givenname",
+                sort: true,
+                any: true
+            },{
+                name: 'FamilyName',
+                field: "familyname",
+                sort: true,
+                any: true
+            },{
+                name: 'Email',
+                field: "email",
+                email: true,
+                sort: true,
+                any: true
+            },{
+                name: 'Status',
+                field: "active",
+                enum: [{
+                    icon: 'glyphicon-lock',
+                    name: 'Activated',
+                    tags: 'Activated',
+                    field: "active",
+                    operator: "eq",
+                    value: true
+                },{
+                    icon: 'glyphicon-lock',
+                    name: 'Desactivated',
+                    tags: 'Desactivated',
+                    field: "active",
+                    operator: "eq",
+                    value: false
+                }]
+            },{
+                name: 'Status',
+                field: "verified",
+                enum: [{
+                    icon: 'glyphicon-flag',
+                    name: 'Verified',
+                    tags: 'Verified',
+                    field: "verified",
+                    operator: "eq",
+                    value: true
+                },{
+                    icon: 'glyphicon-flag',
+                    name: 'Desverified',
+                    tags: 'Desverified',
+                    field: "verified",
+                    operator: "eq",
+                    value: false
+                }]
+            },{
+                name: 'PreviousLogonTime',
+                field: "previousLogonTime",
+                moment: true,
+                sort: true
+            },{
+                name: 'LastLogonTime',
+                field: "lastLogonTime",
+                moment: true,
+                sort: true
+            },{
+                name: 'PasswordLastModified',
+                field: "passwd_lastmodified",
+                moment: true,
+                sort: true
+            },{
+                name: 'Created',
+                field: "created",
+                moment: true,
+                sort: true
+            },{
+                name: 'LastModified',
+                field: "lastModified",
+                moment: true,
+                sort: true
+            }],
+            [{
+                support: function(text){
+                    return !!text && text.indexOf('.') !== -1
+                },
+                data: {
+                    group: 'Scope',
+                    icon: 'glyphicon-folder-close',
+                    name: Search.usingText,
+                    field: "scope",
+                    operator: "co",
+                    value: Search.usingText
                 }
-                filters.push(filter);
-            });
-
-            var filter = filters.join(and ? ' and ' : ' or ');
-            $scope.loadPage(filter);
-        }
+            }]
+        );
+        $scope.tagging = Search.tagging;
+        $scope.filtering = Search.filtering;
+        $scope.pagging = Search.refreshing;
     });

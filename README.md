@@ -71,6 +71,9 @@ No one will use SAML service at present.
 
 ![Alt text](/doc/saml.png?raw=true "SAML")
 
-Exciting with guess search.
+Exciting with [guess search](https://xiaoyao9184.wordpress.com/2019/03/25/think-about-guess-search/).
 
 ![Alt text](/doc/guess-search.gif?raw=true "GuessSearch")
+
+![Alt text](/doc/guess_search_uaa_ui.gif "GuessSearch")
+![Alt text](/doc/guess_search_uaa_ui_2.gif "GuessSearch")
