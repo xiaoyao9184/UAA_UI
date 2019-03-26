@@ -67,13 +67,13 @@
                 </td>
                 <td>
                     <span ng-repeat="e in user.emails"
-                        style="cursor: pointer;">{{e.value}}</span>
+                        class="hand">{{e.value}}</span>
                 </td>
                 <td>
-                    <span class="label label-danger" style="cursor: pointer;"
+                    <span class="label label-danger hand"
                         ng-click="setActive(user, true)" 
                         ng-show="!user.active">Desactivated</span>
-                    <span class="label label-success" style="cursor: pointer;"
+                    <span class="label label-success hand"
                         ng-click="setActive(user, false)" 
                         ng-show="user.active">Activated</span>
                     <br><br>
@@ -101,27 +101,27 @@
                 </td>
 
                 <td class="text-right">
-                    <button type="submit"
-                            ui-sref="user-management-detail({id:user.id})"
-                            class="btn btn-info btn-sm">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                    </button>
-                    <button type="submit"
-                            ui-sref="user-management.edit({id:user.id})"
-                            class="btn btn-primary btn-sm">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <br>
-                    <button type="submit"
-                            ui-sref="user-management.delete({id:user.id})"
-                            class="btn btn-danger btn-sm">
-                        <span class="glyphicon glyphicon-remove-circle"></span>
-                    </button>
-                    <button type="submit"
+                    <div>
+                        <button type="submit" class="btn btn-info btn-sm"
+                            ui-sref="user-management-detail({id:user.id})">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm"
+                            ui-sref="user-management.edit({id:user.id})">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            ui-sref="user-management.delete({id:user.id})">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </button>
+                        <button type="submit" class="btn btn-success btn-sm"
                             ui-sref="user-management.location({id:user.id})"
-                            class="btn btn-info btn-sm">
-                        <span class="glyphicon glyphicon-map-marker"></span>
-                    </button>
+                            ng-class="{'disabled': user.groups.length === 0}">
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                        </button>
+                    </div>
                 </td>
             </tr>
             </tbody>

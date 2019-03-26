@@ -17,7 +17,7 @@
                 <th>ID</th>
                 <th>Name</th>
                 <th>Sub Domain</th>
-                <th></th>
+                <th>Status</th>
                 <th>Description</th>
                 <th>Created<br>LastModified</th>
                 <th></th>
@@ -33,10 +33,10 @@
                 <td>{{zone.name}}</td>
                 <td>{{zone.subdomain}}</td>
                 <td>
-                    <span class="label label-danger" style="cursor: pointer;"
+                    <span class="label label-danger hand"
                         ng-click="setActive(zone, true)" 
                         ng-show="!zone.active">Desactivated</span>
-                    <span class="label label-success" style="cursor: pointer;"
+                    <span class="label label-success hand"
                         ng-click="setActive(zone, false)" 
                         ng-show="zone.active">Activated</span>
                 </td>
@@ -47,23 +47,26 @@
                     {{zone.last_modified | date:'dd/MM/yy HH:mm'}}
                 </td>
                 <td class="text-right">
-                    <button type="submit" class="btn btn-info btn-sm"
+                    <div>
+                        <button type="submit" class="btn btn-info btn-sm"
                             ui-sref="zone-management-detail({id:zone.id})">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                    </button>
-                    <button type="submit" class="btn btn-primary btn-sm"
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm"
                             ui-sref="zone-management.edit({id:zone.id})">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <button type="submit" class="btn btn-danger btn-sm"
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-danger btn-sm"
                             ui-sref="zone-management.delete({id:zone.id})">
-                        <span class="glyphicon glyphicon-remove-circle"></span>
-                    </button>
-                    <button type="submit"
-                            ng-click="changeZone(zone)"
-                            class="btn btn-warning btn-sm">
-                        <span class="glyphicon glyphicon-log-in"></span>
-                    </button>
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </button>
+                        <button type="submit" class="btn btn-warning btn-sm"
+                            ng-click="changeZone(zone)">
+                            <span class="glyphicon glyphicon-log-in"></span>
+                        </button>
+                    </div>
                 </td>
             </tr>
             </tbody>

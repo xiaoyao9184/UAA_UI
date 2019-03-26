@@ -17,10 +17,9 @@
             <div class="form-group col-md-4">
                 <label class="control-label">Add list</label>
                 <ul class="list-group">
-                    <li class="list-group-item"
+                    <li class="list-group-item hand tree"
                         ng-repeat="item in actionItems track by $index"
-                        ng-click="removeAction($index)"
-                        style="cursor: pointer;">
+                        ng-click="removeAction($index)">
                         <span class="glyphicon glyphicon glyphicon-user" ng-show="item.type == 'USER'"></span>
                         <span class="glyphicon glyphicon-folder-open" ng-show="item.type == 'GROUP'"></span>
                         {{item.name}}
@@ -50,10 +49,9 @@
 
                 <div class="form-group row">
                     <ul class="list-group col-md-6">
-                        <li class="list-group-item"
+                        <li class="list-group-item hand tree"
                             ng-repeat="item in searchGroupItems track by item.id"
-                            ng-click="addAction(item)"
-                            style="cursor: pointer;">
+                            ng-click="addAction(item)">
                             <span class="glyphicon glyphicon glyphicon-user" ng-show="item.type == 'USER'"></span>
                             <span class="glyphicon glyphicon-folder-open" ng-show="item.type == 'GROUP'"></span>
                             {{item.name}}
@@ -61,10 +59,9 @@
                     </ul>
 
                     <ul class="list-group col-md-6">
-                        <li class="list-group-item"
+                        <li class="list-group-item hand tree"
                             ng-repeat="item in searchUserItems track by item.id"
-                            ng-click="addAction(item)"
-                            style="cursor: pointer;">
+                            ng-click="addAction(item)">
                             <span class="glyphicon glyphicon glyphicon-user" ng-show="item.type == 'USER'"></span>
                             <span class="glyphicon glyphicon-folder-open" ng-show="item.type == 'GROUP'"></span>
                             {{item.name}}

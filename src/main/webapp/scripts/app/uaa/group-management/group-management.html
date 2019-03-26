@@ -67,26 +67,28 @@
                     </a>
                 </td>
                 <td class="text-right">
-                    <button type="submit"
-                            ui-sref="group-management-detail({id:group.id})"
-                            class="btn btn-info btn-sm">
-                        <span class="glyphicon glyphicon-eye-open"></span>
-                    </button>
-                    <button type="submit"
+                    <div>
+                        <button type="submit" class="btn btn-info btn-sm"
+                            ui-sref="group-management-detail({id:group.id})">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                        <button type="submit"
                             ui-sref="group-management.edit({id:group.id})"
                             class="btn btn-primary btn-sm">
-                        <span class="glyphicon glyphicon-pencil"></span>
-                    </button>
-                    <button type="submit"
-                            ui-sref="group-management.delete({id:group.id})"
-                            class="btn btn-danger btn-sm">
-                        <span class="glyphicon glyphicon-remove-circle"></span>
-                    </button>
-                    <button type="submit"
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            ui-sref="group-management.delete({id:group.id})">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </button>
+                        <button type="submit" class="btn btn-success btn-sm"
                             ui-sref="member-management({gid:group.id})"
-                            class="btn btn-success btn-sm">
-                        <span class="glyphicon glyphicon-fullscreen"></span>
-                    </button>
+                            ng-class="{'disabled': group.members.length === 0}">
+                            <span class="glyphicon glyphicon-fullscreen"></span>
+                        </button>
+                    </div>
                 </td>
             </tr>
             </tbody>

@@ -35,6 +35,9 @@ angular.module('uaaUIApp')
                         size: 'lg',
                         resolve: {
                             paths: function () {
+                                if(angular.isUndefined($state.current.data)){
+                                    $state.go('member-management', null, { reload: true });
+                                }
                                 return $state.current.data.paths;
                             }
                         }
