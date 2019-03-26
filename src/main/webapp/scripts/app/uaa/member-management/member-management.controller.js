@@ -95,5 +95,13 @@ angular.module('uaaUIApp')
             }).$promise;
         }
 
-
+        $state.reflash = function(result){
+            var path = $scope.paths.slice(-1)[0];
+            $scope.selectItem(path)
+                .then(function(members){
+                    if($scope.paths.length === 1){
+                        $scope.members = members;
+                    }
+                });
+        }
     });

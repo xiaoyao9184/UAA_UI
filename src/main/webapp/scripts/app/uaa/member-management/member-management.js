@@ -42,7 +42,13 @@ angular.module('uaaUIApp')
                             }
                         }
                     }).result.then(function(result) {
-                        $state.go('member-management', null, { reload: false });
+                        var reload = result.length > 0;
+                        if(reload){
+                            //reload part
+                            $state.reflash(result);
+                            reload = false;
+                        }
+                        $state.go('member-management', null, { reload: reload });
                     }, function() {
                         $state.go('member-management');
                     })
@@ -65,7 +71,13 @@ angular.module('uaaUIApp')
                             }
                         }
                     }).result.then(function(result) {
-                        $state.go('member-management', null, { reload: false });
+                        var reload = result.length > 0;
+                        if(reload){
+                            //reload part
+                            $state.reflash(result);
+                            reload = false;
+                        }
+                        $state.go('member-management', null, { reload: reload });
                     }, function() {
                         $state.go('^');
                     })
