@@ -30,7 +30,7 @@ angular.module('uaaUIApp')
             }
 
             function clear() {
-                alerts = [];
+                alerts.length = 0;
             }
 
             function get() {
