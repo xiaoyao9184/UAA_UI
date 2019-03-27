@@ -20,31 +20,41 @@
     <br>
     <div class="row">
         <div class="col-md-8 col-md-offset-2">
-            <button class="btn btn-default"
-                ng-click="checkUaaSSO()">
-                <span class="glyphicon glyphicon-log-up"></span> <span>Check UAA SSO</span>
-            </button>
-            <br>
+            <div class="panel panel-info">
+                <div class="panel-heading">SSO</div>
+                <div class="panel-body">
+                    <div class="alert" role="alert"
+                        ng-class="isSSO() ? 'alert-success': 'alert-warning'">
+                        SSO is {{isSSO() ? 'enable': 'disable'}}.
 
-            <button class="btn btn-warning" 
-                ng-show="isSSO()"
-                ng-click="logoutUaa()">
-                <span class="glyphicon glyphicon-log-out"></span> <span>Logout UAA</span>
-            </button>
-
-            <div class="input-group"
-                ng-show="!isSSO()">
-                <span class="input-group-addon" id="sso_username-addon">User</span>
-                <input type="text" class="form-control" id="sso_username" aria-describedby="sso_username-addon"
-                    ng-model="sso.username">
-                <span class="input-group-addon" id="sso_password-addon">Password</span>
-                <input type="text" class="form-control" id="sso_password" aria-describedby="sso_password-addon"
-                    ng-model="sso.password">
-                <span class="input-group-btn">
-                    <button type="button" class="btn btn-success"
-                        ng-click="loginUaa()" >Login UAA</button>
-                </span>
+                        <button class="btn btn-default"
+                            ng-click="checkUaaSSO()">
+                            <span class="glyphicon glyphicon-log-up"></span> <span>Check UAA SSO</span>
+                        </button>
+                    </div>
+                    <button class="btn btn-warning" 
+                        ng-show="isSSO()"
+                        ng-click="logoutUaa()">
+                        <span class="glyphicon glyphicon-log-out"></span> <span>Logout UAA</span>
+                    </button>
+        
+                    <div class="input-group"
+                        ng-show="!isSSO()">
+                        <span class="input-group-addon" id="sso_username-addon">User</span>
+                        <input type="text" class="form-control" id="sso_username" aria-describedby="sso_username-addon"
+                            ng-model="sso.username">
+                        <span class="input-group-addon" id="sso_password-addon">Password</span>
+                        <input type="text" class="form-control" id="sso_password" aria-describedby="sso_password-addon"
+                            ng-model="sso.password">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-success"
+                                ng-click="loginUaa()" >Login UAA</button>
+                        </span>
+                    </div>
+                </div>
             </div>
+
+            
         </div>
     </div>
 </div>

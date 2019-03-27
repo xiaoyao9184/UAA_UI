@@ -33,7 +33,7 @@ angular.module('uaaUIApp')
                     TokenHolder.set(res.data);
                     Principal.token(TokenHolder.getJwt().payload);
                     $scope.token = TokenHolder.getJwt().payload;
-                    // $state.go('token');
+                    AlertService.success('<strong>UI: </strong>Refresh success!');
                 })
                 .catch(function(err){
                     $scope.error = true;
@@ -52,7 +52,7 @@ angular.module('uaaUIApp')
             SSOServerProvider.start_logout(params,$scope)
                 .then(function(){
                     Principal.uaaLogin(false)
-                    AlertService.success('Logout success!');
+                    AlertService.success('<strong>UI: </strong>Logout success!');
                 })
         }
         $scope.sso = {
@@ -73,7 +73,7 @@ angular.module('uaaUIApp')
                     clientId: $scope.setting.clientId
                 })
                 Principal.uaaLogin(true)
-                AlertService.info('Unable to get login status, default is login!');
+                AlertService.warning('<strong>UI: </strong>Unable to get login status, default is login!');
             }).catch(function(res){
                 AlertService.error(res.data.error_description);
             })
