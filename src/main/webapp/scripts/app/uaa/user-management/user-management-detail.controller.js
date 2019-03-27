@@ -76,7 +76,7 @@ angular.module('uaaUIApp')
                         code: result.code,
                         new_password: $scope.reset.password
                     },function(result) {
-                        AlertService.success('UI: reset password success!');
+                        AlertService.success('<strong>UI: </strong>reset password success!');
                         //TODO
                         var r = result
                     });
@@ -98,10 +98,10 @@ angular.module('uaaUIApp')
                 client_id: setting.clientId
             },function(result) {
                 //TODO https://github.com/cloudfoundry/uaa/issues/951
-                AlertService.warning('UI: bug https://github.com/cloudfoundry/uaa/issues/951!');
+                AlertService.warning('<strong>UI: </strong>bug https://github.com/cloudfoundry/uaa/issues/951!');
                 if(useCodeFlow){
                     Email.change({},result.code,function(result) {
-                        AlertService.success('UI: change email success!');
+                        AlertService.success('<strong>UI: </strong>change email success!');
                         //TODO
                         var r = result
                     });
@@ -114,7 +114,7 @@ angular.module('uaaUIApp')
         
         $scope.deleteMFA = function(){
             UserMFARegistration.delete({id: $scope.user.id},function() {
-                AlertService.success('UI: delete mfa success!');
+                AlertService.success('<strong>UI: </strong>delete mfa success!');
             });
         };
 
@@ -122,7 +122,7 @@ angular.module('uaaUIApp')
             UserStatus.change({id: $scope.user.id}, {
                 "locked" : false
             }, function(result) {
-                AlertService.success('UI: Unlock account success!');
+                AlertService.success('<strong>UI: </strong>Unlock account success!');
             }).$promise
         };
 
@@ -130,7 +130,7 @@ angular.module('uaaUIApp')
             UserStatus.change({id: $scope.user.id}, {
                 "passwordChangeRequired" : true
             }, function(result) {
-                AlertService.success('UI: Force user password to expire success!');
+                AlertService.success('<strong>UI: </strong>Force user password to expire success!');
             }).$promise
         };
 
@@ -142,7 +142,7 @@ angular.module('uaaUIApp')
         $scope.verifyUser = function() {
             UserVerify.verify({id: $scope.user.id}, function(result) {
                 $scope.user = result;
-                AlertService.success('UI: Verify user success!');
+                AlertService.success('<strong>UI: </strong>Verify user success!');
             }).$promise
         };
         $scope.verifyLink = function() {
@@ -150,7 +150,7 @@ angular.module('uaaUIApp')
                 redirect_uri: $scope.verify.redirect_uri
             }, function(result) {
                 $scope.verify.verify_link = result.verify_link;
-                AlertService.success('UI: Verify link create success!');
+                AlertService.success('<strong>UI: </strong>Verify link create success!');
             }).$promise
         };
     });

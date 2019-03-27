@@ -12,6 +12,14 @@ angular.module('uaaUIApp')
                 if(setting === null || setting.version < this.version){
                     setting = {
                         version: this.version,
+                        debug: false,
+                        hide: {
+                            setting: [
+                                'username', 
+                                'password'
+                            ],
+                        },
+                        
 
                         // debug edit
                         username: 'admin',

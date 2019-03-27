@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('SettingController',
-    ['$scope', '$stateParams', '$uibModalInstance', 'Setting',
-        function($scope, $stateParams, $uibModalInstance, Setting) {
+    ['$scope', '$stateParams', '$uibModalInstance', 'Setting', 'AlertService',
+        function($scope, $stateParams, $uibModalInstance, Setting, AlertService) {
 
-        $scope.setting = Setting.get()
+        $scope.setting = Setting.get();
+        $scope.count = 5;
         
         var onSaveSuccess = function (result) {
             $scope.isSaving = false;
@@ -24,4 +25,15 @@ angular.module('uaaUIApp').controller('SettingController',
         $scope.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
+
+        $scope.goingDebug = function(){
+            if($scope.count === 0){
+                $scope.setting.debug = !$scope.setting.debug;
+                Setting.set($scope.setting);
+                $scope.count = 5;
+            }else{
+                AlertService.info('<strong>UI: </strong>click ' + $scope.count + ' times to enter debug mode');
+                $scope.count = $scope.count - 1;
+            }
+        }
 }]);

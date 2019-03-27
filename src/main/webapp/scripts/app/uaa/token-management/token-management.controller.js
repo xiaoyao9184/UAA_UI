@@ -60,7 +60,7 @@ angular.module('uaaUIApp')
                 }
             }else{
                 Token.revoke({id: id}, function () {
-                    AlertService.success('UI: Revoke token success!');
+                    AlertService.success('<strong>UI: </strong>Revoke token success!');
 
                     // token will not expire immediately
                     if($scope.isMe){
