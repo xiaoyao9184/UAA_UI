@@ -16,7 +16,7 @@ angular.module('uaaUIApp')
             }else if(angular.isArray(listOrMap)){
                 listOrMap.push(item);
             }else{
-                listOrMap[item.key] = item.value
+                listOrMap[item.key] = item.value;
             }
         }
     
@@ -40,7 +40,7 @@ angular.module('uaaUIApp')
             }
             if(angular.isArray(listOrMap)){
                 var index = listOrMap.indexOf(item);
-                return index !== -1
+                return index !== -1;
             }else{
                 return item in listOrMap;
             }
@@ -55,13 +55,13 @@ angular.module('uaaUIApp')
                 if(this.hasItem(listOrMap,item)){
                     var index = listOrMap.indexOf(item);
                     listOrMap.splice(index,1);
-                    return
+                    return;
                 }
                 listOrMap.push(item);
             }else{
                 if(this.hasItem(listOrMap,item)){
                     this.deleItem(listOrMap,item);
-                    return
+                    return;
                 }
                 this.addItem(listOrMap,item);
             }
