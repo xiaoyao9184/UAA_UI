@@ -116,6 +116,12 @@ angular.module('uaaUIApp')
                 // retrieve the identity data from the server, update the identity object, and then resolve.
                 UserInfo.get().$promise
                     .then(function (info) {
+                        if (angular.isUndefined(info.user_name)) {
+                            _identity = undefined;
+                            _authenticated = false;
+                            deferred.reject(null);
+                            return;
+                        }
                         _identity = info;
                         _authenticated = true;
                         deferred.resolve(_identity);
