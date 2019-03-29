@@ -34,10 +34,11 @@ gulp.task('bower', function () {
 
 gulp.task('config', function () {
     return gulp.src('./config.json')
-      .pipe(ngConstant({
-        name: 'uaaUIApp'
-      }))
-      .pipe(gulp.dest('./temp'));
+        .pipe(ngConstant({
+          name: 'uaaUIApp',
+          deps: false
+        }))
+        .pipe(gulp.dest('./temp'));
 });
 
 gulp.task('usemin-index', function () {
