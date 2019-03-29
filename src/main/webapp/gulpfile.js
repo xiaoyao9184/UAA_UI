@@ -113,8 +113,8 @@ gulp.task('copy-other', function () {
 gulp.task('build', function (callback) {
     sequence(
         'clean', 
-        'bower',
         'config',
+        'bower',
         'usemin-index', 
         'min-templates',
         'copy-fonts',

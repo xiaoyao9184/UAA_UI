@@ -30,6 +30,19 @@ switch to `/src/main/webapp` directory.
     > npm run server
 - access `http://localhost:3000`
 
+## Development
+
+Just switch to `/src/main/webapp` directory.
+Use editor with static file HTTP server,
+like VSCode with Live Server Plugin.
+
+If you don't have a ready-made UAA service instance.
+switch to `/development` run the following command in bash.
+
+> ./run_quick-uaa-local.sh
+
+it will use [quaa](https://github.com/starkandwayne/quaa) start a development UAA instance.
+
 ## Screen shots
 
 Use password grant for login, you can change in 'Setting' use other OAuth2 flow to login.
