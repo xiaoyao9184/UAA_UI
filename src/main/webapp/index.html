@@ -101,11 +101,7 @@
 
         <!-- build:js(.) scripts/app.js -->
         <script src="scripts/app/app.js"></script>
-        <!-- build:remove -->
-        <script src="scripts/app/app.constants.js"></script>
-        <!-- endbuild -->
         <!-- inject:js -->
-        <!-- the rest of the *.js files will be injected here -->
         <!-- endinject -->
         <script src="scripts/components/ui/setting.service.js"></script>
         <script src="scripts/components/ui/principal.service.js"></script>
@@ -274,5 +270,8 @@
         <script src="scripts/app/uaa/uaa.js"></script>
         <!-- endbuild -->
     
+        <!-- build:remove -->
+        <script src="scripts/app/app.constants.js"></script>
+        <!-- endbuild -->
     </body>
 </html>

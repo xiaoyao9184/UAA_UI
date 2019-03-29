@@ -33,7 +33,7 @@ gulp.task('bower', function () {
 });
 
 gulp.task('config', function () {
-    gulp.src('./config.json')
+    return gulp.src('./config.json')
       .pipe(ngConstant({
         name: 'uaaUIApp'
       }))
@@ -50,7 +50,7 @@ gulp.task('usemin-index', function () {
     }
     var sources = gulp.src(['./temp/config.js'], {read: false});
     return gulp.src(['./temp/*.html'])
-        .pipe(inject(sources))
+        .pipe(config.dev ? gutil.noop():inject(sources))
         .pipe(usemin({
             css: [ cleanCSS(), 'concat' ],
             html: [ function () {
