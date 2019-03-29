@@ -77,7 +77,7 @@ angular.module('uaaUIApp')
                     try{
                         new URL(search)
                         data = angular.copy(config.data);
-                    }catch{}
+                    }catch(e){}
                 }else if (config.support === 'email'){
                     if(angular.isString(search) &&
                         search.indexOf('@') !== -1){
