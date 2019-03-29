@@ -14,11 +14,11 @@ angular.module('uaaUIApp')
 
         $scope.url_healthz = $sce.trustAsResourceUrl($scope.setting.url + 'healthz');
         UAAServerProvider.info();
-        $scope.isHealthy = UAAServerProvider.isHealthy
+        $scope.isHealthy = UAAServerProvider.isHealthy;
         
-        $scope.isAuthenticated = Principal.isAuthenticated;
-        $scope.isClient = Principal.isClient;
         Principal.userName().then(function(userName){
             $scope.userName = userName;
         });
+        $scope.isAuthenticated = Principal.isAuthenticated;
+        $scope.isClient = Principal.isClient;
     });
