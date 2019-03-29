@@ -18,7 +18,9 @@
     "gulp-uglify": "^3.0.2",
     "gulp-usemin": "^0.3.29",
     "run-sequence": "^2.2.1",
-    "wiredep": "^4.0.0"
+    "wiredep": "^4.0.0",
+    "gulp-inject": "^5.0.2",
+    "gulp-ng-constant": "^1.2.0"
   },
   "author": "xiaoyao9184@gmail.com",
   "license": "GPL",

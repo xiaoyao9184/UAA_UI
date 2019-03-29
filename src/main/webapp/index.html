@@ -55,6 +55,19 @@
             ga('create','UA-XXXXX-X');ga('send','pageview');
         </script>-->
 
+        <!-- StatHat -->
+        <script type="text/javascript">
+            var _StatHat = _StatHat || [];
+            _StatHat.push(['_setUser', 'MTYyNTYg-QnGayPggwHHnXTrD2Du_g~~']);
+            (function() {
+                    var sh = document.createElement('script'); sh.type = 'text/javascript';
+                    sh.async = true;
+                    sh.src = '//www.stathat.com/javascripts/api.js';
+                    var s = document.getElementsByTagName('script')[0];
+                    s.parentNode.insertBefore(sh, s);
+            })();
+        </script>
+
         <!-- build:vendorjs(.) scripts/vendor.js -->
         <!-- bower:js -->
         <!-- endbower -->
@@ -88,7 +101,12 @@
 
         <!-- build:js(.) scripts/app.js -->
         <script src="scripts/app/app.js"></script>
+        <!-- build:remove -->
         <script src="scripts/app/app.constants.js"></script>
+        <!-- endbuild -->
+        <!-- inject:js -->
+        <!-- the rest of the *.js files will be injected here -->
+        <!-- endinject -->
         <script src="scripts/components/ui/setting.service.js"></script>
         <script src="scripts/components/ui/principal.service.js"></script>
         <script src="scripts/components/ui/token.holder.service.js"></script>

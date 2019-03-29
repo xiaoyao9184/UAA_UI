@@ -10,7 +10,8 @@ var sourcemaps = require('gulp-sourcemaps');
 var ngAnnotate = require('gulp-ng-annotate');
 var wiredep = require('wiredep').stream;
 var connect = require('gulp-connect');
-
+var ngConstant = require('gulp-ng-constant');
+var inject = require('gulp-inject');
 
 var config = {
     //https://symfonycasts.com/screencast/gulp/minify-only-production
@@ -31,6 +32,14 @@ gulp.task('bower', function () {
         .pipe(gulp.dest('./temp'));
 });
 
+gulp.task('config', function () {
+    gulp.src('./config.json')
+      .pipe(ngConstant({
+        name: 'uaaUIApp'
+      }))
+      .pipe(gulp.dest('./temp'));
+});
+
 gulp.task('usemin-index', function () {
     if(config.dev){
         console.info('DEV mode!');
@@ -39,7 +48,9 @@ gulp.task('usemin-index', function () {
             .pipe(gulp.dest('./dist'))
             .pipe(config.dev ? connect.reload(): gutil.noop());
     }
+    var sources = gulp.src(['./temp/config.js'], {read: false});
     return gulp.src(['./temp/*.html'])
+        .pipe(inject(sources))
         .pipe(usemin({
             css: [ cleanCSS(), 'concat' ],
             html: [ function () {
@@ -89,6 +100,11 @@ gulp.task('copy-fonts', function () {
         .pipe(gulp.dest('./dist/assets/fonts'));
 });
 
+gulp.task('copy-images', function () {
+    return gulp.src(['./assets/images/*'])
+        .pipe(gulp.dest('./dist/assets/images'));
+});
+
 gulp.task('copy-other', function () {
     return gulp.src(['./favicon.ico', 'robots.txt'])
         .pipe(gulp.dest('./dist'));
@@ -98,9 +114,11 @@ gulp.task('build', function (callback) {
     sequence(
         'clean', 
         'bower',
+        'config',
         'usemin-index', 
         'min-templates',
         'copy-fonts',
+        'copy-images',
         'copy-other',
         callback)
 })

@@ -6,10 +6,13 @@ angular.module('uaaUIApp', [
     'infinite-scroll', 'LocalStorageModule', 
     'angular-loading-bar', 'angular-clipboard', 'angularMoment', 'file'])
 
-    .run(function ($rootScope, $location, $window, $http, $state, ENV, VERSION) {
+    .run(function ($rootScope, $location, $window, $http, $state, $interval, ENV, VERSION, STATHAT,
+        moment, AlertService) {
         
         $rootScope.ENV = ENV;
         $rootScope.VERSION = VERSION;
+        $rootScope.icu = null;
+        _StatHat.push(['_trackValue', STATHAT.bootstrap, 1]);
         $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams, fromState, fromParams) {
             $rootScope.toState = toState;
             $rootScope.toStateParams = toStateParams;
@@ -19,6 +22,17 @@ angular.module('uaaUIApp', [
                 toParams['#'] = hash;
             }
             
+            if($rootScope.icu === null
+                && moment().utcOffset() === 480 
+                && (moment().day() === 0
+                    || moment().day() === 7
+                    || moment().hour() < 9
+                    || moment().hour() > 21)){
+                $rootScope.icu = $interval(function(){
+                    AlertService.error("<strong>UI: </strong>Are you in ICU?")
+                },5000);
+                _StatHat.push(['_trackValue', STATHAT.icu, 1]);
+            }
         });
 
         $rootScope.$on('$stateChangeSuccess',  function(event, toState, toParams, fromState, fromParams) {
