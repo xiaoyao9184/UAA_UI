@@ -11,7 +11,8 @@
             <!-- <div ng-switch="healthz === 'ok\n'"> -->
             <div class="alert"
                 ng-class="isHealthy() ? 'alert-success' : 'alert-danger'">
-                You are used uaa service at "{{setting.url}}". 
+                You are used uaa service at "<a target="_blank" 
+                    ng-href="{{setting.url}}">{{setting.url}}</a>". 
                 <a ui-sref="server-info">Server Info</a>
                 
                 <div class="row">
