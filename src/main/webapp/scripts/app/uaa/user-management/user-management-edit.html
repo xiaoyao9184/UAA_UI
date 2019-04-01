@@ -180,6 +180,7 @@
                 ng-model="user.name.salt">
         </div>
         
+        <!-- TODO -->
         <div class="form-group" >
             <label class="control-label">Approvals</label>
             <br>
@@ -215,31 +216,31 @@
                 <div ng-show="editForm.clientId_{{$index}}.$invalid">
                     <p class="help-block"
                         ng-show="editForm.clientId_{{$index}}.$error.required">
-                        This field is required.
+                        ClientId field is required.
                     </p>
 
                     <p class="help-block"
                         ng-show="editForm.clientId_{{$index}}.$error.maxlength"
                         translate-value-max="100">
-                        This field cannot be longer than 100 characters.
+                        ClientId field cannot be longer than 100 characters.
                     </p>
                 </div>
 
                 <div ng-show="editForm.scope_{{$index}}.$invalid">
                     <p class="help-block"
                         ng-show="editForm.scope_{{$index}}.$error.required">
-                        This field is required.
+                        Scope field is required.
                     </p>
 
                     <p class="help-block"
                         ng-show="editForm.scope_{{$index}}.$error.maxlength"
                         translate-value-max="100">
-                        This field cannot be longer than 100 characters.
+                        Scope field cannot be longer than 100 characters.
                     </p>
                 </div>
             </div>
             <button type="button" class="btn btn-primary" 
-                ng-click="addItem(user.approvals,{})">
+                ng-click="addItem(user.approvals,{status: 'APPROVED'})">
                 <span class="glyphicon glyphicon-plus"></span>
             </button>
         </div>
