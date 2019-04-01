@@ -13,8 +13,10 @@ angular.module('uaaUIApp')
 
         $scope.setActive = function (zone, isActivated) {
             zone.active = isActivated;
-            Zone.update({id: zone.id}, zone, function () {
-                $scope.loadAll();
+            Zone.update({id: zone.id}, zone, function (result) {
+                delete result.$promise;
+                delete result.$resolved;
+                angular.merge(zone,result);
             });
         };
 
