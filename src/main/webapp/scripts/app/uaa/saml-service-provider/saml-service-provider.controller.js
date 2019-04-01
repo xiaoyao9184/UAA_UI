@@ -8,17 +8,17 @@ angular.module('uaaUIApp')
                 $scope.providers = result;
 
                 angular.forEach(result, function(provider){
-                    provider.ui = {}
+                    provider.ui = {};
 
                     //Same like https://github.com/cloudfoundry/uaa/blob/4.26.0/model/src/main/java/org/cloudfoundry/identity/uaa/provider/saml/idp/SamlServiceProviderDefinition.java#L80
                     if(provider.config.metaDataLocation.indexOf("<?xml") == 0 ||
                         provider.config.metaDataLocation.indexOf("<md:EntityDescriptor") == 0 ||
                         provider.config.metaDataLocation.indexOf("<EntityDescriptor") == 0){
-                        provider.ui.MetaDataFormat = 'XML'
+                        provider.ui.MetaDataFormat = 'XML';
                     }else if(provider.config.metaDataLocation.indexOf("http") == 0){
-                        provider.ui.MetaDataFormat = 'URL'
+                        provider.ui.MetaDataFormat = 'URL';
                     }
-                })
+                });
             });
         };
 
@@ -32,5 +32,5 @@ angular.module('uaaUIApp')
 
         $scope.copy = function(text){
             clipboard.copyText(text);
-        }
+        };
     });

@@ -12,6 +12,7 @@ var wiredep = require('wiredep').stream;
 var connect = require('gulp-connect');
 var ngConstant = require('gulp-ng-constant');
 var inject = require('gulp-inject');
+var jshint = require('gulp-jshint');
 
 var config = {
     //https://symfonycasts.com/screencast/gulp/minify-only-production
@@ -21,6 +22,12 @@ var config = {
 gulp.task('clean', function() {
     return gulp.src(['./dist','./temp'])
        .pipe(clean({force: true}));
+});
+
+gulp.task('lint', function() {
+    return gulp.src('./scripts/**/*.js')
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'));
 });
 
 gulp.task('bower', function () {

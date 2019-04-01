@@ -4,10 +4,10 @@ angular.module('uaaUIApp')
     .controller('UserManagementDetailController', 
     function ($scope, $state, $stateParams, $location, $filter,
         User, UserPassword, UserStatus, UserVerify, UserVerifyLink, UserMFARegistration, Password, Email,
-        TokenServerProvider, Principal, Setting, AlertService) {
+        TokenServerProvider, TokenHolder, Principal, Setting, AlertService) {
          
         if($state.current.name !== 'token-user'){
-            $state.go('token-user')
+            $state.go('token-user');
         }
         var setting = Setting.get();
         
@@ -15,11 +15,11 @@ angular.module('uaaUIApp')
         $scope.load = function (id) {
             Principal.identity()
                 .then(function(userInfo){
-                    $scope.isMe = (userInfo.user_id === id)
+                    $scope.isMe = (userInfo.user_id === id);
                 })
                 .catch(function(){
-                    $scope.isMe = false
-                })
+                    $scope.isMe = false;
+                });
             User.get({id: id}, function(result) {
                 $scope.user = result;
             });
@@ -38,11 +38,11 @@ angular.module('uaaUIApp')
 
                     if($scope.isMe){
                         TokenHolder.remove();
-                        Principal.authenticate(undefined)
+                        Principal.authenticate(undefined);
                         $state.go('home', null, { reload: true });
                     }
-                }).$promise
-                return
+                }).$promise;
+                return;
             }
 
             TokenServerProvider.password({
@@ -51,15 +51,15 @@ angular.module('uaaUIApp')
                 username: $scope.user.userName,
                 password: $scope.secret.old_password
             }).then(function(response){
-                var token = response.data.access_token
+                var token = response.data.access_token;
                 UserPassword.change({id: $scope.user.id}, {
                     "oldPassword" : $scope.secret.old_password,
                     "password" : $scope.secret.password,
                     "token" : token
                 }, function(result) {
                     AlertService.success(result.message);
-                }).$promise
-            })
+                }).$promise;
+            });
         };
 
         $scope.reset = {
@@ -78,11 +78,11 @@ angular.module('uaaUIApp')
                     },function(result) {
                         AlertService.success('<strong>UI: </strong>reset password success!');
                         //TODO
-                        var r = result
+                        var r = result;
                     });
                 }else{
                     //use code in other system
-                    $scope.reset.code = result.code
+                    $scope.reset.code = result.code;
                 }
             });
         };
@@ -103,11 +103,11 @@ angular.module('uaaUIApp')
                     Email.change({},result.code,function(result) {
                         AlertService.success('<strong>UI: </strong>change email success!');
                         //TODO
-                        var r = result
+                        var r = result;
                     });
                 }else{
                     //use code in other system
-                    $scope.email.code = result.code
+                    $scope.email.code = result.code;
                 }
             });
         };
@@ -123,7 +123,7 @@ angular.module('uaaUIApp')
                 "locked" : false
             }, function(result) {
                 AlertService.success('<strong>UI: </strong>Unlock account success!');
-            }).$promise
+            }).$promise;
         };
 
         $scope.expirePassword = function() {
@@ -131,19 +131,19 @@ angular.module('uaaUIApp')
                 "passwordChangeRequired" : true
             }, function(result) {
                 AlertService.success('<strong>UI: </strong>Force user password to expire success!');
-            }).$promise
+            }).$promise;
         };
 
 
         $scope.verify = {
             redirect_uri: $location.absUrl().replace(/#\/.*/gi, ''),
             verify_link: ''
-        }
+        };
         $scope.verifyUser = function() {
             UserVerify.verify({id: $scope.user.id}, function(result) {
                 $scope.user = result;
                 AlertService.success('<strong>UI: </strong>Verify user success!');
-            }).$promise
+            }).$promise;
         };
         $scope.verifyLink = function() {
             UserVerifyLink.verify({id: $scope.user.id,
@@ -151,6 +151,6 @@ angular.module('uaaUIApp')
             }, function(result) {
                 $scope.verify.verify_link = result.verify_link;
                 AlertService.success('<strong>UI: </strong>Verify link create success!');
-            }).$promise
+            }).$promise;
         };
     });

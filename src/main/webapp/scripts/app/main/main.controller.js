@@ -6,10 +6,10 @@ angular.module('uaaUIApp')
         $scope.error = null;
         $scope.errorMessage = '';
 
-        $scope.setting = Setting.get()
+        $scope.setting = Setting.get();
 
         if($state.current.name !== $scope.setting.loginType){
-            $state.go($scope.setting.loginType)
+            $state.go($scope.setting.loginType);
         }
 
         $scope.url_healthz = $sce.trustAsResourceUrl($scope.setting.url + 'healthz');

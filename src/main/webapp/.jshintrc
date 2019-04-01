@@ -1,0 +1,16 @@
+{
+    "validthis": true,
+    "strict": false,
+    "node": true,
+    "globals": { 
+        "URL": false,
+        "FileReader": false,
+        "location": false,
+        "window": false,
+        "navigator": false,
+        "angular": false,
+        "sjcl": false,
+        "_StatHat": false
+    },
+    "expr": true
+}

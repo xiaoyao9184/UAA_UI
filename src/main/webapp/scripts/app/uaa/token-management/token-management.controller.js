@@ -12,11 +12,11 @@ angular.module('uaaUIApp')
             if(type === 'user'){
                 Principal.identity()
                     .then(function(userInfo){
-                        $scope.isMe = (userInfo.user_id === id)
+                        $scope.isMe = (userInfo.user_id === id);
                     })
                     .catch(function(){
-                        $scope.isMe = false
-                    })
+                        $scope.isMe = false;
+                    });
             }else if(type === 'client'){
                 $scope.isMe = TokenHolder.getJwt().payload.client_id === id;
             }
@@ -25,8 +25,8 @@ angular.module('uaaUIApp')
             ZoneHolder.current()
                 .then(function(zone){
                     $scope.zoneId = zone.id;
-                    $scope.tokenPolicy = zone.config.tokenPolicy
-                })
+                    $scope.tokenPolicy = zone.config.tokenPolicy;
+                });
         };
 
         $scope.tokens = [];
@@ -49,11 +49,11 @@ angular.module('uaaUIApp')
         };
         $scope.revokeToken = function (id) {
             if(!id){
-                if(type === 'user'){
+                if($scope.type === 'user'){
                     Token.userRevoke({id: $scope.id}, function (result) {
                         $scope.tokens = result;
                     });
-                }else if(type === 'client'){
+                }else if($scope.type === 'client'){
                     Token.clientRevoke({id: $scope.id}, function (result) {
                         $scope.tokens = result;
                     });
@@ -65,11 +65,11 @@ angular.module('uaaUIApp')
                     // token will not expire immediately
                     if($scope.isMe){
                         TokenHolder.remove();
-                        Principal.authenticate(undefined)
+                        Principal.authenticate(undefined);
                         $state.go('home', null, { reload: true });
-                        return
+                        return;
                     }
-                    $scope.loadToken()
+                    $scope.loadToken();
                 });
             }
         };

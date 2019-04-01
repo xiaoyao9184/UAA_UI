@@ -57,7 +57,7 @@ angular.module('uaaUIApp')
                         $state.go('identity-provider', null, { reload: true });
                     }, function() {
                         $state.go('identity-provider');
-                    })
+                    });
                 }]
             })
             .state('identity-provider.edit', {
@@ -80,7 +80,7 @@ angular.module('uaaUIApp')
                         $state.go('identity-provider', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             })
             .state('identity-provider.delete', {
@@ -103,7 +103,7 @@ angular.module('uaaUIApp')
                         $state.go('identity-provider', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             })
 
@@ -256,5 +256,5 @@ angular.module('uaaUIApp')
                         templateUrl: 'scripts/app/uaa/identity-provider/config-saml-edit.html'
                     }
                 }
-            })
+            });
     });

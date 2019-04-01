@@ -4,12 +4,12 @@ angular.module('uaaUIApp').controller('LoginClientCredentialsController',
     ['$scope', '$state', '$stateParams', 'Setting', 'TokenServerProvider', 'TokenHolder', 'Principal',
         function($scope, $state, $stateParams, Setting, TokenServerProvider, TokenHolder, Principal) {
 
-        $scope.setting = Setting.get()
+        $scope.setting = Setting.get();
         $scope.uaa = {
             url: $scope.setting.url,
             clientId: $scope.setting.clientId,
             clientSecret: $scope.setting.clientSecret
-        }
+        };
 
         $scope.login = function(){
             TokenServerProvider.client($scope.uaa)
@@ -21,6 +21,6 @@ angular.module('uaaUIApp').controller('LoginClientCredentialsController',
                 .catch(function(err){
                     $scope.error = true;
                     $scope.errorMessage = err.error_description;
-                })
-        }
+                });
+        };
 }]);

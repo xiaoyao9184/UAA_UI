@@ -13,7 +13,7 @@ angular.module('uaaUIApp').controller('MemberManagementAddController',
         $scope.searchMode = {
             user: true,
             group: true
-        }
+        };
         $scope.searchText = '';
         $scope.pageTotal = 0;
         $scope.pageSize = 10;
@@ -23,7 +23,7 @@ angular.module('uaaUIApp').controller('MemberManagementAddController',
         $scope.changePath = function($index, $event) {
             // change paths
             $scope.paths = $scope.paths.slice(0,$index+1);
-        }
+        };
 
         $scope.addAction = function(item) {
             var index = $scope.actionItems.indexOf(item);
@@ -43,16 +43,16 @@ angular.module('uaaUIApp').controller('MemberManagementAddController',
             $scope.searchUserItems = [];
             $scope.searchGroupItems = [];
             var startIndex = ($scope.pageNumber - 1) * $scope.pageSize + 1;
-
-            var promises = []
+            var filter;
+            var promises = [];
             if ($scope.searchMode.user) {
-                var filter = "userName co '" + $scope.searchText + "'"
+                filter = "userName co '" + $scope.searchText + "'";
                 promises.push(
                     User.query({startIndex: startIndex, count: $scope.pageSize, filter: filter})
                         .$promise);
             }
             if ($scope.searchMode.group) {
-                var filter = "displayName co '" + $scope.searchText + "'"
+                filter = "displayName co '" + $scope.searchText + "'";
                 promises.push(
                     Group.query({startIndex: startIndex, count: $scope.pageSize, filter: filter})
                         .$promise);
@@ -63,7 +63,7 @@ angular.module('uaaUIApp').controller('MemberManagementAddController',
                     var user_result = results[0];
                     var group_result = results[1];
                     if(!fixedPage){
-                        $scope.pageTotal = Math.max(user_result.totalResults, group_result.totalResults)
+                        $scope.pageTotal = Math.max(user_result.totalResults, group_result.totalResults);
                     }
                     angular.forEach(user_result.resources, function(user){
                         $scope.searchUserItems.push({
@@ -79,7 +79,7 @@ angular.module('uaaUIApp').controller('MemberManagementAddController',
                             type: "GROUP"
                         });          
                     });
-                })
+                });
         };
 
         var onSaveSuccess = function (result) {
@@ -94,7 +94,7 @@ angular.module('uaaUIApp').controller('MemberManagementAddController',
         $scope.save = function () {
             $scope.isSaving = true;
             var path = $scope.paths.slice(-1)[0];
-            var promises = []
+            var promises = [];
             angular.forEach($scope.actionItems, function(member){
                 promises.push(
                     Member.add({gid: path.id}, {
@@ -103,7 +103,7 @@ angular.module('uaaUIApp').controller('MemberManagementAddController',
                         type: member.type,
                         value: member.id
                     }, function(result){
-                        var find = $filter('filter')($scope.actionItems, {'id':result.value}) 
+                        var find = $filter('filter')($scope.actionItems, {'id':result.value});
                         if(find.length === 1){
                             var index = $scope.actionItems.indexOf(find[0]);
                             $scope.actionItems.splice(index, 1);
@@ -112,7 +112,7 @@ angular.module('uaaUIApp').controller('MemberManagementAddController',
             });
             $q.all(promises)
                 .then(onSaveSuccess)
-                .catch(onSaveError)
+                .catch(onSaveError);
         };
 
         $scope.clear = function() {

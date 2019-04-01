@@ -9,16 +9,16 @@ angular.module('uaaUIApp')
                 $scope.userInfo = info;
             });
 
-        $scope.password = {}
+        $scope.password = {};
         
         $scope.changePassword = function(){
             UserPassword.change({id: $scope.userInfo.user_id},$scope.password).$promise
                 .then(function(result){
                     AlertService.success(result.message);
-                    $scope.password.oldPassword = $scope.password.password
-                    $scope.password.password = ''
-                })
-        }
+                    $scope.password.oldPassword = $scope.password.password;
+                    $scope.password.password = '';
+                });
+        };
 
         $scope.getPasscode = function(){
             SSOServerProvider.start_passcode({

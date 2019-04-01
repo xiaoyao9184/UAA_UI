@@ -31,26 +31,26 @@ angular.module('uaaUIApp')
                 return token && token.expires_at && token.expires_at > new Date().getTime();
             },
             getJwt: function(){
-                var token = this.get()
+                var token = this.get();
                 var jwt = token.access_token.split('.');
                 
                 //Base64URL to Base64
                 var header = jwt[0].replace(/-/g, '+').replace(/_/g, '/');
                 var payload = jwt[1].replace(/-/g, '+').replace(/_/g, '/');
                 var signature = jwt[2].replace(/-/g, '+').replace(/_/g, '/');
-                header = angular.fromJson($window.atob(header))
-                payload = angular.fromJson($window.atob(payload))
-                signature = $window.atob(signature)
+                header = angular.fromJson($window.atob(header));
+                payload = angular.fromJson($window.atob(payload));
+                signature = $window.atob(signature);
                 return {
                     header: header,
                     payload: payload,
                     signature: signature
-                }
+                };
             },
             isSupportRefresh: function(){
                 var token = localStorageService.get('token');
                 return token !== null && 
-                    angular.isDefined(token.refresh_token)
+                    angular.isDefined(token.refresh_token);
             }
         };
     });

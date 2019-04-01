@@ -5,12 +5,12 @@ angular.module('uaaUIApp').controller('LoginPasscodeController',
         function($scope, $state, $stateParams, Setting, 
         TokenServerProvider, SSOServerProvider, TokenHolder, Principal) {
 
-        $scope.setting = Setting.get()
+        $scope.setting = Setting.get();
         $scope.uaa = {
             url: $scope.setting.url,
             clientId: $scope.setting.clientId,
             clientSecret: $scope.setting.clientSecret
-        }
+        };
 
         $scope.goPasscode = function(){
             SSOServerProvider.start_passcode({
@@ -20,11 +20,11 @@ angular.module('uaaUIApp').controller('LoginPasscodeController',
         $scope.pastePasscode = function(){
             navigator.clipboard.readText()
                 .then(function(text){
-                    $scope.uaa.passcode = text
-                    $scope.$apply()
+                    $scope.uaa.passcode = text;
+                    $scope.$apply();
                 })
                 .catch(function(err){
-                    $scope.error = true
+                    $scope.error = true;
                     $scope.errorMessage = 'Failed to read clipboard contents: ' + err;
                 });
         };
@@ -40,6 +40,6 @@ angular.module('uaaUIApp').controller('LoginPasscodeController',
                 .catch(function(err){
                     $scope.error = true;
                     $scope.errorMessage = err.error_description;
-                })
-        }
+                });
+        };
 });

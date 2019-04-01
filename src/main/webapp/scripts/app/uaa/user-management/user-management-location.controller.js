@@ -21,7 +21,7 @@ angular.module('uaaUIApp')
             }else{
                 member.show = !member.show;
             }
-        }
+        };
         $scope.selectItem = $scope.expandItem;
 
         var init = function() {
@@ -42,7 +42,7 @@ angular.module('uaaUIApp')
                     node.name = node.display;
                     nodes.push(node);
                     return node;
-                }
+                };
 
                 var findNode = function(member){
                     var findInRoot = $filter('filter')($scope.roots, {'value':member.value}, true);
@@ -58,13 +58,13 @@ angular.module('uaaUIApp')
                     }
 
                     return null;
-                }
+                };
 
                 var promises = [];
                 angular.forEach(user.groups, function(group){
                     var promise = Member.list({gid: group.value}).$promise;
                     promises.push(promise);
-                })
+                });
 
                 $q.all(promises).then(function(results){
                     angular.forEach(user.groups, function(group){
@@ -106,7 +106,7 @@ angular.module('uaaUIApp')
                                     }else{
                                         node_child = createNode(member);
                                         node_child.type = 'NONE';
-                                        node_child.name = '(unrelated)'
+                                        node_child.name = '(unrelated)';
                                     }
                                 }
                                 node.members.push(node_child);

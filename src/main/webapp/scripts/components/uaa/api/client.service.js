@@ -6,10 +6,10 @@ angular.module('uaaUIApp')
             if(data.allowedproviders != null &&
                 data.allowedproviders.length == 0){
                 //https://github.com/cloudfoundry/uaa/blob/b9f228091ee9856129b157c9f908978549e8ca37/server/src/main/java/org/cloudfoundry/identity/uaa/oauth/UaaAuthorizationRequestManager.java#L222-L227
-                delete data.allowedproviders
+                delete data.allowedproviders;
             }
             return angular.toJson(data);
-        }
+        };
 
         return $resource('api/oauth/clients/:id', {}, {
                 'query': { method: 'GET', isArray: false},
@@ -40,14 +40,14 @@ angular.module('uaaUIApp')
                             if(angular.isUndefined(config.data.token)){
                                 return null;
                             }
-                            var auth = 'Bearer ' + config.data.token
+                            var auth = 'Bearer ' + config.data.token;
                             return auth;
                         }
                     },
                     transformRequest: function(data) {
                         // you can delete the variable if you don't want it sent to the backend
                         // delete data['old_secret'];
-                        delete data['token'];
+                        delete data.token;
                         // transform payload before sending
                         return angular.fromJson(data);
                     }

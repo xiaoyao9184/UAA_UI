@@ -19,7 +19,7 @@ angular.module('uaaUIApp').controller('SettingController',
         $scope.save = function () {
             $scope.isSaving = true;
             Setting.set($scope.setting);
-            onSaveSuccess($scope.setting)
+            onSaveSuccess($scope.setting);
         };
 
         $scope.clear = function() {
@@ -36,5 +36,5 @@ angular.module('uaaUIApp').controller('SettingController',
                 AlertService.info('<strong>UI: </strong>click ' + $scope.count + ' times to enter/exit debug mode');
                 $scope.count = $scope.count - 1;
             }
-        }
+        };
 }]);

@@ -57,7 +57,7 @@ angular.module('uaaUIApp')
                         $state.go('mfa-provider', null, { reload: true });
                     }, function() {
                         $state.go('mfa-provider');
-                    })
+                    });
                 }]
             })
             .state('mfa-provider.delete', {
@@ -80,8 +80,8 @@ angular.module('uaaUIApp')
                         $state.go('mfa-provider', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
-            })
+            });
 
     });

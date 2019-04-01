@@ -57,7 +57,7 @@ angular.module('uaaUIApp')
                         $state.go('client-management', null, { reload: true });
                     }, function() {
                         $state.go('client-management');
-                    })
+                    });
                 }]
             })
             .state('client-management.edit', {
@@ -80,7 +80,7 @@ angular.module('uaaUIApp')
                         $state.go('client-management', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             })
             .state('client-management.delete', {
@@ -103,7 +103,7 @@ angular.module('uaaUIApp')
                         $state.go('client-management', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             })
             .state('client-management.meta', {
@@ -126,7 +126,7 @@ angular.module('uaaUIApp')
                         $state.go('client-management', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
-            })
+            });
     });

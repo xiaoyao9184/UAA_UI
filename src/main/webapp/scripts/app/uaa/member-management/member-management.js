@@ -51,7 +51,7 @@ angular.module('uaaUIApp')
                         $state.go('member-management', null, { reload: reload });
                     }, function() {
                         $state.go('member-management');
-                    })
+                    });
                 }]
             })
             .state('member-management.delete', {
@@ -80,7 +80,7 @@ angular.module('uaaUIApp')
                         $state.go('member-management', null, { reload: reload });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             });
     });

@@ -60,7 +60,7 @@ angular.module('uaaUIApp')
                         $state.go('group-management', null, { reload: true });
                     }, function() {
                         $state.go('group-management');
-                    })
+                    });
                 }]
             })
             .state('group-management.edit', {
@@ -83,7 +83,7 @@ angular.module('uaaUIApp')
                         $state.go('group-management', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             })
             .state('group-management.delete', {
@@ -106,7 +106,7 @@ angular.module('uaaUIApp')
                         $state.go('group-management', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             });
     });

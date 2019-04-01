@@ -12,9 +12,9 @@ angular.module('uaaUIApp').controller('MemberManagementDeleteController',
 
         $scope.changePath = function($index, $event) {
             if($index+1 === $scope.paths.length){
-                return
+                return;
             }else if($index+1 > $scope.paths.length){
-                $index = $scope.paths.length -1
+                $index = $scope.paths.length - 1;
             }
 
             // change paths
@@ -24,15 +24,15 @@ angular.module('uaaUIApp').controller('MemberManagementDeleteController',
             var path = $scope.paths[$index];
             return Member.list({gid: path.id}, function (result) {
                 angular.forEach(result, function(element) {
-                    element.id = element.value
+                    element.id = element.value;
                     MemberType.getName(element)
                         .then(function(name){
-                            element.name = name
-                        })
+                            element.name = name;
+                        });
                 });
                 $scope.members = result;
             }).$promise;
-        }
+        };
 
         $scope.addAction = function(item) {
             var index = $scope.actionItems.indexOf(item);
@@ -62,11 +62,11 @@ angular.module('uaaUIApp').controller('MemberManagementDeleteController',
         $scope.save = function () {
             $scope.isSaving = true;
             var path = $scope.paths.slice(-1)[0];
-            var promises = []
+            var promises = [];
             angular.forEach($scope.actionItems, function(member){
                 promises.push(
                     Member.remove({gid: path.id, id: member.id}, function(result){
-                        var find = $filter('filter')($scope.actionItems, {'id':result.value}) 
+                        var find = $filter('filter')($scope.actionItems, {'id':result.value});
                         if(find != null && find.length === 1){
                             var index = $scope.actionItems.indexOf(find[0]);
                             $scope.actionItems.splice(index, 1);
@@ -75,7 +75,7 @@ angular.module('uaaUIApp').controller('MemberManagementDeleteController',
             });
             $q.all(promises)
                 .then(onSaveSuccess)
-                .catch(onSaveError)
+                .catch(onSaveError);
         };
 
         $scope.clear = function() {

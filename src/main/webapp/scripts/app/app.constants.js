@@ -113,10 +113,10 @@ angular.module('uaaUIApp')
     "authWindowType": "popup",
     "authWindowParam" :"toolbar=no,scrollbars=no,resizable=no,top=100,left=500,width=600,height=800",
 
-    "sessionCheckUrl": "session_management"
+    "sessionCheckUrl": "session_management",
     
     // dev
-    ,
+    
     "clientSecret": "x9nkg9n7bnberzekf3ni",
     "password": 'nzhpjprxkcojt1dols89',
 })

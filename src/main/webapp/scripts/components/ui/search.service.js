@@ -152,7 +152,7 @@ angular.module('uaaUIApp')
                         var a = {
                             group: attribute.name,
                             field: attribute.field,
-                        }
+                        };
                         angular.forEach(attribute.enum, function(e){
                             var data = angular.merge({},a,e);
                             _enum_datas.push(data);

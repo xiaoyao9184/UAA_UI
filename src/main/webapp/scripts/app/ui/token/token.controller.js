@@ -9,7 +9,7 @@ angular.module('uaaUIApp')
         if(TokenHolder.get() === null) {
             // if not token then go to homepage
             $state.go('home');
-            return
+            return;
         }
 
         $scope.setting = Setting.get();
@@ -17,9 +17,9 @@ angular.module('uaaUIApp')
 
         $scope.removeToken = function(){
             TokenHolder.remove();
-            Principal.authenticate(undefined)
+            Principal.authenticate(undefined);
             $state.go('home', null, { reload: true });
-        }
+        };
 
         $scope.isRefresh = TokenHolder.isSupportRefresh;
         $scope.refreshToken = function(){
@@ -38,7 +38,7 @@ angular.module('uaaUIApp')
                 .catch(function(err){
                     $scope.error = true;
                     $scope.errorMessage = err.error_description;
-                })
+                });
         };
 
         
@@ -48,17 +48,17 @@ angular.module('uaaUIApp')
                 url: $scope.setting.url,
                 clientId: $scope.setting.clientId,
                 redirect_uri: $location.absUrl().replace(/#\/.*/gi, $scope.setting.authRedirectUrl)
-            }
+            };
             SSOServerProvider.start_logout(params,$scope)
                 .then(function(){
-                    Principal.uaaLogin(false)
+                    Principal.uaaLogin(false);
                     AlertService.success('<strong>UI: </strong>Logout success!');
-                })
-        }
+                });
+        };
         $scope.sso = {
             username: $scope.setting.username,
             password: $scope.setting.password
-        }
+        };
         $scope.loginUaa = function(){
             AutoLogin.code({
                 url: $scope.setting.url,
@@ -71,23 +71,23 @@ angular.module('uaaUIApp')
                     url: $scope.setting.url,
                     code: res.data.code,
                     clientId: $scope.setting.clientId
-                })
-                Principal.uaaLogin(true)
+                });
+                Principal.uaaLogin(true);
                 AlertService.warning('<strong>UI: </strong>Unable to get login status, default is login!');
             }).catch(function(res){
                 AlertService.error(res.data.error_description);
-            })
-        }
+            });
+        };
 
         $scope.checkUaaSSO = function(){
-            var setting = Setting.get()
+            var setting = Setting.get();
             //https://github.com/cloudfoundry/uaa/issues/950
             var userId = $scope.token.user_id;
             if(setting.sessionCheckUrl === 'session_management'){
-                var res = sjcl.hash.sha256.hash(setting.clientId 
-                    + ' ' + window.location.origin 
-                    + ' ' + userId 
-                    + ' ' + 'ui');
+                var res = sjcl.hash.sha256.hash(setting.clientId +
+                    ' ' + window.location.origin +
+                    ' ' + userId +
+                    ' ' + 'ui');
                 userId = sjcl.codec.hex.fromBits(res) + "." + 'ui';
             }
 

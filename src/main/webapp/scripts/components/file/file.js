@@ -3,8 +3,6 @@
 angular.module('file',[])
 
 .factory('readFile', function ($window, $q) {
-    'use strict';
-
     var readFile = function (file) {
         var deferred = $q.defer(),  
             reader = new $window.FileReader();
@@ -23,8 +21,6 @@ angular.module('file',[])
 
 // does not capture input change event
 .directive('fileHandler', function (readFile) {
-    'use strict';
-
     return {
         link: function (scope, element) {
             element.on('change', function (event) {
@@ -38,8 +34,6 @@ angular.module('file',[])
 })
 
 .directive('fileBrowser', function () {
-    'use strict';
-
     return {
         require: "ngModel",
         template: '<input type="file" style="display: none;" />' +

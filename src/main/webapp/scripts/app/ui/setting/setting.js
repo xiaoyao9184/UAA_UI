@@ -22,7 +22,7 @@ angular.module('uaaUIApp')
                         $state.go('home', null, { reload: true });
                     }, function() {
                         $state.go('home', null, { reload: true });
-                    })
+                    });
                 }]
             });
     });

@@ -10,14 +10,14 @@ angular.module('uaaUIApp')
             "keystone",
             "saml",
             "ldap"
-        ]
+        ];
         $scope.isUnknowType = function(type){
-            return $scope.types.indexOf(type) === -1
+            return $scope.types.indexOf(type) === -1;
         };
 
         if(!$scope.isUnknowType($stateParams.type) &&
             $state.current.name.indexOf($stateParams.type) === -1){
-            $state.go("identity-provider-detail." + $stateParams.type.replace('.',''))
+            $state.go("identity-provider-detail." + $stateParams.type.replace('.',''));
         }
     
         $scope.provider = {};
@@ -30,9 +30,9 @@ angular.module('uaaUIApp')
                     if(result.config.metaDataLocation.indexOf("<?xml") == 0 ||
                         result.config.metaDataLocation.indexOf("<md:EntityDescriptor") == 0 ||
                         result.config.metaDataLocation.indexOf("<EntityDescriptor") == 0){
-                        $scope.ui.MetaDataFormat = 'XML'
+                        $scope.ui.MetaDataFormat = 'XML';
                     }else if(result.config.metaDataLocation.indexOf("http") == 0){
-                        $scope.ui.MetaDataFormat = 'URL'
+                        $scope.ui.MetaDataFormat = 'URL';
                     }
                 }
             });
@@ -41,6 +41,6 @@ angular.module('uaaUIApp')
 
         $scope.ui = {
             MetaDataFormat: 'URL'
-        }
+        };
 
     });

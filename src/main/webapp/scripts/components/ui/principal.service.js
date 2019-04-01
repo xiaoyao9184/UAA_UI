@@ -88,7 +88,7 @@ angular.module('uaaUIApp')
                 if(this.isClient()){
                     this.authenticate({
                         user_name: token.client_id
-                    })
+                    });
                 }else{
                     this.userName();
                 }

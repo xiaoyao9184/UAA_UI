@@ -4,12 +4,12 @@ angular.module('uaaUIApp')
     .factory('TokenServerProvider', function ($http, $window, $location, $q, Base64, Setting) {
         return {
             refresh: function(credentials) {
-                var data = "client_id=" + encodeURIComponent(credentials.clientId) 
-                    + "&client_secret=" + encodeURIComponent(credentials.clientSecret) 
-                    + "&grant_type=refresh_token" 
+                var data = "client_id=" + encodeURIComponent(credentials.clientId) +
+                    "&client_secret=" + encodeURIComponent(credentials.clientSecret) +
+                    "&grant_type=refresh_token" +
                     //TODO not jwt format
-                    // + "&token_format=opaque"
-                    + "&refresh_token=" + credentials.token;
+                    // + "&token_format=opaque" +
+                    "&refresh_token=" + credentials.token;
                 
                 return $http.post('api/oauth/token', data, {
                     headers: {
@@ -30,9 +30,9 @@ angular.module('uaaUIApp')
                 });
             },
             password: function(credentials) {
-                var data = "username=" +  encodeURIComponent(credentials.username) 
-                    + "&password=" + encodeURIComponent(credentials.password) 
-                    + "&grant_type=password";
+                var data = "username=" +  encodeURIComponent(credentials.username) +
+                    "&password=" + encodeURIComponent(credentials.password) +
+                    "&grant_type=password";
                 return $http.post('api/oauth/token', data, {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
@@ -42,8 +42,8 @@ angular.module('uaaUIApp')
                 });
             },
             passcode: function(credentials) {
-                var data = "passcode=" +  encodeURIComponent(credentials.passcode) 
-                    + "&grant_type=password";
+                var data = "passcode=" +  encodeURIComponent(credentials.passcode) +
+                    "&grant_type=password";
                 return $http.post('api/oauth/token', data, {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
@@ -53,9 +53,9 @@ angular.module('uaaUIApp')
                 });
             },
             authorization_code: function(credentials){
-                var data = "client_id=" + encodeURIComponent(credentials.clientId) 
-                    + "&redirect_uri=" + encodeURIComponent(credentials.redirect_uri) 
-                    + "&grant_type=authorization_code&code=" + credentials.code;
+                var data = "client_id=" + encodeURIComponent(credentials.clientId) +
+                    "&redirect_uri=" + encodeURIComponent(credentials.redirect_uri) +
+                    "&grant_type=authorization_code&code=" + credentials.code;
                 return $http.post('api/oauth/token', data, {
                     headers: {
                         "Content-Type": "application/x-www-form-urlencoded",
@@ -65,25 +65,25 @@ angular.module('uaaUIApp')
                 });                
             },
             start_implicit: function(credentials,$scope){
-                var response_type = credentials.response_type || 'token'
-                var data = "client_id=" + encodeURIComponent(credentials.clientId) 
-                    + "&redirect_uri=" + encodeURIComponent(credentials.redirect_uri) 
-                    + "&response_type=" + response_type 
-                    + "&state=" + credentials.state;
-                var uaa_auth_url = credentials.auth_url + '?' + data
+                var response_type = credentials.response_type || 'token';
+                var data = "client_id=" + encodeURIComponent(credentials.clientId) +
+                    "&redirect_uri=" + encodeURIComponent(credentials.redirect_uri) +
+                    "&response_type=" + response_type +
+                    "&state=" + credentials.state;
+                var uaa_auth_url = credentials.auth_url + '?' + data;
 
                 if(Setting.get().authWindowType === 'popup'){
                     var authWindow = $window.open(uaa_auth_url, 'UAA-Auth-Window', 
                         Setting.get().authWindowParam);
 
-                    var that = this
+                    var that = this;
                     var deferred = $q.defer();
                     var listener = $scope.$root.$on('$messageIncoming', function (event, data){
-                        var data = angular.fromJson(data);
+                        var _data = angular.fromJson(data);
                         //TODO
-                        delete data.origin
+                        delete _data.origin;
 
-                        that.end_data(data)
+                        that.end_data(_data)
                             .then(function(token){
                                 listener();
                                 authWindow.close();
@@ -91,39 +91,38 @@ angular.module('uaaUIApp')
                             })
                             .catch(function(err){
                                 deferred.reject(err);
-                            })
+                            });
                     });
                     
                     return deferred.promise;
                 }
             },
             start_authorization_code: function(credentials,$scope){
-                var response_type = credentials.response_type || 'code'
+                var response_type = credentials.response_type || 'code';
 
-                var data = "client_id=" + encodeURIComponent(credentials.clientId) 
-                    + "&redirect_uri=" + encodeURIComponent(credentials.redirect_uri) 
-                    + "&response_type=" + response_type 
-                    + "&state=" + credentials.state;
+                var data = "client_id=" + encodeURIComponent(credentials.clientId) +
+                    "&redirect_uri=" + encodeURIComponent(credentials.redirect_uri) +
+                    "&response_type=" + response_type +
+                    "&state=" + credentials.state;
                 if(credentials.code !== null &&
                     !angular.isUndefined(credentials.code)){
-                    data = data
-                        + "&code=" + credentials.code; 
+                    data = data + "&code=" + credentials.code; 
                 }
-                var uaa_auth_url = credentials.auth_url + '?' + data
+                var uaa_auth_url = credentials.auth_url + '?' + data;
 
                 if(Setting.get().authWindowType === 'popup'){
                     var authWindow = $window.open(uaa_auth_url, 'UAA-Auth-Window', 
                         Setting.get().authWindowParam);
 
-                    var that = this
+                    var that = this;
                     var deferred = $q.defer();
                     var listener = $scope.$root.$on('$messageIncoming', function (event, data){
-                        var data = angular.fromJson(data);
+                        var _data = angular.fromJson(data);
                         //TODO
-                        delete data.origin
+                        delete _data.origin;
 
-                        data.redirect_uri = credentials.redirect_uri
-                        that.end_data(data)
+                        _data.redirect_uri = credentials.redirect_uri;
+                        that.end_data(_data)
                             .then(function(token){
                                 listener();
                                 authWindow.close();
@@ -131,18 +130,18 @@ angular.module('uaaUIApp')
                             })
                             .catch(function(err){
                                 deferred.reject(err);
-                            })
+                            });
                     });
                     
                     return deferred.promise;
                 }
             },
             get_redirect_data: function(stateParams){
-                var urlParams = {}
+                var urlParams = {};
                 var searchParams = new URL(location.href).searchParams;
                 var arrayParams = Array.from(searchParams.entries());
                 angular.forEach(arrayParams, function(param){
-                    urlParams[param[0]] = param[1]
+                    urlParams[param[0]] = param[1];
                 });
 
                 for (var n in stateParams) { 
@@ -152,12 +151,12 @@ angular.module('uaaUIApp')
                 }
 
                 var params = angular.merge(urlParams,stateParams);
-                return params
+                return params;
             },
             end_redirect: function($scope,$window,$stateParams){
                 var deferred = $q.defer();
 
-                var data = this.get_redirect_data($stateParams)
+                var data = this.get_redirect_data($stateParams);
                 if(data === null){
                     deferred.reject({
                         error: true,
@@ -189,14 +188,14 @@ angular.module('uaaUIApp')
                 var deferred = $q.defer();
                 if(data.code !== null &&
                     !angular.isUndefined(data.code)){ 
-                    var setting = Setting.get()
+                    var setting = Setting.get();
                     var uaa = {
                         url: setting.url,
                         clientId: setting.clientId,
                         clientSecret: setting.clientSecret,
                         code: data.code,
                         redirect_uri: data.redirect_uri
-                    }
+                    };
                     this.authorization_code(uaa)
                         .then(function(res){
                             deferred.resolve(res.data);
@@ -206,7 +205,7 @@ angular.module('uaaUIApp')
                         });
                 } else if(data.access_token !== null &&
                     !angular.isUndefined(data.access_token)){
-                    data.expires_in = parseInt(data.expires_in)
+                    data.expires_in = parseInt(data.expires_in);
                     deferred.resolve(data);
                 }
                 return deferred.promise;

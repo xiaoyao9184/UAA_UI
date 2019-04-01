@@ -18,10 +18,10 @@ angular.module('uaaUIApp')
                     .catch(function(err){
                         $scope.error = true;
                         $scope.errorMessage = "Error with data to token" + angular.toJson(data);
-                    })
+                    });
             })
             .catch(function(err){
                 $scope.error = err.error;
                 $scope.errorMessage = err.error_description;
-            })
+            });
     });

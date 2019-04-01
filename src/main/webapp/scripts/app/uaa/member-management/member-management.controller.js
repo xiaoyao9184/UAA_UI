@@ -13,11 +13,11 @@ angular.module('uaaUIApp')
     
                 id: group.id,
                 members: $scope.members
-            }
+            };
             MemberType.getName(root)
                 .then(function(name){
-                    root.name = name
-                })
+                    root.name = name;
+                });
 
             $scope.selectItem(root)
                 .then(function(members){
@@ -36,7 +36,7 @@ angular.module('uaaUIApp')
                 $event.stopPropagation();
             }
             if(member.type !== 'GROUP'){   
-                return
+                return;
             }
 
             // change paths
@@ -48,7 +48,7 @@ angular.module('uaaUIApp')
             $state.current.data.paths = $scope.paths;
 
             return getSubItem(member);
-        }
+        };
 
         $scope.expandItem = function(member, $event) {
             // disable Event bubbling
@@ -59,41 +59,41 @@ angular.module('uaaUIApp')
                 getSubItem(member)
                     .then(function(members){
                         member.show = !member.show;
-                    })
+                    });
             }else{
                 member.show = !member.show;
             }
-        }
+        };
         
         var createPath = function(paths, member){
             paths.unshift(member);
             if(typeof member.father !== 'undefined'){
-                createPath(paths, member.father)
+                createPath(paths, member.father);
             }
-        }
+        };
 
         var getSubItem = function(member) {
-            return Member.list({gid: member.value}, function (result) {
+            return Member.list({gid: member.value, returnEntities: true}, function (result) {
                 angular.forEach(result, function(element){
-                    element.id = element.value
+                    element.id = element.value;
                     MemberType.getName(element)
                         .then(function(name){
-                            element.name = name
-                        })
+                            element.name = name;
+                        });
                     //Comparison change
-                    var old = $filter('filter')(member.members, {'id':element.id})
+                    var old = $filter('filter')(member.members, {'id':element.id});
                     if(old != null && old.length === 1 && typeof old[0] !== 'undefined'){
-                        element.members = old[0].members
-                        element.show = old[0].show
+                        element.members = old[0].members;
+                        element.show = old[0].show;
                     }else{
-                        element.members = null
-                        element.show = false
+                        element.members = null;
+                        element.show = false;
                     }
-                    element.father = member
+                    element.father = member;
                 });
                 member.members = result;
             }).$promise;
-        }
+        };
 
         $state.reflash = function(result){
             var path = $scope.paths.slice(-1)[0];
@@ -103,5 +103,5 @@ angular.module('uaaUIApp')
                         $scope.members = members;
                     }
                 });
-        }
+        };
     });

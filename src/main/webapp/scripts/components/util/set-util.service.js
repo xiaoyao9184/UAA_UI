@@ -18,7 +18,7 @@ angular.module('uaaUIApp')
             }else{
                 listOrMap[item.key] = item.value;
             }
-        }
+        };
     
         this.deleItem = function(listOrMap, index) {
             if(angular.isUndefined(listOrMap) ||
@@ -31,7 +31,7 @@ angular.module('uaaUIApp')
                 var key = index;
                 delete listOrMap[key];
             }
-        }
+        };
     
         this.hasItem = function(listOrMap, item) {
             if(angular.isUndefined(listOrMap) ||
@@ -44,7 +44,7 @@ angular.module('uaaUIApp')
             }else{
                 return item in listOrMap;
             }
-        }
+        };
     
         this.toggleItem = function(listOrMap, item) {
             if(angular.isUndefined(listOrMap) ||
@@ -65,6 +65,6 @@ angular.module('uaaUIApp')
                 }
                 this.addItem(listOrMap,item);
             }
-        }
+        };
     });
 

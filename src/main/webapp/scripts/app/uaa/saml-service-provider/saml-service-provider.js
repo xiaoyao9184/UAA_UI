@@ -57,7 +57,7 @@ angular.module('uaaUIApp')
                         $state.go('saml-service-provider', null, { reload: true });
                     }, function() {
                         $state.go('saml-service-provider');
-                    })
+                    });
                 }]
             })
             .state('saml-service-provider.edit', {
@@ -80,7 +80,7 @@ angular.module('uaaUIApp')
                         $state.go('saml-service-provider', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             })
             .state('saml-service-provider.delete', {
@@ -103,8 +103,8 @@ angular.module('uaaUIApp')
                         $state.go('saml-service-provider', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
-            })
+            });
 
     });

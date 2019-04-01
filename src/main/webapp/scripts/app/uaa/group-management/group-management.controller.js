@@ -5,11 +5,11 @@ angular.module('uaaUIApp')
     function ($scope, $stateParams, 
         Group, Search) {
         $scope.groups = [];
-        $scope.pageTotal = 0
+        $scope.pageTotal = 0;
         $scope.pageNumber = 1;
         $scope.pageSize = 5;
         $scope.loadPage = function (filter,sortBy,sortOrder) {
-            var startIndex = ($scope.pageNumber - 1) * $scope.pageSize + 1
+            var startIndex = ($scope.pageNumber - 1) * $scope.pageSize + 1;
             Group.query({startIndex: startIndex, count: $scope.pageSize, 
                 filter: filter, sortBy: sortBy, sortOrder: sortOrder}, function (result) {
                 $scope.pageTotal = result.totalResults;
@@ -26,7 +26,7 @@ angular.module('uaaUIApp')
 
         $scope.selected = {
             value: []
-        }
+        };
         $scope.filters = Search.init(
             $scope.loadPage,
             $scope.selected,

@@ -12,23 +12,23 @@ angular.module('uaaUIApp')
                 .then(function(result){
                     $scope.apps = result;
                     angular.forEach(result, function(app){
-                        var content = Base64.decode(app.appIcon)
+                        var content = Base64.decode(app.appIcon);
                         if(/data:.*\/.*;base64,/g.test(content)){
                             app.appIconUrl = content;
                         }else{
-                            app.appIconUrl = "data:image/png;base64," + app.appIcon
+                            app.appIconUrl = "data:image/png;base64," + app.appIcon;
                         }
-                    })
+                    });
                 });
-        }
+        };
 
         $scope.clients = [];
         $scope.search = '';
-        $scope.pageTotal = 0
+        $scope.pageTotal = 0;
         $scope.pageNumber = 1;
         $scope.pageSize = 5;
         $scope.loadPage = function (filter,sortBy,sortOrder) {
-            var startIndex = ($scope.pageNumber - 1) * $scope.pageSize + 1
+            var startIndex = ($scope.pageNumber - 1) * $scope.pageSize + 1;
             Client.query({startIndex: startIndex, count: $scope.pageSize, 
                 filter: filter, sortBy: sortBy, sortOrder: sortOrder}, function (result) {
                 $scope.clients = result.resources;
@@ -69,7 +69,7 @@ angular.module('uaaUIApp')
                 return 'glyphicon-ok';
             }
             return 'glyphicon-folder-close';
-        }
+        };
         $scope.getScopeTipIndex = function(scope, autoapprove){
             if(SetUtils.hasItem(autoapprove,'true')){
                 return 0;
@@ -118,14 +118,14 @@ angular.module('uaaUIApp')
         angular.forEach(GRANTS,function(grant){
             if(grant.grant){
                 var value = grant.value ? grant.value: grant.name;
-                $scope.grants[value] = grant
+                $scope.grants[value] = grant;
             }
         });
 
         
         $scope.selected = {
             value: []
-        }
+        };
         $scope.filters = Search.init(
             $scope.loadPage,
             $scope.selected,
@@ -187,7 +187,7 @@ angular.module('uaaUIApp')
             }],
             [{
                 support: function(text){
-                    return !!text && text.indexOf('.') !== -1
+                    return !!text && text.indexOf('.') !== -1;
                 },
                 data: {
                     group: 'Scope',

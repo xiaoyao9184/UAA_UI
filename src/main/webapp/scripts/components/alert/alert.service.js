@@ -93,7 +93,7 @@ angular.module('uaaUIApp')
                     close: function (alerts) {
                         return exports.closeAlert(this.id, alerts);
                     }
-                }
+                };
                 if(!alert.scoped) {
                     alerts.push(alert);
                 }

@@ -16,14 +16,14 @@ angular.module('uaaUIApp')
                 Healthz.get().$promise
                     .then(function (res) {
                         if(res.data === 'ok\n'){
-                            _healthy = true
+                            _healthy = true;
                         }else{
-                            _healthy = false
+                            _healthy = false;
                         }
                         deferred.resolve(_healthy);
                     })
                     .catch(function(){
-                        _healthy = false
+                        _healthy = false;
                         deferred.resolve(_healthy);
                     });
                 return deferred.promise;

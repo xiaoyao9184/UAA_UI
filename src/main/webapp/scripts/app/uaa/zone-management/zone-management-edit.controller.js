@@ -18,7 +18,7 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
         var save_processors = {
             'branding': function(){
                 if(Object.keys($scope.branding.consent).length === 0){
-                    $scope.branding.consent = null
+                    $scope.branding.consent = null;
                 }
                 
                 $scope.branding.productLogo = $scope.imageModelToBase64($scope.branding_productLogo);
@@ -54,34 +54,34 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
         $scope.time_units = {
             'S': {
                 'to': function(original){
-                    return original
+                    return original;
                 },
                 'from': function(value){
-                    return value
+                    return value;
                 }
             },
             'M': {
                 'to': function(original){
-                    return original / 60
+                    return original / 60;
                 },
                 'from': function(value){
-                    return value * 60
+                    return value * 60;
                 }
             },
             'H': {
                 'to': function(original){
-                    return original / 3600
+                    return original / 3600;
                 },
                 'from': function(value){
-                    return value * 3600
+                    return value * 3600;
                 }
             },
             'D': {
                 'to': function(original){
-                    return original / 86400
+                    return original / 86400;
                 },
                 'from': function(value){
-                    return value * 86400
+                    return value * 86400;
                 }
             }
         };
@@ -96,7 +96,7 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
             var original = units[now_unit].from(object.value);
             object.original = original;
             if(angular.isUndefined(original)){
-                return 0
+                return 0;
             }
             return original;
         };
@@ -176,21 +176,21 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
         $scope.base64ToImageModel = function(base64,model){
             var deferred = $q.defer();
             if(angular.isUndefined(base64) || base64 === null){
-                deferred.reject('undefined base64 param')
+                deferred.reject('undefined base64 param');
                 return deferred.promise;
             }
             if(angular.isUndefined(model)){
                 model = {};
             }
 
-            var content = Base64.decode(base64)
+            var content = Base64.decode(base64);
             if(/data:.*\/.*;base64,/g.test(content)){
                 model.format = 'dataUrl';
                 model.url = content;
                 deferred.resolve(model);
             }else{
                 model.format = 'base64';
-                model.url = "data:image/png;base64," + base64
+                model.url = "data:image/png;base64," + base64;
                 deferred.resolve(model);
             }
             return deferred.promise;
@@ -198,7 +198,7 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
         $scope.fileToImageModel = function(file,model){
             var deferred = $q.defer();
             if(angular.isUndefined(file)){
-                deferred.reject('undefined file')
+                deferred.reject('undefined file');
                 return deferred.promise;
             }
             if(angular.isUndefined(model)){
@@ -228,17 +228,17 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
             }else{
                 return null;
             }
-        }
+        };
 
         $scope.activeTab = function(num){
-            $scope.active = num
-        }
+            $scope.active = num;
+        };
 
 
         //Saml
         $scope.changeKey = function(key) {
             $scope.samlConfig.activeKeyId = key;
-            $scope.key = $scope.samlConfig.keys[key]
+            $scope.key = $scope.samlConfig.keys[key];
         };
 
 
@@ -259,10 +259,10 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
         $scope.initRawConfig = function() {
             $scope.zone.$promise.then(function(zone){
                 $scope.config = JSON.stringify(zone.config,null,"  ");
-            })
+            });
         };
         $scope.configChange = function() {
-            $scope.zone.config = JSON.parse($scope.config)
+            $scope.zone.config = JSON.parse($scope.config);
         };
 
         
@@ -273,13 +273,13 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
                     unit: 'S',
                     value: $scope.tokenPolicy.accessTokenValidity,
                     original: $scope.tokenPolicy.accessTokenValidity
-                }
+                };
                 $scope.tokenPolicy_refreshTokenValidity = {
                     last_unit: 'S',
                     unit: 'S',
                     value: $scope.tokenPolicy.refreshTokenValidity,
                     original: $scope.tokenPolicy.refreshTokenValidity
-                }
+                };
             },
             'clientSecretPolicy': function(){
                 
@@ -353,8 +353,8 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
                                     url: reader.result,
                                     format: 'base64',
                                     default: true
-                                }
-                            }
+                                };
+                            };
                         });
                     });
                 
@@ -375,8 +375,8 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
                                     url: reader.result,
                                     format: 'base64',
                                     default: true
-                                }
-                            }
+                                };
+                            };
                         });
                     });
 
@@ -389,7 +389,7 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
                             url: '',
                             format: 'base64',
                             default: true
-                        }
+                        };
                     });
             },
             'samlConfig': function(){
@@ -426,11 +426,11 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
                 deferred.resolve($scope.zone);
                 promise = deferred.promise;
             }else{
-                promise = $scope.zone.$promise
+                promise = $scope.zone.$promise;
             }
             promise.then(function(zone){
                 if(angular.isUndefined(zone.config)){
-                    zone.config = {}
+                    zone.config = {};
                 }
                 angular.merge(
                     zone.config,
@@ -454,13 +454,12 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
                         $scope[name] = zone.config;
                     }
 
-                    var processor = init_processors[name];
                     if(angular.isFunction(processor)){
                         processor();
-                    };
-                })
+                    }
+                });
                 
-            })
+            });
         };
 
         init();

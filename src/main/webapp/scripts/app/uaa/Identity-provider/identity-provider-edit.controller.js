@@ -37,9 +37,9 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
             "keystone", 
             "ldap",
             "saml",
-        ]
+        ];
         $scope.isUnknowType = function(type){
-            return $scope.types.indexOf(type) === -1
+            return $scope.types.indexOf(type) === -1;
         };
 
         var change_processors = {
@@ -62,9 +62,9 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
                 if(config.metaDataLocation.indexOf("<?xml") == 0 ||
                     config.metaDataLocation.indexOf("<md:EntityDescriptor") == 0 ||
                     config.metaDataLocation.indexOf("<EntityDescriptor") == 0){
-                    $scope.ui.MetaDataFormat = 'XML'
+                    $scope.ui.MetaDataFormat = 'XML';
                 }else if(config.metaDataLocation.indexOf("http") == 0){
-                    $scope.ui.MetaDataFormat = 'URL'
+                    $scope.ui.MetaDataFormat = 'URL';
                 }               
             },
             'ldap': function(config){
@@ -135,22 +135,22 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
             if(angular.isUndefined($scope.provider.type)){
                 //first active
                 $scope.active = 'none';
-                return
+                return;
             }else if($scope.provider.type !== name){
-                $scope.provider.config = {}
+                $scope.provider.config = {};
             }else if($scope.provider.config === null ||
                 angular.isUndefined($scope.provider.config)){
-                $scope.provider.config = {}
+                $scope.provider.config = {};
             }
             $scope.provider.type = name;
 
             var processor = change_processors[name];
             if(angular.isFunction(processor)){
                 processor($scope.provider.config);
-            };
+            }
             
-            $state.go($scope.baseState + '.' + name.replace('.',''))
-            return
+            $state.go($scope.baseState + '.' + name.replace('.',''));
+            return;
         };
         
         $scope.addItem = SetUtils.addItem;
@@ -162,7 +162,7 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
         //SAML
         $scope.ui = {
             MetaDataFormat: 'URL'
-        }
+        };
 
 
         //OIDC1
@@ -184,7 +184,7 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
                 config.userInfoUrl = res.data.userinfo_endpoint;
                 config.tokenKeyUrl = res.data.jwks_uri;
                 config.scopes = res.data.scopes_supported;
-            })
+            });
         };
 
 

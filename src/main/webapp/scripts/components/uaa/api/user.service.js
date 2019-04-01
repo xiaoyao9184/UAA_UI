@@ -27,14 +27,14 @@ angular.module('uaaUIApp')
                             if(angular.isUndefined(config.data.token)){
                                 return null;
                             }
-                            var auth = 'Bearer ' + config.data.token
+                            var auth = 'Bearer ' + config.data.token;
                             return auth;
                         }
                     },
                     transformRequest: function(data) {
                         // you can delete the variable if you don't want it sent to the backend
                         // delete data['old_secret'];
-                        delete data['token'];
+                        delete data.token;
                         // transform payload before sending
                         return angular.toJson(data);
                     }

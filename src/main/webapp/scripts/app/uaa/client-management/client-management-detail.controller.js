@@ -7,7 +7,7 @@ angular.module('uaaUIApp')
         TokenServerProvider, TokenHolder, Principal, AlertService) {
         
         if($state.current.name !== 'token-client'){
-            $state.go('token-client')
+            $state.go('token-client');
         }
         
         $scope.client = {};
@@ -26,7 +26,7 @@ angular.module('uaaUIApp')
                 clientId: $scope.client.client_id,
                 clientSecret: $scope.secret.old_secret,
             }).then(function(response){
-                var token = response.data.access_token
+                var token = response.data.access_token;
                 ClientSecret.change({id: $scope.client.client_id}, {
                     "clientId" : $scope.client.client_id,
                     "secret" : $scope.secret.secret,
@@ -36,10 +36,10 @@ angular.module('uaaUIApp')
 
                     if($scope.isMe){
                         TokenHolder.remove();
-                        Principal.authenticate(undefined)
+                        Principal.authenticate(undefined);
                         $state.go('home', null, { reload: true });
                     }
-                }).$promise
-            })
+                }).$promise;
+            });
         };
     });

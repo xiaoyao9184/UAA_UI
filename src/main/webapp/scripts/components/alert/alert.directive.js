@@ -21,7 +21,7 @@ angular.module('uaaUIApp')
                     });
                 }
             ]
-        }
+        };
     })
     .directive('jhAlertError', function(AlertService, $rootScope) {
         return {
@@ -105,8 +105,8 @@ angular.module('uaaUIApp')
                                 $scope.error_alerts
                             )
                         );
-                    }
+                    };
                 }
             ]
-        }
+        };
     });

@@ -2,13 +2,13 @@
 
 angular.module('uaaUIApp')
     .factory('ZoneHolder', function (Zone, localStorageService, $q) {
-        var _current = undefined
+        var _current;
         var _uaa = true;
 
         restoreZone();
 
         function restoreZone(){
-            _current = localStorageService.get("zone")
+            _current = localStorageService.get("zone");
             _uaa = (_current === null || _current.id === 'uaa');
         }
         function is_uaa(){
@@ -21,7 +21,7 @@ angular.module('uaaUIApp')
                 changeZone('uaa')
                     .then(function(zone){
                         deferred.resolve(zone);
-                    })
+                    });
             }else{
                 deferred.resolve(_current);
             }
@@ -32,7 +32,7 @@ angular.module('uaaUIApp')
             var deferred = $q.defer();
             now().then(function(zone){
                 deferred.resolve(zone.name);
-            })
+            });
             return deferred.promise;
         }
         function changeZone(id){
@@ -46,7 +46,7 @@ angular.module('uaaUIApp')
                     .then(function(zone){
                         localStorageService.set("zone",zone);
                         _uaa = (zone.id === 'uaa');
-                        _current = zone
+                        _current = zone;
                     });
             }
         }
@@ -62,6 +62,6 @@ angular.module('uaaUIApp')
             name: nowName,
             change: changeZone,
             reset: resetZone
-        }
+        };
     });
 

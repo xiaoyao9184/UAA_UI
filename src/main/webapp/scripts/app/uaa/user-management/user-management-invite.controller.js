@@ -8,11 +8,11 @@ angular.module('uaaUIApp').controller('UserManagementInviteController',
         var onSaveSuccess = function (result) {
             $scope.isSaving = false;
             result.new_invites.concat(result.failed_invites).forEach(function(new_invite){
-                var find = $filter('filter')($scope.invites, {'email':new_invite.email}, true)
+                var find = $filter('filter')($scope.invites, {'email':new_invite.email}, true);
                 if(find.length === 1){
                     var i = find[0];
                     i = angular.merge(i, new_invite);
-                    i.done = true
+                    i.done = true;
                 }
             });
         };
@@ -24,13 +24,13 @@ angular.module('uaaUIApp').controller('UserManagementInviteController',
         $scope.params = {
             client_id: Setting.get().clientId,
             redirect_uri: Setting.get().url
-        }
+        };
         $scope.invites = [
             { email: '', done: false }
-        ]
+        ];
 
         $scope.addInvite = function() {
-            $scope.invites.push({ email: '', done: false })
+            $scope.invites.push({ email: '', done: false });
         };
 
         $scope.deleInvite = function(index) {
@@ -45,12 +45,12 @@ angular.module('uaaUIApp').controller('UserManagementInviteController',
             };
             $scope.invites.forEach(function(invite){
                 body.emails.push(invite.email);
-            })
+            });
 
             UserInvite.invite(
                 $scope.params, 
                 body,
-                onSaveSuccess, onSaveError)
+                onSaveSuccess, onSaveError);
         };
 
         $scope.clear = function() {

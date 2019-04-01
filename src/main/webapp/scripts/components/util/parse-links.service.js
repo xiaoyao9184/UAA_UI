@@ -22,7 +22,7 @@ angular.module('uaaUIApp')
                     new RegExp("([^?=&]+)(=([^&]*))?", "g"),
                     function($0, $1, $2, $3) { queryString[$1] = $3; }
                 );
-                var page = queryString['page'];
+                var page = queryString.page;
                 if( angular.isString(page) ) {
                     page = parseInt(page);
                 }
@@ -31,5 +31,5 @@ angular.module('uaaUIApp')
             });
 
             return links;
-        }
+        };
     });

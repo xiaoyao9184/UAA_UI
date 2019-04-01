@@ -13,23 +13,23 @@ angular.module('uaaUIApp', [
         $rootScope.VERSION = VERSION;
         $rootScope.icu = null;
         _StatHat.push(['_trackValue', STATHAT.bootstrap, 1]);
-        $rootScope.$on('$stateChangeStart', function (event, toState, toStateParams, fromState, fromParams) {
+        $rootScope.$on('$stateChangeStart', function (event, toState, toParams, fromState, fromParams) {
             $rootScope.toState = toState;
-            $rootScope.toStateParams = toStateParams;
+            $rootScope.toStateParams = toParams;
 
             var hash = $location.hash();
             if (hash) {
                 toParams['#'] = hash;
             }
             
-            if($rootScope.icu === null
-                && moment().utcOffset() === 480 
-                && (moment().day() === 0
-                    || moment().day() === 7
-                    || moment().hour() < 9
-                    || moment().hour() > 21)){
+            if($rootScope.icu === null &&
+                moment().utcOffset() === 480 &&
+                (moment().day() === 0 ||
+                    moment().day() === 6 ||
+                    moment().hour() < 9 ||
+                    moment().hour() > 21)){
                 $rootScope.icu = $interval(function(){
-                    AlertService.error("<strong>UI: </strong>Are you in ICU?")
+                    AlertService.error("<strong>UI: </strong>Are you in ICU?");
                 },5000);
                 _StatHat.push(['_trackValue', STATHAT.icu, 1]);
             }
@@ -101,10 +101,10 @@ angular.module('uaaUIApp', [
     .config(['$urlMatcherFactoryProvider', function($urlMatcherFactory) {
         $urlMatcherFactory.type('boolean', {
             name : 'boolean',
-            decode: function(val) { return val == true ? true : val == "true" ? true : false },
+            decode: function(val) { return val == true ? true : val == "true" ? true : false; },
             encode: function(val) { return val ? 1 : 0; },
             equals: function(a, b) { return this.is(a) && a === b; },
-            is: function(val) { return [true,false,0,1].indexOf(val) >= 0 },
+            is: function(val) { return [true,false,0,1].indexOf(val) >= 0; },
             pattern: /bool|true|0|1/
         });
-    }]);;
+    }]);

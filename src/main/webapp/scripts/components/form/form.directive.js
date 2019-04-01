@@ -13,7 +13,7 @@ angular.module('uaaUIApp')
                 });
                 $watchers.push(watch);
             });
-        }
+        };
 
         return {
             restrict: 'A',
@@ -23,11 +23,10 @@ angular.module('uaaUIApp')
                     var $formGroup = $(this);
                     var $inputs = $formGroup.find('input[ng-model],textarea[ng-model],select[ng-model]');
 
+                    var warchers = [];
                     if ($inputs.length > 0) {
-                        var warchers = [];
                         watchInvalidAndDirty(scope,$inputs,warchers,$formGroup);
                     }else{
-                        var warchers = [];
                         var $formInline;
                         scope.$watch(function() {
                             $inputs = $formGroup.find('input[ng-model],textarea[ng-model],select[ng-model]');

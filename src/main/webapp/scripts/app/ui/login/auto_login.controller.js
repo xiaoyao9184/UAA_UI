@@ -4,7 +4,7 @@ angular.module('uaaUIApp').controller('LoginAutoLoginController',
     ['$scope', '$state', '$stateParams', '$location', 'Setting', 'TokenServerProvider', 'TokenHolder', 'Principal', 'AutoLogin',
         function($scope, $state, $stateParams, $location, Setting, TokenServerProvider, TokenHolder, Principal, AutoLogin) {
 
-        $scope.setting = Setting.get()
+        $scope.setting = Setting.get();
         $scope.uaa = {
             url: $scope.setting.url,
             clientId: $scope.setting.clientId,
@@ -13,13 +13,13 @@ angular.module('uaaUIApp').controller('LoginAutoLoginController',
             state: '',
             username: $scope.setting.username,
             password: $scope.setting.password
-        }
+        };
 
         $scope.login = function(){
             AutoLogin.code($scope.uaa)
                 .then(function(res){
-                    $scope.uaa.auth_url = res.data.path.replace(/^\//gi,$scope.setting.url)
-                    $scope.uaa.code = res.data.code
+                    $scope.uaa.auth_url = res.data.path.replace(/^\//gi,$scope.setting.url);
+                    $scope.uaa.code = res.data.code;
                     // $scope.uaa.response_type = 'code,code=' + res.data.code
                     TokenServerProvider.start_authorization_code($scope.uaa,$scope)
                         .then(function(token){
@@ -30,7 +30,7 @@ angular.module('uaaUIApp').controller('LoginAutoLoginController',
                         .catch(function(err){
                             $scope.error = true;
                             $scope.errorMessage = err.error_description;
-                        })
-                })
-        }
+                        });
+                });
+        };
 }]);

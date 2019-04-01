@@ -26,7 +26,7 @@ angular.module('uaaUIApp')
                 }
             }
             return false;
-        }
+        };
 
         var conversion = function(data,context){
             for (var key in data) { 
@@ -34,7 +34,7 @@ angular.module('uaaUIApp')
                     data[key] = data[key](context);
                 }
             }
-        }
+        };
 
 
         this.config = function(config) {
@@ -46,7 +46,7 @@ angular.module('uaaUIApp')
             }else{
                 configs.push(config);
             } 
-        }
+        };
     
         this.guess = function(search, current) {
             var result = [];
@@ -75,7 +75,7 @@ angular.module('uaaUIApp')
                     }
                 }else if (config.support === 'url'){
                     try{
-                        new URL(search)
+                        new URL(search);
                         data = angular.copy(config.data);
                     }catch(e){}
                 }else if (config.support === 'email'){
@@ -107,7 +107,7 @@ angular.module('uaaUIApp')
             });
             
             return result;
-        }
+        };
 
     });
 

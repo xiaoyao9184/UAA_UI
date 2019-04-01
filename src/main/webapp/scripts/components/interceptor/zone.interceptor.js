@@ -8,7 +8,7 @@ angular.module('uaaUIApp')
                 if (config.url.indexOf('api') !== 0) {
                     return config;
                 }
-                var zone = localStorageService.get("zone")
+                var zone = localStorageService.get("zone");
                 if(zone !== null &&
                     zone.id !== 'uaa'){
                     config.headers['X-Identity-Zone-Id'] = zone.id;

@@ -61,7 +61,7 @@ angular.module('uaaUIApp')
                         $state.go('user-management', null, { reload: true });
                     }, function() {
                         $state.go('user-management');
-                    })
+                    });
                 }]
             })
             .state('user-management.new', {
@@ -84,7 +84,7 @@ angular.module('uaaUIApp')
                         $state.go('user-management', null, { reload: true });
                     }, function() {
                         $state.go('user-management');
-                    })
+                    });
                 }]
             })
             .state('user-management.edit', {
@@ -107,7 +107,7 @@ angular.module('uaaUIApp')
                         $state.go('user-management', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             })
             .state('user-management.delete', {
@@ -130,7 +130,7 @@ angular.module('uaaUIApp')
                         $state.go('user-management', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             })
             .state('user-management.invite', {
@@ -148,7 +148,7 @@ angular.module('uaaUIApp')
                         $state.go('user-management', null, { reload: true });
                     }, function() {
                         $state.go('user-management');
-                    })
+                    });
                 }]
-            })
+            });
     });

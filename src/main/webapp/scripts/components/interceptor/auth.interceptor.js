@@ -38,7 +38,7 @@ angular.module('uaaUIApp')
                     localStorageService.remove('token');
                     var Principal = $injector.get('Principal');
                     if (Principal.isAuthenticated()) {
-                        Principal.authenticate(undefined)
+                        Principal.authenticate(undefined);
                     }
                 }
                 return $q.reject(response);

@@ -59,7 +59,7 @@ angular.module('uaaUIApp')
                         $state.go('zone-management', null, { reload: true });
                     }, function() {
                         $state.go('zone-management');
-                    })
+                    });
                 }]
             })
             .state('zone-management.edit', {
@@ -82,7 +82,7 @@ angular.module('uaaUIApp')
                         $state.go('zone-management', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             })
             .state('zone-management.delete', {
@@ -105,7 +105,7 @@ angular.module('uaaUIApp')
                         $state.go('zone-management', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
             })
             .state('zone-management-detail.edit', {
@@ -128,7 +128,7 @@ angular.module('uaaUIApp')
                         $state.go('zone-management-detail', null, { reload: true });
                     }, function() {
                         $state.go('^');
-                    })
+                    });
                 }]
-            })
+            });
     });

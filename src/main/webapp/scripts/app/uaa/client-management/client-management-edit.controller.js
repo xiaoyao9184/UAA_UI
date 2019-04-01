@@ -46,13 +46,13 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
         angular.forEach(GRANTS,function(grant){
             if(grant.grant){
                 var value = grant.value ? grant.value: grant.name;
-                $scope.ui.grants[value] = grant
+                $scope.ui.grants[value] = grant;
             }
         });
 
         $scope.providers = {
             identity: null
-        }
+        };
         
         $scope.addItem = SetUtils.addItem;
         $scope.deleItem = SetUtils.deleItem;

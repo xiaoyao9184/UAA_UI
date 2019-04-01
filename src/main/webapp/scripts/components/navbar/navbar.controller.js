@@ -21,6 +21,6 @@ angular.module('uaaUIApp')
         if($scope.isZoneMode){
             ZoneHolder.current().then(function(zone){
                 $scope.zone = zone;
-            })
+            });
         }
     });

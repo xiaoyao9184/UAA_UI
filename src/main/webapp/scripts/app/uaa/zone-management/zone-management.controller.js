@@ -22,7 +22,7 @@ angular.module('uaaUIApp')
             ZoneHolder.change(zone.id)
                 .then(function(){
                     $state.go('home', null, { reload: true });
-                })
+                });
         };
 
         $scope.clear = function () {
