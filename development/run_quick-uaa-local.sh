@@ -11,5 +11,5 @@ cp ./development/quaa/manifests/uaa.yml ./.quaa/manifests/uaa.yml
 cp ./development/quaa/.versions ./.quaa/.versions
 
 echo "Run quaa up"
-./.quaa/bin/quaa up -ctx uaa
+./.quaa/bin/quaa up -ctx uaa "$@"
 
