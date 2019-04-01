@@ -49,7 +49,7 @@
                 <th>Previous/Last<br>LogonTime</th>
                 <th>Password<br>LastModified</th>
                 <th>Created<br>LastModified</th>
-                <th>ZoneId</th>
+                <th>ZoneId<br>Origin</th>
                 <th></th>
             </tr>
             </thead>
@@ -102,6 +102,14 @@
                     <a ui-sref="zone-management-detail({id:user.zoneId})">
                         {{user.zoneId | limitTo:8}}
                     </a>
+                    <br><br>
+                    <span class="label label-primary" 
+                        uib-tooltip="{{user.origin}}"
+                        ng-show="user.origin === 'uaa'">Internal</span>
+                    <span class="label label-default"
+                        uib-tooltip="{{user.origin}}"
+                        ng-show="user.origin !== 'uaa'">External</span>
+                    
                 </td>
 
                 <td class="text-right">

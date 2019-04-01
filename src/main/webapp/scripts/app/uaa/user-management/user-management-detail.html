@@ -52,10 +52,27 @@
             </tr>
             <tr>
                 <td>
+                    <span>Phone</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" ng-repeat="p in user.phoneNumbers" value="{{p.value}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
                     <span>Activated</span>
                 </td>
                 <td>
                     <input type="text" class="input-sm form-control" value="{{user.active}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Verified</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{user.verified}}" readonly>
                 </td>
             </tr>
             
@@ -102,6 +119,24 @@
                 <td>
                     <input type="text" class="input-sm form-control"
                            value="{{user.meta.lastModified | date:'dd/MM/yy HH:mm'}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Origin</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{user.origin}}" readonly>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>ZoneId</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control"
+                           value="{{user.zoneId}}" readonly>
                 </td>
             </tr>
             </tbody>
