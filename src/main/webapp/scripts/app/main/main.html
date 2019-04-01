@@ -34,6 +34,12 @@
                 <ifarme 
                 style="height: 90px; width: 150px;" src="http://localhost:8080/uaa/healthz"></ifarme>
             </div> -->
+
+            <div class="alert alert-warning"
+                ng-show="isZoneMode">
+                You are in zone "{{zone.name}}" mode. 
+                <a class="hand" ng-click="exitZoneMode()">Exit</a>
+            </div>
             
             <div ng-switch="isAuthenticated()">
                 <div class="alert alert-success" ng-switch-when="true">

@@ -1,7 +1,8 @@
 'use strict';
 
 angular.module('uaaUIApp')
-    .controller('MainController', function ($scope, $state, $sce, Setting,UAAServerProvider,Principal) {
+    .controller('MainController', 
+    function ($scope, $state, $sce, Setting,UAAServerProvider,Principal,ZoneHolder) {
 
         $scope.error = null;
         $scope.errorMessage = '';
@@ -21,4 +22,15 @@ angular.module('uaaUIApp')
         });
         $scope.isAuthenticated = Principal.isAuthenticated;
         $scope.isClient = Principal.isClient;
+
+        $scope.isZoneMode = !ZoneHolder.isUAA();
+        if($scope.isZoneMode){
+            ZoneHolder.current().then(function(zone){
+                $scope.zone = zone;
+            });
+        }
+        $scope.exitZoneMode = function(){
+            ZoneHolder.reset();
+            $state.go('home', null, { reload: true });
+        };
     });
