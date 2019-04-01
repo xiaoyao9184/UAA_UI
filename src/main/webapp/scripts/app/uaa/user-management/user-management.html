@@ -44,7 +44,7 @@
             <tr>
                 <th>ID</th>
                 <th>Name<br>Given/Family</th>
-                <th>Email</th>
+                <th>Email<br>Phone</th>
                 <th>Status</th>
                 <th>Previous/Last<br>LogonTime</th>
                 <th>Password<br>LastModified</th>
@@ -66,8 +66,12 @@
                     {{user.name.givenName}} {{user.name.familyName}}
                 </td>
                 <td>
-                    <span ng-repeat="e in user.emails"
-                        class="hand">{{e.value}}</span>
+                    <span ng-repeat="e in user.emails">
+                        <a ng-href="mailto:{{e.value}}">{{e.value}}</a>
+                    </span>
+                    <br><br>
+                    <span ng-repeat="p in user.phoneNumbers"
+                        class="hand">{{p.value}}</span>
                 </td>
                 <td>
                     <span class="label label-danger hand"
