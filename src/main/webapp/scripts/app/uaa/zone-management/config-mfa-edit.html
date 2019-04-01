@@ -1,5 +1,12 @@
 <form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
     <div class="form-group">
+        <div class="alert alert-warning" role="alert"
+            ng-show="!zone.$promise">
+            MFA cannot be added for newly created zones because MFA has not been created yet!
+        </div>
+    </div>
+    
+    <div class="form-group">
         <label for="enabled">
             <input type="checkbox" id="enabled" 
                 ng-model="mfaConfig.enabled">

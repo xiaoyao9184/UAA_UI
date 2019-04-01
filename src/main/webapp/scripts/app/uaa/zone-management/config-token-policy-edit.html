@@ -27,7 +27,7 @@
 
         <input type="number" class="form-control" name="accessTokenValidity"
             ng-model="tokenPolicy.accessTokenValidity"     
-            ng-min="1"
+            ng-min="-1"
             ng-show="false">
 
         <div ng-show="editForm.accessTokenValidity.$invalid">
@@ -38,7 +38,7 @@
 
             <p class="help-block"
                 ng-show="editForm.accessTokenValidity.$error.min"
-                translate-value-max="255">
+                translate-value-max="-1">
                 This field cannot be smaller than -1.
             </p>
         </div>
@@ -72,7 +72,7 @@
 
         <input type="number" class="form-control" name="refreshTokenValidity"
             ng-model="tokenPolicy.refreshTokenValidity"     
-            ng-min="1"
+            ng-min="-1"
             ng-show="false">
     
         <div ng-show="editForm.refreshTokenValidity.$invalid">
@@ -83,8 +83,8 @@
 
             <p class="help-block"
                 ng-show="editForm.refreshTokenValidity.$error.min"
-                translate-value-max="255">
-                This field cannot be smaller than 1.
+                translate-value-max="-1">
+                This field cannot be smaller than -1.
             </p>
         </div>
     </div>
