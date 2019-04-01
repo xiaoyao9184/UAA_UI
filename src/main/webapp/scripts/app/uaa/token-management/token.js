@@ -8,6 +8,9 @@ angular.module('uaaUIApp')
                 params: {
                     type: 'client'
                 },
+                data: {
+                    previous: false
+                },
                 views: {
                     'token': {
                         templateUrl: 'scripts/app/uaa/token-management/token-management.html',
@@ -19,6 +22,9 @@ angular.module('uaaUIApp')
                 parent: 'user-management-detail',
                 params: {
                     type: 'user'
+                },
+                data: {
+                    previous: false
                 },
                 views: {
                     'token': {
