@@ -25,9 +25,10 @@ angular.module('uaaUIApp')
 
         $scope.setActive = function (user, isActivated) {
             user.active = isActivated;
-            User.update({id: user.id}, user, function () {
-                $scope.loadAll();
-                $scope.clear();
+            User.update({id: user.id}, user, function (result) {
+                delete result.$promise;
+                delete result.$resolved;
+                angular.merge(user,result);
             });
         };
 
