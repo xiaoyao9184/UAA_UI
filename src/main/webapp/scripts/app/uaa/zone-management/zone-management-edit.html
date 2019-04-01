@@ -8,7 +8,7 @@
     </div>
     <div class="modal-body">
         <div class="form-group">
-            <label>ID</label>
+            <label class="control-label">ID</label>
             <input type="text" class="form-control" name="id"
                 ng-model="zone.id">
         </div>
@@ -16,7 +16,7 @@
         <div class="form-group">
             <label class="control-label">Name</label>
             <input type="text" class="form-control" name="name"
-                   ng-model="zone.name" ng-maxlength="255">
+                   ng-model="zone.name" ng-required="true" ng-maxlength="255">
 
             <div ng-show="editForm.name.$invalid">
                 <p class="help-block"
@@ -34,7 +34,7 @@
         <div class="form-group">
             <label class="control-label">Sub Domain</label>
             <input type="text" class="form-control" name="subdomain"
-                   ng-model="zone.subdomain" ng-maxlength="255">
+                   ng-model="zone.subdomain" required ng-maxlength="255">
 
             <div ng-show="editForm.subdomain.$invalid">
                 <p class="help-block"
@@ -106,6 +106,7 @@
                 <uib-tab index="10" heading="Raw" select="initRawConfig()">
                     <label>Config</label>
                     <textarea class="form-control" name="config"
+                        style="min-height: 500px;"
                         ng-model="config" ng-change="configChange"></textarea>
                 </uib-tab>
             </uib-tabset>
