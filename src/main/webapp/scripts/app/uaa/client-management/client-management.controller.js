@@ -47,7 +47,8 @@ angular.module('uaaUIApp')
 
         
         $scope.getScopeLabel = function(scope, autoapprove){
-            if(SetUtils.hasItem(autoapprove,'true')){
+            if(autoapprove === true || 
+                SetUtils.hasItem(autoapprove,'true')){
                 return 'label-success';
             }
             if(scope.indexOf('*') != -1){
@@ -59,7 +60,8 @@ angular.module('uaaUIApp')
             return 'label-primary';
         };
         $scope.getScopeIcon = function(scope, autoapprove){
-            if(SetUtils.hasItem(autoapprove,'true')){
+            if(autoapprove === true || 
+                SetUtils.hasItem(autoapprove,'true')){
                 return 'glyphicon-ok';
             }
             if(scope.indexOf('*') != -1){
@@ -71,7 +73,8 @@ angular.module('uaaUIApp')
             return 'glyphicon-folder-close';
         };
         $scope.getScopeTipIndex = function(scope, autoapprove){
-            if(SetUtils.hasItem(autoapprove,'true')){
+            if(autoapprove === true || 
+                SetUtils.hasItem(autoapprove,'true')){
                 return 0;
             }
             if(scope.indexOf('*') != -1){

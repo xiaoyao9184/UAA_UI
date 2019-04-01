@@ -33,7 +33,7 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
                 processor();
             });
             
-            if ($scope.zone.id != null) {
+            if (angular.isDefined($scope.zone.$promise)) {
                 Zone.update({id: $scope.zone.id}, $scope.zone, onSaveSuccess, onSaveError);
             } else {
                 Zone.save($scope.zone, onSaveSuccess, onSaveError);
@@ -257,9 +257,14 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
         
         //Raw
         $scope.initRawConfig = function() {
-            $scope.zone.$promise.then(function(zone){
-                $scope.config = JSON.stringify(zone.config,null,"  ");
-            });
+            $scope.config = JSON.stringify($scope.zone.config,null,"  ");
+            // if (angular.isDefined($scope.zone.$promise)) {
+            //     $scope.zone.$promise.then(function(zone){
+                    
+            //     });
+            // }else{
+            //     // $scope.config = {};
+            // }
         };
         $scope.configChange = function() {
             $scope.zone.config = JSON.parse($scope.config);
