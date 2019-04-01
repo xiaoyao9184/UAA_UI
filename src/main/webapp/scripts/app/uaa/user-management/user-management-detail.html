@@ -184,14 +184,30 @@
                                 ng-click="resetPassword(true)">Reset</button>
                         </span>
                     </div>
-                    <div class="input-group">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
-                                ng-click="resetPassword(false)">Get</button>
-                        </span>
-                        <span class="input-group-addon" id="reset-password-code-addon">Reset Password Code</span>
-                        <input type="text" class="form-control" id="reset-password-code" aria-describedby="reset-password-code-addon"
-                            ng-model="reset.code">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Or just get code of 
+                            <a target="_blank"
+                                href="https://github.com/cloudfoundry/uaa/blob/develop/docs/UAA-APIs.rst#reset-password-flow">
+                                reset-password-flow</a>
+                        </div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                                        ng-click="resetPassword(false)">Get</button>
+                                </span>
+                                <input type="text" class="form-control" id="reset-password-code" aria-describedby="reset-password-code-addon"
+                                    placeholder="Reset Password Code" readonly
+                                    ng-model="reset.code">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" aria-haspopup="true" aria-expanded="false"
+                                        ng-click="copyText(reset.code)">
+                                        <span class="glyphicon glyphicon-copy"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -205,18 +221,38 @@
                     <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
                         ng-click="verifyUser()">Verify</button>
                     
-                    <div class="input-group">
-                        <span class="input-group-addon" id="verify-redirect-addon">Redirect uri</span>
-                        <input type="text" class="form-control" id="redirect_uri" aria-describedby="verify-redirect-addon"
-                            ng-model="verify.redirect_uri">
-                        <span class="input-group-addon" id="verify-link-addon">Verify link</span>
-                        <input type="text" class="form-control" id="verify_link" aria-describedby="verify-link-addon"
-                            ng-model="verify.verify_link">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
-                                ng-click="verifyLink()">Create verify link</button>
-                        </span>
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Or just get 
+                            <a target="_blank"
+                                href="https://github.com/cloudfoundry/uaa/blob/develop/docs/UAA-APIs.rst#verify-user-links-get-users-id-verify-link">
+                                verify link</a>
+                            for future 
+                        </div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="verify-redirect-addon">Redirect uri</span>
+                                <input type="text" class="form-control" id="redirect_uri" aria-describedby="verify-redirect-addon"
+                                    ng-model="verify.redirect_uri">
+                            </div>        
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                                        ng-click="verifyLink()">Get</button>
+                                </span>
+                                <input type="text" class="form-control" id="verify_link" aria-describedby="verify-link-addon"
+                                    placeholder="Verify link" readonly
+                                    ng-model="verify.verify_link">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" aria-haspopup="true" aria-expanded="false"
+                                        ng-click="copyText(verify.verify_link)">
+                                        <span class="glyphicon glyphicon-copy"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
+                    
                 </div>
             </div>
         </div>
@@ -233,18 +269,35 @@
                                 ng-click="changeEmail(true)">Change</button>
                         </span>
                     </div>
-                    
-                    <div class="input-group">
-                        <span class="input-group-addon" id="change-email-addon">New Email</span>
-                        <input type="text" class="form-control" id="change-email" aria-describedby="change-email-addon"
-                            ng-model="email.email">
-                        <span class="input-group-btn">
-                            <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
-                                ng-click="changeEmail(false)">Get</button>
-                        </span>
-                        <span class="input-group-addon" id="change-email-code-addon">Change Email Code</span>
-                        <input type="text" class="form-control" id="change-email-code" aria-describedby="change-email-code-addon"
-                            ng-model="email.code">
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                            Or just get code of 
+                            <a target="_blank"
+                                href="https://github.com/cloudfoundry/uaa/blob/develop/docs/UAA-APIs.rst#change-email-flow">
+                                change-email-flow</a>
+                        </div>
+                        <div class="panel-body">
+                            <div class="input-group">
+                                <span class="input-group-addon" id="change-email-addon">New Email</span>
+                                <input type="text" class="form-control" id="change-email" aria-describedby="change-email-addon"
+                                    ng-model="email.email">
+                            </div>
+                            <div class="input-group">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-info" aria-haspopup="true" aria-expanded="false"
+                                        ng-click="changeEmail(false)">Get</button>
+                                </span>
+                                <input type="text" class="form-control" id="change-email-code" aria-describedby="change-email-code-addon"
+                                    placeholder="Change Email Code" readonly 
+                                    ng-model="email.code">
+                                <span class="input-group-btn">
+                                    <button type="button" class="btn btn-default" aria-haspopup="true" aria-expanded="false"
+                                        ng-click="copyText(email.code)">
+                                        <span class="glyphicon glyphicon-copy"></span>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

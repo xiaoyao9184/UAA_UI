@@ -2,7 +2,7 @@
 
 angular.module('uaaUIApp')
     .controller('UserManagementDetailController', 
-    function ($scope, $state, $stateParams, $location, $filter,
+    function ($scope, $state, $stateParams, $location, clipboard,
         User, UserPassword, UserStatus, UserVerify, UserVerifyLink, UserMFARegistration, Password, Email,
         TokenServerProvider, TokenHolder, Principal, Setting, AlertService) {
          
@@ -25,6 +25,9 @@ angular.module('uaaUIApp')
             });
         };
         $scope.load($stateParams.id);
+
+
+        $scope.copyText = clipboard.copyText;
 
         $scope.changePassword = function() {
             //change use manager token
@@ -98,7 +101,9 @@ angular.module('uaaUIApp')
                 client_id: setting.clientId
             },function(result) {
                 //TODO https://github.com/cloudfoundry/uaa/issues/951
-                AlertService.warning('<strong>UI: </strong>bug https://github.com/cloudfoundry/uaa/issues/951!');
+                AlertService.warning('<strong>UI: </strong>bug ' + 
+                    '<a target="_blank" href="https://github.com/cloudfoundry/uaa/issues/951">issues/951</a>' +
+                    '!');
                 if(useCodeFlow){
                     Email.change({},result.code,function(result) {
                         AlertService.success('<strong>UI: </strong>change email success!');

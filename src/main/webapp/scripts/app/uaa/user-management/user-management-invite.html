@@ -63,7 +63,14 @@
                     ng-show="invite.success">
                     <span class="input-group-addon" id="verify-link-addon">Verify link</span>
                     <input type="text" class="form-control" id="invite_link" aria-describedby="invite-link-addon"
+                        readonly
                         ng-model="invite.inviteLink">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" aria-haspopup="true" aria-expanded="false"
+                            ng-click="copyText(invite.inviteLink)">
+                            <span class="glyphicon glyphicon-copy"></span>
+                        </button>
+                    </span>
                 </div>
 
                 <div class="input-group"

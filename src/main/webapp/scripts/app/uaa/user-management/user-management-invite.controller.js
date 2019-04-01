@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('UserManagementInviteController',
-    ['$scope', '$stateParams', '$uibModalInstance', '$location', '$filter', 'UserInvite', 'Setting',
-        function($scope, $stateParams, $uibModalInstance, $location, $filter, UserInvite, Setting) {
+    ['$scope', '$stateParams', '$uibModalInstance', '$filter', 'clipboard', 'UserInvite', 'Setting',
+        function($scope, $stateParams, $uibModalInstance, $filter, clipboard, UserInvite, Setting) {
 
        
         var onSaveSuccess = function (result) {
@@ -57,4 +57,6 @@ angular.module('uaaUIApp').controller('UserManagementInviteController',
             $uibModalInstance.dismiss('cancel');
         };
 
+        
+        $scope.copyText = clipboard.copyText;
 }]);
