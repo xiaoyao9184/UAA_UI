@@ -74,13 +74,17 @@ angular.module('uaaUIApp')
 
                             default:
                                 if (httpResponse.data && httpResponse.data.message) {
-                                    addErrorAlert(httpResponse.data.message);
+                                    addErrorAlert('<strong>' + httpResponse.status + ' Error: </strong>' + 
+                                        httpResponse.data.message);
                                 } else if (httpResponse.data && httpResponse.data.error_description) {
-                                    addErrorAlert(httpResponse.data.error_description);
+                                    addErrorAlert('<strong>' + httpResponse.status + ' Error: </strong>' + 
+                                        httpResponse.data.error_description);
                                 } else if (httpResponse.data && httpResponse.data.error) {
-                                    addErrorAlert(httpResponse.data.error);
+                                    addErrorAlert('<strong>' + httpResponse.status + ' Error: </strong>' + 
+                                        httpResponse.data.error);
                                 } else {
-                                    addErrorAlert(JSON.stringify(httpResponse));
+                                    addErrorAlert('<strong>' + httpResponse.status + ' Error: </strong>' + 
+                                        JSON.stringify(httpResponse,null,"  "));
                                 }
                         }
                     });

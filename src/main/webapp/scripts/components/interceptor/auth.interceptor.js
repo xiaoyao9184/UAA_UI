@@ -33,7 +33,8 @@ angular.module('uaaUIApp')
         return {
             responseError: function (response) {
                 // token has expired
-                if (response.status === 401 && 
+                if (response.config.removeIfError === true &&
+                    response.status === 401 && 
                     (response.data.error == 'invalid_token' || response.data.error == 'unauthorized')) {
                     localStorageService.remove('token');
                     var Principal = $injector.get('Principal');
