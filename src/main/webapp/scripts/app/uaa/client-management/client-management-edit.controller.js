@@ -17,7 +17,7 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
 
         $scope.save = function () {
             $scope.isSaving = true;
-            if($scope.client.client_id != null){
+            if (angular.isDefined($scope.client.$promise)) {
                 Client.update({id: $scope.client.client_id}, $scope.client, onSaveSuccess, onSaveError);
             } else {
                 Client.save($scope.client, onSaveSuccess, onSaveError);
