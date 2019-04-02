@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('ClientManagementEditController',
-    ['$scope', '$q', '$uibModalInstance', 'entity', 'Client', 'IdentityProvider', 'SetUtils', 'GRANTS', 'GROUPS',
-        function($scope, $q, $uibModalInstance, entity, Client, IdentityProvider, SetUtils, GRANTS, GROUPS) {
+    ['$scope', '$q', '$uibModalInstance', 'entity', 'Client', 'IdentityProvider', 'SetUtils', 'GRANTS', 'GROUPS', 'RESOURCE_IDS',
+        function($scope, $q, $uibModalInstance, entity, Client, IdentityProvider, SetUtils, GRANTS, GROUPS, RESOURCE_IDS) {
 
         $scope.client = entity;
         
@@ -31,17 +31,7 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
         $scope.ui = {
             grants: {},
             groups: GROUPS,
-            resourceIds: [
-                'zones',
-                'idps',
-                'clients',
-                'scim',
-                'password',
-                'oauth',
-                'approvals', 
-                'groups',
-                'uaa'
-            ]
+            resourceIds: RESOURCE_IDS
         };
         angular.forEach(GRANTS,function(grant){
             if(grant.grant){

@@ -1,8 +1,8 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('ZoneManagementEditController',
-    ['$scope', '$q', '$http', '$uibModalInstance', 'entity', 'Zone', 'MFAProvider', 'IdentityProvider', 'Base64', 'SetUtils',
-        function($scope, $q, $http, $uibModalInstance, entity, Zone, MFAProvider, IdentityProvider, Base64, SetUtils) {
+    ['$scope', '$q', '$http', '$uibModalInstance', 'entity', 'Zone', 'MFAProvider', 'IdentityProvider', 'Base64', 'SetUtils', 'HTTP_METHIDS', 'HTTP_HEADERS',
+        function($scope, $q, $http, $uibModalInstance, entity, Zone, MFAProvider, IdentityProvider, Base64, SetUtils, HTTP_METHIDS, HTTP_HEADERS) {
 
         $scope.zone = entity;
 
@@ -104,71 +104,8 @@ angular.module('uaaUIApp').controller('ZoneManagementEditController',
         
         //CORS Policy
         $scope.http = {
-            methods: [
-                'GET', 'HEAD', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS', 'TRACE'
-            ],
-            headers: [
-                'Accept', 
-                'Accept-Charset', 
-                'Accept-Encoding', 
-                'Accept-Language', 
-                'Accept-Ranges', 
-                'Access-Control-Allow-Credentials', 
-                'Access-Control-Allow-Headers', 
-                'Access-Control-Allow-Methods', 
-                'Access-Control-Allow-Origin', 
-                'Access-Control-Expose-Headers', 
-                'Access-Control-Max-Age', 
-                'Access-Control-Request-Headers', 
-                'Access-Control-Request-Method', 
-                'Age', 
-                'Allow', 
-                'Authorization', 
-                'Cache-Control', 
-                'Connection', 
-                'Content-Encoding', 
-                'Content-Disposition', 
-                'Content-Language', 
-                'Content-Length', 
-                'Content-Location', 
-                'Content-Range', 
-                'Content-Type', 
-                'Cookie', 
-                'Date', 
-                'ETag', 
-                'Expect', 
-                'Expires', 
-                'From', 
-                'Host', 
-                'If-Match', 
-                'If-Modified-Since', 
-                'If-None-Match', 
-                'If-Range', 
-                'If-Unmodified-Since', 
-                'Last-Modified', 
-                'Link', 
-                'Location', 
-                'Max-Forwards', 
-                'Origin', 
-                'Pragma', 
-                'Proxy-Authenticate', 
-                'Proxy-Authorization', 
-                'Range', 
-                'Referer', 
-                'Retry-After', 
-                'Server', 
-                'Set-Cookie', 
-                'Set-Cookie2', 
-                'TE', 
-                'Trailer', 
-                'Transfer-Encoding', 
-                'Upgrade', 
-                'User-Agent', 
-                'Vary', 
-                'Via', 
-                'Warning', 
-                'WWW-Authenticate'
-            ]
+            methods: HTTP_METHIDS,
+            headers: HTTP_HEADERS
         };
 
 
