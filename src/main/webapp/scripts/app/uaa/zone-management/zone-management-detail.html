@@ -80,6 +80,25 @@
         </table>
     </div>
 
+    <div class="panel panel-info">
+        <div class="panel-heading">Zone Management Scopes</div>
+        <div class="panel-body">
+            Click for add/delete to group
+            <br>
+            <span class="label hand"
+                uib-tooltip="{{hasGroup(group) ? 'Already has this group' : 'This group is not included'}}" 
+                ng-class="hasGroup(group) ? 'label-success' : 'label-default'"
+                ng-click="toggleGroup(group)"
+                ng-repeat-start="group in ui.groups">
+                <span class="glyphicon glyphicon-folder-close"></span>
+                {{group.title}}
+            </span>
+            <span ng-repeat-end>
+                &nbsp;
+            </span>
+        </div>
+    </div>
+
     <button type="submit" class="btn btn-info"
         ng-click="back()">
         <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>

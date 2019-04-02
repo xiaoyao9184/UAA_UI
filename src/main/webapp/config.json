@@ -90,6 +90,17 @@
           "grant": true
       }
     ],
+    "ZONE_SCOPES": [
+        { "template": "zones.<zone id>.admin", "description": "scope that permits operations in a designated zone by authenticating against the default zone, such as create identity providers or clients in another zone (used together with the X-Identity-Zone-Id header)" },
+        { "template": "zones.<zone id>.read", "description": "scope that permits reading the given identity zone (used together with the X-Identity-Zone-Id header)" },
+        { "template": "zones.<zone id>.clients.admin", "description": "translates into clients.admin after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
+        { "template": "zones.<zone id>.clients.read", "description": "translates into clients.read after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
+        { "template": "zones.<zone id>.clients.write", "description": "translates into clients.write after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
+        { "template": "zones.<zone id>.scim.read", "description": "translates into scim.read after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
+        { "template": "zones.<zone id>.scim.create", "description": "translates into scim.create after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
+        { "template": "zones.<zone id>.scim.write", "description": "translates into scim.write after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
+        { "template": "zones.<zone id>.idps.read", "description": "translates into idps.read after zone switch is complete (used together with the X-Identity-Zone-Id header)" }
+    ],
     "SETTING": {
         "version": 8,
         "debug": false,
