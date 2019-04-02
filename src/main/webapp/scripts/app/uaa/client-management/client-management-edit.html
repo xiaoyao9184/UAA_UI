@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="form-group" ng-show="client.id === null">
+        <div class="form-group" ng-show="!client.$promise">
             <label class="control-label">Secret</label>
             <input type="password" class="form-control" name="client_secret"
                 ng-model="client.client_secret" ng-maxlength="256">
