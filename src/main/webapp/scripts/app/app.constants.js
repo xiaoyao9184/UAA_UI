@@ -47,7 +47,11 @@ angular.module('uaaUIApp')
     { "template": "zones.<zone id>.scim.read", "description": "translates into scim.read after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
     { "template": "zones.<zone id>.scim.create", "description": "translates into scim.create after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
     { "template": "zones.<zone id>.scim.write", "description": "translates into scim.write after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
-    { "template": "zones.<zone id>.idps.read", "description": "translates into idps.read after zone switch is complete (used together with the X-Identity-Zone-Id header)" }
+    { "template": "zones.<zone id>.scim.invite", "description": "translates into scim.invite after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
+    { "template": "zones.<zone id>.idps.read", "description": "translates into idps.read after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
+    { "template": "zones.<zone id>.idps.write", "description": "translates into idps.write after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
+    { "template": "zones.<zone id>.sps.read", "description": "translates into sps.read after zone switch is complete (used together with the X-Identity-Zone-Id header)" },
+    { "template": "zones.<zone id>.sps.write", "description": "translates into sps.write after zone switch is complete (used together with the X-Identity-Zone-Id header)" }
 ])
 
 .constant('RESOURCE_IDS', [
