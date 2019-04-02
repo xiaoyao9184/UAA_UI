@@ -41,7 +41,7 @@ angular.module('uaaUIApp')
                 }
             })
             .state('user-management.location', {
-                parent: 'uaa',
+                parent: 'user-management',
                 url: '/user/:id/location',
                 data: {
                     authorities: ['ROLE_ADMIN'],

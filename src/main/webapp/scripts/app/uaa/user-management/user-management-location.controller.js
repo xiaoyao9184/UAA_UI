@@ -2,27 +2,133 @@
 
 angular.module('uaaUIApp')
     .controller('UserManagementLocationController',
-    function($scope, $filter, $q, $uibModalInstance, entity, Group, Member) {
+    function($scope, $filter, $q, $uibModalInstance, entity, Group, Member, MemberType) {
         $scope.user = entity;
-        $scope.roots = [];
+        $scope.members = [];
         
         $scope.clear = function() {
             $uibModalInstance.dismiss('cancel');
         };
 
-        $scope.expandItem = function(member, $event) {
+        $scope.selectItem = function(node, $event) {
             // disable Event bubbling
             if($event){
                 $event.stopPropagation();
             }
-            if(!member.members ||
-                member.members.length === 0){
-                member.nochild = true;
+
+            return reflashChildItem(node)
+                .then(function(members){
+                    if(members.length === 0){
+                        node.nochild = true;
+                    }else{
+                        delete node.nochild;
+                    }
+                    return members;
+                });
+        };
+
+        $scope.expandItem = function(node, $event) {
+            // disable Event bubbling
+            if($event){
+                $event.stopPropagation();
+            }
+
+            if(node.nochild === true){
+                return;
+            }
+            if(node.members.length > 0){
+                node.show = !node.show;
             }else{
-                member.show = !member.show;
+                $scope.selectItem(node)
+                    .then(function(members){
+                        if(members.length > 0){
+                            node.show = !node.show;
+                        }
+                    });
             }
         };
-        $scope.selectItem = $scope.expandItem;
+
+        $scope.toggleItem = function(node, $event){
+            // disable Event bubbling
+            if($event){
+                $event.stopPropagation();
+            }
+            if(node.type === 'DIRECT'){
+                Member.remove({gid: node.id, id: $scope.user.id}, function(result){
+                    if(isInDirect(node)){
+                        node.type = 'INDIRECT';
+                    }else{
+                        node.type = 'NONE';
+                    }
+                    reflashParentType(node);
+                });
+            }else{
+                Member.add({gid: node.id}, {
+                    origin: "uaa",
+                    type: "USER",
+                    value: $scope.user.id
+                }, function(result){
+                    node.type = 'DIRECT';
+                    reflashParentType(node);
+                });
+            }
+        }
+
+        var isInDirect = function(node){
+            var findInUser = $filter('filter')(node.members, {'type':'!NONE'}, true);
+            return findInUser.length > 0;
+        };
+
+        var reflashParentType = function(node){
+            angular.forEach(node.parents,function(parent){
+                //UnSure
+                if(parent.type === 'INDIRECT' ||
+                    parent.type === 'NONE'){
+                    if(isInDirect(parent)){
+                        parent.type = 'INDIRECT';
+                    }else{
+                        parent.type = 'NONE';
+                    }
+                    reflashParentType(parent);
+                }
+            });
+        };
+
+        var reflashChildItem = function(node) {
+            return Member.list({gid: node.id, returnEntities: true}).$promise
+                .then(function(members){
+                    var group_members = [];
+                    angular.forEach(members, function(member){
+                        if(member.type === 'USER'){
+                            return;
+                        }
+                        //Comparison change of members
+                        var nodeMember;
+                        var findOldMember = $filter('filter')(node.members, {'id':member.value}, true);
+                        if(findOldMember.length > 0){
+                            nodeMember = findOldMember[0];
+                        }else{
+                            nodeMember = {
+                                id: member.value,
+                                type: 'NONE',
+                                members: [],
+                                parents: [],
+                                show: false,
+                                nochild: false
+                            };
+                            node.members.push(nodeMember);
+                            nodeMember.parents.push(node);
+                        }
+                        //reflash name
+                        MemberType.getName(member)
+                            .then(function(name){
+                                nodeMember.name = name;
+                            });
+                        group_members.push(nodeMember);
+                    });
+                    return group_members;
+                });
+        };
 
         var init = function() {
             var promise;
@@ -36,23 +142,45 @@ angular.module('uaaUIApp')
             promise.then(function(user){
                 var nodes = [];
 
-                var createNode = function(member){
-                    var node = angular.copy(member);
-                    node.id = node.value;
-                    node.name = node.display;
+                var createNode = function(memberOrGroup){
+                    var node;
+                    if(memberOrGroup.display){
+                        var group = memberOrGroup;
+                        node = {
+                            id: group.value,
+                            name: group.display,
+                            type: group.type,
+                            members: [],
+                            parents: [],
+                            show: false,
+                            nochild: true
+                        }
+                    }else{
+                        var member = memberOrGroup;
+                        node = {
+                            id: member.value,
+                            name: member.entity.displayName,
+                            type: 'NONE',
+                            members: [],
+                            parents: [],
+                            show: false,
+                            nochild: false
+                        }
+                    }
+                    
                     nodes.push(node);
                     return node;
                 };
 
                 var findNode = function(member){
-                    var findInRoot = $filter('filter')($scope.roots, {'value':member.value}, true);
+                    var findInRoot = $filter('filter')($scope.members, {'id':member.value}, true);
                     if(findInRoot.length > 0){
-                        var index = $scope.roots.indexOf(findInRoot[0]);
-                        $scope.roots.splice(index, 1);
+                        var index = $scope.members.indexOf(findInRoot[0]);
+                        $scope.members.splice(index, 1);
                         return findInRoot[0];
                     }
 
-                    var findInAll = $filter('filter')(nodes, {'value':member.value}, true);
+                    var findInAll = $filter('filter')(nodes, {'id':member.value}, true);
                     if(findInAll.length > 0){
                         return findInAll[0];
                     }
@@ -62,7 +190,7 @@ angular.module('uaaUIApp')
 
                 var promises = [];
                 angular.forEach(user.groups, function(group){
-                    var promise = Member.list({gid: group.value}).$promise;
+                    var promise = Member.list({gid: group.value, returnEntities: true}).$promise;
                     promises.push(promise);
                 });
 
@@ -71,31 +199,11 @@ angular.module('uaaUIApp')
                         var node = findNode(group);
                         if(node === null){
                             node = createNode(group);
-                            $scope.roots.push(node);
-                        }else{
-                            angular.merge(node,group);
+                            $scope.members.push(node);
                         }
                         
-                        
-                        // node.members = results.shift();
-                        // node.child = [];
-                        // angular.forEach(node.members, function(member){
-                        //     if(member.type === 'GROUP'){
-                        //         var node_child = findNode(member);
-                        //         if(node_child === null){
-                        //             var findInUser = $filter('filter')(user.groups, {'value':member.value}, true);
-                        //             if(findInUser.length > 0){
-                        //                 node_child = createNode(member);
-                        //             }
-                        //         }
-                        //         if(node_child !== null){
-                        //             node.child.push(node_child);
-                        //         }
-                        //     }
-                        // });
-
+                        //members to child nodes
                         var members = results.shift();
-                        node.members = [];
                         angular.forEach(members, function(member){
                             if(member.type === 'GROUP'){
                                 var node_child = findNode(member);
@@ -105,17 +213,16 @@ angular.module('uaaUIApp')
                                         node_child = createNode(findInUser[0]);
                                     }else{
                                         node_child = createNode(member);
-                                        node_child.type = 'NONE';
-                                        node_child.name = '(unrelated)';
                                     }
                                 }
                                 node.members.push(node_child);
+                                node_child.parents.push(node);
                             }
                         });
+
+                        node.nochild = node.members.length === 0;
                         node.show = node.members.length !== 0;
                     });
-
-                    var a = $scope.roots;
                 });
             });
         };

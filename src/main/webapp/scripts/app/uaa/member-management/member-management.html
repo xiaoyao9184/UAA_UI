@@ -20,19 +20,7 @@
             </li>
         </ol>
         
-        <ul class="list-group">
-            <li class="list-group-item hand tree"
-                ng-repeat="member in members | orderBy:'name' track by member.id"
-                ng-click="selectItem(member,$event)">
-                <span class="glyphicon glyphicon-user"ng-show="member.type == 'USER'"></span>
-                <span class="glyphicon" 
-                    ng-class="member.show ? 'glyphicon-folder-open' : 'glyphicon-folder-close'"
-                    ng-click="expandItem(member,$event)" ng-show="member.type == 'GROUP'"></span>
-                {{member.name}}
-
-                <div ng-show="member.show" ng-init="member = member" ng-include="'scripts/app/uaa/member-management/member-item.html'"></div>
-            </li>
-        </ul>
+        <div ng-init="member = this" ng-include="'scripts/app/uaa/member-management/member-item.html'"></div>
     </div>
 
     <button type="submit" class="btn btn-info"
