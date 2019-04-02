@@ -9,7 +9,7 @@
     <div class="modal-body">
         <ul class="list-group">
             <li class="list-group-item hand tree"
-                ng-repeat="member in roots track by member.id"
+                ng-repeat="member in roots | orderBy:'name' track by member.id"
                 ng-click="expandItem(member,$event)">
                 <span class="glyphicon" 
                     ng-class="member.show ? 'glyphicon-folder-open' : 'glyphicon-folder-close'"

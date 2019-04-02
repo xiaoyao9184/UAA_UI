@@ -1,16 +1,16 @@
 <ul class="list-group">
     <li class="list-group-item hand tree" 
-        ng-repeat="member in member.members track by member.id"
+        ng-repeat="member in member.members | orderBy:'name' track by member.id"
         ng-click="selectItem(member,$event)"
         ng-class="{'disabled btn-xs': member.type === 'NONE'}">
         <span class="glyphicon glyphicon-user" 
             ng-show="member.type === 'USER'"></span>
         <span class="glyphicon" 
-            ng-class="member.show ? 'glyphicon-folder-open' : 'glyphicon-folder-close'"
+            ng-class="member.nochild ? 'glyphicon-file' : (member.show ? 'glyphicon-folder-open' : 'glyphicon-folder-close')"
             ng-show="member.type === 'GROUP'"
             ng-click="expandItem(member,$event)"></span>
         <span class="glyphicon" 
-            ng-class="member.show ? 'glyphicon-folder-open' : 'glyphicon-folder-close'"
+            ng-class="member.nochild ? 'glyphicon-file' : (member.show ? 'glyphicon-folder-open' : 'glyphicon-folder-close')"
             ng-show="member.type === 'INDIRECT' || member.type === 'DIRECT' || member.type === 'NONE'"
             ng-click="expandItem(member,$event)"></span>
         {{member.name}}

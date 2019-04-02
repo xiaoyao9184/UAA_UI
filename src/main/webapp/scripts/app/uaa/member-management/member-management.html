@@ -22,7 +22,7 @@
         
         <ul class="list-group">
             <li class="list-group-item hand tree"
-                ng-repeat="member in members track by member.id"
+                ng-repeat="member in members | orderBy:'name' track by member.id"
                 ng-click="selectItem(member,$event)">
                 <span class="glyphicon glyphicon-user"ng-show="member.type == 'USER'"></span>
                 <span class="glyphicon" 

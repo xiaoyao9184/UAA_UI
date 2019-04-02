@@ -47,7 +47,16 @@ angular.module('uaaUIApp')
             $scope.paths = ps;
             $state.current.data.paths = $scope.paths;
 
-            return getSubItem(member);
+            return getSubItem(member)
+                .then(function(members){
+                    if(members.length === 0){
+                        member.nochild = true;
+                    }else{
+                        delete member.nochild;
+                        member.show = true;
+                    }
+                    return members;
+                });
         };
 
         $scope.expandItem = function(member, $event) {
@@ -55,13 +64,22 @@ angular.module('uaaUIApp')
             if($event){
                 $event.stopPropagation();
             }
-            if(member.members == null && !member.show){
+            if(member.members === null && !member.show){
                 getSubItem(member)
                     .then(function(members){
-                        member.show = !member.show;
+                        if(members.length === 0){
+                            member.nochild = true;
+                        }else{
+                            delete member.nochild;
+                            member.show = true;
+                        }
                     });
             }else{
-                member.show = !member.show;
+                if(member.members.length === 0){
+                    
+                }else{
+                    member.show = !member.show;
+                }
             }
         };
         

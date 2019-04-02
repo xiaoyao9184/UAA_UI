@@ -17,7 +17,7 @@ angular.module('uaaUIApp')
             }
             if(!member.members ||
                 member.members.length === 0){
-                
+                member.nochild = true;
             }else{
                 member.show = !member.show;
             }
