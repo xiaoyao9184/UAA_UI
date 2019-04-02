@@ -118,7 +118,7 @@
                         uib-tooltip="{{['Auto approve scope','Wild match scope','Base scope'][getScopeTipIndex(scope,client.autoapprove)]}}" 
                         ng-class="getScopeLabel(scope,client.autoapprove)"
                         ng-click="goGroupListOrDetail(scope)"
-                        ng-repeat-start="scope in client.scope">
+                        ng-repeat-start="scope in client.scope | orderBy:'toString()'">
                         <span class="glyphicon"
                             ng-class="getScopeIcon(scope,client.autoapprove)"></span>
                         {{scope}}
@@ -130,7 +130,7 @@
                     <span class="label label-info hand" 
                         uib-tooltip="Authoritie as user" 
                         ng-click="goGroupListOrDetail(authoritie)"
-                        ng-repeat-start="authoritie in client.authorities">
+                        ng-repeat-start="authoritie in client.authorities | orderBy:'toString()'">
                         <span class="glyphicon glyphicon-text-background"></span>
                         {{authoritie}}
                     </span>
@@ -141,7 +141,7 @@
                     <span class="label label-warning hand"
                         uib-tooltip="Provider must allowed"
                         ng-click="goIdentityProviderDetail(allowedprovider)"
-                        ng-repeat-start="allowedprovider in client.allowedproviders">
+                        ng-repeat-start="allowedprovider in client.allowedproviders | orderBy:'toString()'">
                         <span class="glyphicon glyphicon-cloud"></span>
                         {{allowedprovider}}
                     </span>

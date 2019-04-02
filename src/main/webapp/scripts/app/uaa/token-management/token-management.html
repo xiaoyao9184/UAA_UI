@@ -71,7 +71,7 @@
                     <span class="label label-primary hand"
                         uib-tooltip="Base scope also group" 
                         ng-click="goGroupListOrDetail(scope)"
-                        ng-repeat-start="scope in token.scope">
+                        ng-repeat-start="scope in token.scope | orderBy:'toString()'">
                         <span class="glyphicon glyphicon-folder-close"></span>
                         {{scope}}
                     </span>
