@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('uaaUIApp').controller('ClientManagementEditController',
-    ['$scope', '$q', '$uibModalInstance', 'entity', 'Client', 'IdentityProvider', 'SetUtils', 'GRANTS', 'GROUPS', 'RESOURCE_IDS',
-        function($scope, $q, $uibModalInstance, entity, Client, IdentityProvider, SetUtils, GRANTS, GROUPS, RESOURCE_IDS) {
+    ['$scope', '$q', '$uibModalInstance', 'entity', 'zoneId', 'Client', 'ZoneClient', 'IdentityProvider', 'SetUtils', 'GRANTS', 'GROUPS', 'RESOURCE_IDS',
+        function($scope, $q, $uibModalInstance, entity, zoneId, Client, ZoneClient, IdentityProvider, SetUtils, GRANTS, GROUPS, RESOURCE_IDS) {
 
         $scope.client = entity;
+        $scope.zoneId = zoneId;
         
         var onSaveSuccess = function (result) {
             $scope.isSaving = false;
@@ -19,6 +20,8 @@ angular.module('uaaUIApp').controller('ClientManagementEditController',
             $scope.isSaving = true;
             if (angular.isDefined($scope.client.$promise)) {
                 Client.update({id: $scope.client.client_id}, $scope.client, onSaveSuccess, onSaveError);
+            } else if($scope.zoneId !== null) {
+                ZoneClient.save({id: $scope.zoneId}, $scope.client, onSaveSuccess, onSaveError);
             } else {
                 Client.save($scope.client, onSaveSuccess, onSaveError);
             }

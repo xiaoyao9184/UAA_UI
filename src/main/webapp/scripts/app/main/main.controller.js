@@ -29,6 +29,9 @@ angular.module('uaaUIApp')
                 $scope.zone = zone;
             });
         }
+        $scope.isSwitchingZone = function(){
+            return Principal.isSwitchingZone($scope.zone.id);
+        };
         $scope.exitZoneMode = function(){
             ZoneHolder.reset();
             $state.go('home', null, { reload: true });

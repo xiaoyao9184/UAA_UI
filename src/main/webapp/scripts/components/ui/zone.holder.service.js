@@ -47,6 +47,7 @@ angular.module('uaaUIApp')
                         localStorageService.set("zone",zone);
                         _uaa = (zone.id === 'uaa');
                         _current = zone;
+                        return zone
                     });
             }
         }

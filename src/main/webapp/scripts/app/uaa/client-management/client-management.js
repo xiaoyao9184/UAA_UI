@@ -51,7 +51,8 @@ angular.module('uaaUIApp')
                         resolve: {
                             entity: function (Client) {
                                 return new Client();
-                            }
+                            },
+                            zoneId: null
                         }
                     }).result.then(function(result) {
                         $state.go('client-management', null, { reload: true });
@@ -74,7 +75,8 @@ angular.module('uaaUIApp')
                         resolve: {
                             entity: function(Client) {
                                 return Client.get({id : $stateParams.id});
-                            }
+                            },
+                            zoneId: null
                         }
                     }).result.then(function(result) {
                         $state.go('client-management', null, { reload: true });

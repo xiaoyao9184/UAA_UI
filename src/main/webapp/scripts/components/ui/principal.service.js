@@ -1,10 +1,11 @@
 'use strict';
 
 angular.module('uaaUIApp')
-    .factory('Principal', function Principal($q, UserInfo) {
+    .factory('Principal', function Principal($q, $filter, UserInfo) {
         var _identity,
             _authenticated = false,
             _token,
+            _zone,
             _uaaLogin = false;
 
         return {
@@ -26,6 +27,22 @@ angular.module('uaaUIApp')
                     (_token.grant_type === 'authorization_code' ||
                     _token.grant_type === 'implicit');
             },
+            //Using uaa zone client to manage other zone
+            isSwitchingZone: function(){
+                return angular.isDefined(_token) &&
+                    angular.isDefined(_zone) &&
+                    _token.zid !== _zone.id;
+            },
+            canSwitchingZone: function(zoneId){
+                if (!_authenticated || !_token) {
+                    return false;
+                }
+                if(zoneId === 'uaa'){
+                    return false;
+                }
+                var find = $filter('filter')(_token.scope, 'zones.' + zoneId + '.');
+                return find.length > 0;
+            },
             userName: function() {
                 return this.identity().then(function(_id) {
                     if(_id == null){
@@ -40,12 +57,17 @@ angular.module('uaaUIApp')
                 if (!_authenticated || !_token) {
                     return false;
                 }
-
+                if (this.isSwitchingZone()) {
+                    scope = 'zones.' + _token.zid + '.' + scope;
+                }
                 return _token.scope.indexOf(scope);
             },
             hasAnyScope: function (scopes) {
                 if (!_authenticated || !_token) {
                     return false;
+                }
+                if (this.isSwitchingZone()) {
+                    scope = 'zones.' + _token.zid + '.' + scope;
                 }
 
                 for (var i = 0; i < scopes.length; i++) {
@@ -60,12 +82,18 @@ angular.module('uaaUIApp')
                 if (!_authenticated || !_token) {
                     return false;
                 }
+                if (this.isSwitchingZone()) {
+                    authority = 'zones.' + _token.zid + '.' + authority;
+                }
 
                 return _token.aud.indexOf(authority);
             },
             hasAnyAuthority: function (authorities) {
                 if (!_authenticated || !_token) {
                     return false;
+                }
+                if (this.isSwitchingZone()) {
+                    authority = 'zones.' + _token.zid + '.' + authority;
                 }
 
                 for (var i = 0; i < authorities.length; i++) {
@@ -92,6 +120,10 @@ angular.module('uaaUIApp')
                 }else{
                     this.userName();
                 }
+                return this;
+            },
+            zone: function(zone){
+                _zone = zone;
                 return this;
             },
             authenticate: function (identity) {

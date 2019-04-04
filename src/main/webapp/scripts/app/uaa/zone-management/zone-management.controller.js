@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('uaaUIApp')
-    .controller('ZoneManagementController', function ($scope, $state, Zone, ZoneHolder) {
+    .controller('ZoneManagementController', function ($scope, $state, Zone, ZoneHolder, Principal) {
         $scope.zones = [];
         $scope.loadAll = function () {
             Zone.query({}, function (result) {
@@ -20,11 +20,8 @@ angular.module('uaaUIApp')
             });
         };
 
-        $scope.changeZone = function (zone) {
-            ZoneHolder.change(zone.id)
-                .then(function(){
-                    $state.go('home', null, { reload: true });
-                });
+        $scope.canChangeZone = function (zone) {
+            return zone !== 'uaa';
         };
 
         $scope.clear = function () {

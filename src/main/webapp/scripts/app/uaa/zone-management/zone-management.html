@@ -64,7 +64,8 @@
                         </button>
                         <button type="submit" class="btn btn-warning btn-sm"
                             uib-tooltip="Change zone"
-                            ng-click="changeZone(zone)">
+                            ng-disabled="!canChangeZone(zone.id)"
+                            ui-sref="zone-management.change({id:zone.id})">
                             <span class="glyphicon glyphicon-log-in"></span>
                         </button>
                     </div>

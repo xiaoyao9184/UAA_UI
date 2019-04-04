@@ -15,5 +15,11 @@ angular.module('uaaUIApp')
                 'update': { method:'PUT' },
                 'delete':{ method:'DELETE'}
             });
+        })
+    .factory('ZoneClient', function ($resource) {
+        return $resource('api/identity-zones/:id/clients/:cid', {}, {
+                'save': { method:'POST' },
+                'delete':{ method:'DELETE'}
+            });
         });
-
+    

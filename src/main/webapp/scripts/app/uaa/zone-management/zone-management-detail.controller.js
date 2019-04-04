@@ -5,11 +5,10 @@ angular.module('uaaUIApp')
     function ($scope, $state, $q, $filter, ZoneHolder, entity, Group, ZONE_SCOPES) {
         $scope.zone = entity;
 
-        $q.all([ZoneHolder.current(),$scope.zone.$promise])
-            .then(function(zone){
-                $scope.isZoneMode = (zone[0].id === zone[1].id);
-            });
-        
+        $scope.isZoneMode = !ZoneHolder.isUAA();
+        $scope.isAllowSwitching = function(){
+            return ZoneHolder.isUAA() && $scope.zone.id !== 'uaa';
+        };
         $scope.exitZoneMode = function(){
             ZoneHolder.reset();
             $state.go('home', null, { reload: true });

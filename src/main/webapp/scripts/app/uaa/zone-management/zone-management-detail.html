@@ -80,24 +80,49 @@
         </table>
     </div>
 
-    <div class="panel panel-info">
-        <div class="panel-heading">Zone Management Scopes</div>
-        <div class="panel-body">
-            Click for add/delete to group
-            <br>
-            <span class="label hand"
-                uib-tooltip="{{hasGroup(group) ? 'Already has this group' : 'This group is not included'}}" 
-                ng-class="hasGroup(group) ? 'label-success' : 'label-default'"
-                ng-click="toggleGroup(group)"
-                ng-repeat-start="group in ui.groups">
-                <span class="glyphicon glyphicon-folder-close"></span>
-                {{group.title}}
-            </span>
-            <span ng-repeat-end>
-                &nbsp;
-            </span>
+    <div class="row"
+        ng-show="isAllowSwitching()">
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Zone switching scopes</div>
+                <div class="panel-body">
+                    Zone 'uaa' allow cross zone management.
+                    <div>
+                        Click for add/delete to group
+                        <br>
+                        <span class="label hand"
+                            uib-tooltip="{{hasGroup(group) ? 'Already has this group' : 'This group is not included'}}" 
+                            ng-class="hasGroup(group) ? 'label-success' : 'label-default'"
+                            ng-click="toggleGroup(group)"
+                            ng-repeat-start="group in ui.groups">
+                            <span class="glyphicon glyphicon-folder-close"></span>
+                            {{group.title}}
+                        </span>
+                        <span ng-repeat-end>
+                            &nbsp;
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Zone switching clients</div>
+                <div class="panel-body">
+                    Zone 'uaa' allow cross zone management.
+                    <div>
+                        Zone client can create in here
+                        <br>
+                        <button type="submit" class="btn btn-success"
+                            ui-sref="zone-management-detail.client({id:zone.id})">
+                            <span class="glyphicon glyphicon-flash"></span>&nbsp;<span> Create</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
+
 
     <button type="submit" class="btn btn-info"
         ng-click="back()">
@@ -110,8 +135,8 @@
     </button>
 
     <button type="submit" class="btn btn-warning"
-            ng-show="isZoneMode"
-            ng-click="exitZoneMode()">
+        ng-show="isZoneMode"
+        ng-click="exitZoneMode()">
         <span class="glyphicon glyphicon-log-out"></span>&nbsp;<span> Exit</span>
     </button>
 </div>

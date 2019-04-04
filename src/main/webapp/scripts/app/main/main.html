@@ -39,6 +39,9 @@
                 ng-show="isZoneMode">
                 You are in zone "{{zone.name}}" mode. 
                 <a class="hand" ng-click="exitZoneMode()">Exit</a>
+                <div ng-show="isSwitchingZone">
+                    With switching client (in uaa zone), only some features are available.
+                </div>
             </div>
             
             <div ng-switch="isAuthenticated()">

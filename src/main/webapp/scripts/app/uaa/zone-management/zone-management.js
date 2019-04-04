@@ -108,6 +108,29 @@ angular.module('uaaUIApp')
                     });
                 }]
             })
+            .state('zone-management.change', {
+                parent: 'zone-management',
+                url: '/{id}/change',
+                data: {
+                    authorities: ['ROLE_ADMIN'],
+                },
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
+                    $uibModal.open({
+                        templateUrl: 'scripts/app/uaa/zone-management/zone-management-change.html',
+                        controller: 'ZoneManagementChangeController',
+                        size: 'md',
+                        resolve: {
+                            entity: function(Zone) {
+                                return Zone.get({id : $stateParams.id});
+                            }
+                        }
+                    }).result.then(function(result) {
+                        $state.go('home', null, result);
+                    }, function() {
+                        $state.go('^');
+                    });
+                }]
+            })
             .state('zone-management-detail.edit', {
                 parent: 'zone-management-detail',
                 url: '/zone/:id/edit',
@@ -122,6 +145,29 @@ angular.module('uaaUIApp')
                         resolve: {
                             entity: function(Zone) {
                                 return Zone.get({id : $stateParams.id});
+                            }
+                        }
+                    }).result.then(function(result) {
+                        $state.go('zone-management-detail', null, { reload: true });
+                    }, function() {
+                        $state.go('^');
+                    });
+                }]
+            })
+            .state('zone-management-detail.client', {
+                parent: 'zone-management-detail',
+                url: '/zone/:id/client',
+                onEnter: ['$state', '$uibModal', '$stateParams', function($state, $uibModal, $stateParams) {
+                    $uibModal.open({
+                        templateUrl: 'scripts/app/uaa/client-management/client-management-edit.html',
+                        controller: 'ClientManagementEditController',
+                        size: 'lg',
+                        resolve: {
+                            entity: function(Client) {
+                                return new Client();
+                            },
+                            zoneId: function($stateParams) {
+                                return $stateParams.id;
                             }
                         }
                     }).result.then(function(result) {
