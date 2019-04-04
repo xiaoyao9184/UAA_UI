@@ -17,7 +17,8 @@ angular.module('uaaUIApp')
         ZoneHolder.current().then(function(zone){
             $scope.zone = zone;
             Principal.zone(zone);
-            if(Principal.isSwitchingZone()){
+            if(Principal.isSwitchingZone() &&
+                Principal.isAuthenticated()){
                 return;
             }
             Principal.identity(true)

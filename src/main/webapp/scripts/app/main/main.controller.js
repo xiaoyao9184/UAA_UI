@@ -14,14 +14,14 @@ angular.module('uaaUIApp')
         }
 
         $scope.url_healthz = $sce.trustAsResourceUrl($scope.setting.url + 'healthz');
-        UAAServerProvider.info();
         $scope.isHealthy = UAAServerProvider.isHealthy;
+        UAAServerProvider.info(true);
         
+        $scope.isAuthenticated = Principal.isAuthenticated;
+        $scope.isClient = Principal.isClient;
         Principal.userName().then(function(userName){
             $scope.userName = userName;
         });
-        $scope.isAuthenticated = Principal.isAuthenticated;
-        $scope.isClient = Principal.isClient;
 
         $scope.isZoneMode = !ZoneHolder.isUAA();
         if($scope.isZoneMode){
@@ -30,7 +30,7 @@ angular.module('uaaUIApp')
             });
         }
         $scope.isSwitchingZone = function(){
-            return Principal.isSwitchingZone($scope.zone.id);
+            return Principal.isSwitchingZone();
         };
         $scope.exitZoneMode = function(){
             ZoneHolder.reset();

@@ -39,9 +39,20 @@
                 ng-show="isZoneMode">
                 You are in zone "{{zone.name}}" mode. 
                 <a class="hand" ng-click="exitZoneMode()">Exit</a>
-                <div ng-show="isSwitchingZone">
-                    With switching client (in uaa zone), only some features are available.
-                </div>
+            </div>
+            <div class="alert alert-danger"
+                ng-show="isZoneMode && isSwitchingZone()">
+                <strong>With switching client (in uaa zone not "{{zone.name}}")</strong>
+                only some features are available.
+                <br>
+                <strong>Don't refresh your browser</strong>
+                If you do that.
+                <br>
+                You will lose the current user information and authorization.
+                <br>
+                The switching client does not have permission to get current user information.
+                <br>
+                So you can only exit zone mode re-enter for fix it.
             </div>
             
             <div ng-switch="isAuthenticated()">

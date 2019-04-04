@@ -31,7 +31,8 @@ angular.module('uaaUIApp')
             isSwitchingZone: function(){
                 return angular.isDefined(_token) &&
                     angular.isDefined(_zone) &&
-                    _token.zid !== _zone.id;
+                    _token.zid !== _zone.id &&
+                    this.canSwitchingZone(_zone.id);
             },
             canSwitchingZone: function(zoneId){
                 if (!_authenticated || !_token) {
