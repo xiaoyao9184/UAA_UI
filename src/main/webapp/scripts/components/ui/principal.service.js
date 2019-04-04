@@ -8,7 +8,7 @@ angular.module('uaaUIApp')
             _zone,
             _uaaLogin = false;
 
-        return {
+        var that = {
             isIdentityResolved: function () {
                 return angular.isDefined(_identity);
             },
@@ -29,10 +29,11 @@ angular.module('uaaUIApp')
             },
             //Using uaa zone client to manage other zone
             isSwitchingZone: function(){
-                return angular.isDefined(_token) &&
-                    angular.isDefined(_zone) &&
-                    _token.zid !== _zone.id &&
-                    this.canSwitchingZone(_zone.id);
+                if (!_token || !_zone) {
+                    return false;
+                }
+                return _token.zid !== _zone.id &&
+                    that.canSwitchingZone(_zone.id);
             },
             canSwitchingZone: function(zoneId){
                 if (!_authenticated || !_token) {
@@ -45,7 +46,7 @@ angular.module('uaaUIApp')
                 return find.length > 0;
             },
             userName: function() {
-                return this.identity().then(function(_id) {
+                return that.identity().then(function(_id) {
                     if(_id == null){
                         return 'UNKNOW';
                     }
@@ -58,7 +59,7 @@ angular.module('uaaUIApp')
                 if (!_authenticated || !_token) {
                     return false;
                 }
-                if (this.isSwitchingZone()) {
+                if (that.isSwitchingZone()) {
                     scope = 'zones.' + _token.zid + '.' + scope;
                 }
                 return _token.scope.indexOf(scope);
@@ -67,7 +68,7 @@ angular.module('uaaUIApp')
                 if (!_authenticated || !_token) {
                     return false;
                 }
-                if (this.isSwitchingZone()) {
+                if (that.isSwitchingZone()) {
                     scope = 'zones.' + _token.zid + '.' + scope;
                 }
 
@@ -83,7 +84,7 @@ angular.module('uaaUIApp')
                 if (!_authenticated || !_token) {
                     return false;
                 }
-                if (this.isSwitchingZone()) {
+                if (that.isSwitchingZone()) {
                     authority = 'zones.' + _token.zid + '.' + authority;
                 }
 
@@ -93,7 +94,7 @@ angular.module('uaaUIApp')
                 if (!_authenticated || !_token) {
                     return false;
                 }
-                if (this.isSwitchingZone()) {
+                if (that.isSwitchingZone()) {
                     authority = 'zones.' + _token.zid + '.' + authority;
                 }
 
@@ -110,22 +111,22 @@ angular.module('uaaUIApp')
             },
             token: function(token){
                 _token = token;
-                if(this.isRedirect()){
+                if(that.isRedirect()){
                     _uaaLogin = true;
                 }
 
-                if(this.isClient()){
-                    this.authenticate({
+                if(that.isClient()){
+                    that.authenticate({
                         user_name: token.client_id
                     });
                 }else{
-                    this.userName();
+                    that.userName();
                 }
-                return this;
+                return that;
             },
             zone: function(zone){
                 _zone = zone;
-                return this;
+                return that;
             },
             authenticate: function (identity) {
                 _identity = identity;
@@ -167,4 +168,6 @@ angular.module('uaaUIApp')
                 return deferred.promise;
             }
         };
+
+        return that;
     });
