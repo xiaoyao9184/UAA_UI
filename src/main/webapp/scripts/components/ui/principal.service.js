@@ -69,7 +69,7 @@ angular.module('uaaUIApp')
                     return false;
                 }
                 if (that.isSwitchingZone()) {
-                    scope = 'zones.' + _token.zid + '.' + scope;
+                    scopes = 'zones.' + _token.zid + '.' + scopes;
                 }
 
                 for (var i = 0; i < scopes.length; i++) {
@@ -95,7 +95,7 @@ angular.module('uaaUIApp')
                     return false;
                 }
                 if (that.isSwitchingZone()) {
-                    authority = 'zones.' + _token.zid + '.' + authority;
+                    authorities = 'zones.' + _token.zid + '.' + authorities;
                 }
 
                 for (var i = 0; i < authorities.length; i++) {

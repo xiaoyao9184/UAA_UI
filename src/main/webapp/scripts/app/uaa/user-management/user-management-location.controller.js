@@ -72,7 +72,7 @@ angular.module('uaaUIApp')
                     reflashParentType(node);
                 });
             }
-        }
+        };
 
         var isInDirect = function(node){
             var findInUser = $filter('filter')(node.members, {'type':'!NONE'}, true);
@@ -154,7 +154,7 @@ angular.module('uaaUIApp')
                             parents: [],
                             show: false,
                             nochild: true
-                        }
+                        };
                     }else{
                         var member = memberOrGroup;
                         node = {
@@ -165,7 +165,7 @@ angular.module('uaaUIApp')
                             parents: [],
                             show: false,
                             nochild: false
-                        }
+                        };
                     }
                     
                     nodes.push(node);

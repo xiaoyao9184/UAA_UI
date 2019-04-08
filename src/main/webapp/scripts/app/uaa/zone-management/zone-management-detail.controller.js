@@ -19,7 +19,7 @@ angular.module('uaaUIApp')
         };
         $scope.hasGroup = function(group){
             return !!group.has;
-        }
+        };
         $scope.toggleGroup = function(group){
             if(group.has){
                 Group.delete({id: group.has.id},
