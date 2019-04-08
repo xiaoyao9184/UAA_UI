@@ -1,0 +1,31 @@
+# See https://github.com/cloudfoundry/uaa/blob/13992755850296da8a6d53308a70ecdac73b29e6/uaa/src/main/webapp/WEB-INF/spring-servlet.xml#L124-L208
+    
+- type: replace
+  path: /cors?
+  value:
+    xhr:
+        allowed:
+        headers:
+            - Accept
+            - Authorization
+            - Content-Type
+            - Accept-Language
+            - Content-Language
+            # for update
+            - If-Match
+            # for zone change
+            - X-Identity-Zone-Id
+            - X-Identity-Zone-Subdomain
+    default:
+        allowed:
+        headers:
+            - Accept
+            - Authorization
+            - Content-Type
+            - Accept-Language
+            - Content-Language
+            # for update
+            - If-Match
+            # for zone change
+            - X-Identity-Zone-Id
+            - X-Identity-Zone-Subdomain

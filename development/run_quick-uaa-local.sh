@@ -7,8 +7,12 @@ echo "Clone quick-uaa-local to ${repo_root}"
 git clone https://github.com/xiaoyao9184/quick-uaa-local ${repo_root}/.quaa
 
 echo "Change default quaa config"
-cp ./development/quaa/manifests/uaa.yml ./.quaa/manifests/uaa.yml
 cp ./development/quaa/.versions ./.quaa/.versions
+mkdir -p "${repo_root}/.quaa/operators/"
+for file in ./development/quaa/operators/*.yml; 
+do
+    cp "$file" "${repo_root}/.quaa/operators/";
+done
 
 echo "Run quaa up"
 ./.quaa/bin/quaa up -ctx uaa "$@"
