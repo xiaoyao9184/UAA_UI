@@ -180,7 +180,7 @@
         "Via", 
         "Warning", 
         "WWW-Authenticate"
-    ]
+    ],
     "SETTING": {
         "version": 8,
         "debug": false,
