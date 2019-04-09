@@ -48,6 +48,7 @@ angular.module('uaaUIApp')
         
         $scope.getScopeLabel = function(scope, autoapprove){
             if(autoapprove === true || 
+                autoapprove === 'true' ||
                 SetUtils.hasItem(autoapprove,'true')){
                 return 'label-success';
             }
@@ -61,6 +62,7 @@ angular.module('uaaUIApp')
         };
         $scope.getScopeIcon = function(scope, autoapprove){
             if(autoapprove === true || 
+                autoapprove === 'true' ||
                 SetUtils.hasItem(autoapprove,'true')){
                 return 'glyphicon-ok';
             }
@@ -74,6 +76,7 @@ angular.module('uaaUIApp')
         };
         $scope.getScopeTipIndex = function(scope, autoapprove){
             if(autoapprove === true || 
+                autoapprove === 'true' ||
                 SetUtils.hasItem(autoapprove,'true')){
                 return 0;
             }
