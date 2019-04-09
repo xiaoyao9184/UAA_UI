@@ -97,7 +97,7 @@ angular.module('uaaUIApp')
         var reflashChildItem = function(node) {
             var deferred = $q.defer();
 
-            var mapping = function(members){
+            var mapping_node = function(members){
                 var group_members = [];
                 angular.forEach(members, function(member){
                     if(member.type === 'USER'){
@@ -131,7 +131,7 @@ angular.module('uaaUIApp')
             };
 
             Member.list({gid: node.id, returnEntities: true}).$promise
-                .then(mapping)
+                .then(mapping_node)
                 .then(function(members){
                     deferred.resolve(members);
                 })
@@ -140,7 +140,7 @@ angular.module('uaaUIApp')
                         //when delete zone 
                         //the switching scopes member relationship will not be deleted
                         Member.list({gid: node.id, returnEntities: false}).$promise
-                            .then(mapping)
+                            .then(mapping_node)
                             .then(function(members){
                                 deferred.resolve(members);
                             })
@@ -181,13 +181,22 @@ angular.module('uaaUIApp')
                         var member = memberOrGroup;
                         node = {
                             id: member.value,
-                            name: member.entity.displayName,
+                            name: '',
                             type: 'NONE',
                             members: [],
                             parents: [],
                             show: false,
                             nochild: false
                         };
+
+                        if(angular.isDefined(member.entity)){
+                            node.name = member.entity.displayName;
+                        }else{
+                            MemberType.getName(member)
+                                .then(function(name){
+                                    node.name = name;
+                                });
+                        }
                     }
                     
                     nodes.push(node);
@@ -210,13 +219,7 @@ angular.module('uaaUIApp')
                     return null;
                 };
 
-                var promises = [];
-                angular.forEach(user.groups, function(group){
-                    var promise = Member.list({gid: group.value, returnEntities: true}).$promise;
-                    promises.push(promise);
-                });
-
-                $q.all(promises).then(function(results){
+                var mappingNode = function(results){
                     angular.forEach(user.groups, function(group){
                         var node = findNode(group);
                         if(node === null){
@@ -245,7 +248,22 @@ angular.module('uaaUIApp')
                         node.nochild = node.members.length === 0;
                         node.show = node.members.length !== 0;
                     });
+                };
+
+                var promises = [];
+                angular.forEach(user.groups, function(group){
+                    var promise = Member.list({gid: group.value, returnEntities: true}).$promise;
+                    promises.push(promise);
                 });
+                $q.all(promises).then(mappingNode)
+                    .catch(function(){
+                        promises = [];
+                        angular.forEach(user.groups, function(group){
+                            var promise = Member.list({gid: group.value, returnEntities: false}).$promise;
+                            promises.push(promise);
+                        });
+                        $q.all(promises).then(mappingNode);
+                    });
             });
         };
 

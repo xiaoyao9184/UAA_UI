@@ -30,55 +30,55 @@ angular.module('uaaUIApp')
             $scope.editForm.$setUntouched();
         };
 
-        $scope.selectItem = function(member, $event) {
+        $scope.selectItem = function(node, $event) {
             // disable Event bubbling
             if($event){
                 $event.stopPropagation();
             }
-            if(member.type !== 'GROUP'){   
+            if(node.type !== 'GROUP'){   
                 return;
             }
 
             // change paths
             var ps = [];
-            createPath(ps,member);
+            createPath(ps,node);
             
             //TODO Comparison change
             $scope.paths = ps;
             $state.current.data.paths = $scope.paths;
 
-            return getSubItem(member)
+            return reflashChildItem(node)
                 .then(function(members){
                     if(members.length === 0){
-                        member.nochild = true;
+                        node.nochild = true;
                     }else{
-                        delete member.nochild;
-                        member.show = true;
+                        delete node.nochild;
+                        node.show = true;
                     }
                     return members;
                 });
         };
 
-        $scope.expandItem = function(member, $event) {
+        $scope.expandItem = function(node, $event) {
             // disable Event bubbling
             if($event){
                 $event.stopPropagation();
             }
-            if(member.members === null && !member.show){
-                getSubItem(member)
+            if(node.members === null && !node.show){
+                reflashChildItem(node)
                     .then(function(members){
                         if(members.length === 0){
-                            member.nochild = true;
+                            node.nochild = true;
                         }else{
-                            delete member.nochild;
-                            member.show = true;
+                            delete node.nochild;
+                            node.show = true;
                         }
                     });
             }else{
-                if(member.members.length === 0){
+                if(node.members.length === 0){
                     
                 }else{
-                    member.show = !member.show;
+                    node.show = !node.show;
                 }
             }
         };
@@ -90,33 +90,40 @@ angular.module('uaaUIApp')
             }
         };
 
-        var getSubItem = function(member) {
+        var reflashChildItem = function(node) {
             var deferred = $q.defer();
 
-            var mapping = function (members) {
-                angular.forEach(members, function(element){
-                    element.id = element.value;
-                    MemberType.getName(element)
+            var mapping_node = function (members) {
+                var member_nodes = [];
+                angular.forEach(members, function(member){
+                    var nodeMember = {
+                        id: member.value,
+                        type: member.type,
+                        name: '',
+                    };
+
+                    MemberType.getName(member)
                         .then(function(name){
-                            element.name = name;
+                            nodeMember.name = name;
                         });
                     //Comparison change
-                    var old = $filter('filter')(member.members, {'id':element.id});
+                    var old = $filter('filter')(node.members, {'id':nodeMember.id});
                     if(old != null && old.length === 1 && typeof old[0] !== 'undefined'){
-                        element.members = old[0].members;
-                        element.show = old[0].show;
+                        nodeMember.members = old[0].members;
+                        nodeMember.show = old[0].show;
                     }else{
-                        element.members = null;
-                        element.show = false;
+                        nodeMember.members = null;
+                        nodeMember.show = false;
                     }
-                    element.father = member;
+                    nodeMember.father = node;
+                    member_nodes.push(nodeMember);
                 });
-                member.members = members;
-                return members
+                node.members = member_nodes;
+                return member_nodes;
             };
 
-            Member.list({gid: member.id, returnEntities: true}).$promise
-                .then(mapping)
+            Member.list({gid: node.id, returnEntities: true}).$promise
+                .then(mapping_node)
                 .then(function(members){
                     deferred.resolve(members);
                 })
@@ -124,8 +131,8 @@ angular.module('uaaUIApp')
                     if(res.status === 404){
                         //when delete zone 
                         //the switching scopes member relationship will not be deleted
-                        Member.list({gid: member.id, returnEntities: false}).$promise
-                            .then(mapping)
+                        Member.list({gid: node.id, returnEntities: false}).$promise
+                            .then(mapping_node)
                             .then(function(members){
                                 deferred.resolve(members);
                             })
