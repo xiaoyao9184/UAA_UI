@@ -49,16 +49,17 @@ gulp.task('config', function () {
 });
 
 gulp.task('usemin-index', function () {
+    var sources = gulp.src(['./temp/config.js'], {read: false});
     if(config.dev){
         console.info('DEV mode!');
         return gulp.src(['./temp/*.html'])
+            .pipe(inject(sources))
             .pipe(usemin())
             .pipe(gulp.dest('./dist'))
-            .pipe(config.dev ? connect.reload(): gutil.noop());
+            .pipe(connect.reload());
     }
-    var sources = gulp.src(['./temp/config.js'], {read: false});
     return gulp.src(['./temp/*.html'])
-        .pipe(config.dev ? gutil.noop():inject(sources))
+        .pipe(inject(sources))
         .pipe(usemin({
             css: [ cleanCSS(), 'concat' ],
             html: [ function () {
@@ -93,7 +94,7 @@ gulp.task('usemin-index', function () {
             inlinecss: [ cleanCSS(), 'concat' ]
         }))
         .pipe(gulp.dest('./dist'))
-        .pipe(config.dev ? connect.reload(): gutil.noop());
+        .pipe(gutil.noop());
 });
 
 gulp.task('min-templates', function () {
