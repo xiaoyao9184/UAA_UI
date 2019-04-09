@@ -5,27 +5,27 @@
   value:
     xhr:
         allowed:
-        headers:
-            - Accept
-            - Authorization
-            - Content-Type
-            - Accept-Language
-            - Content-Language
-            # for update
-            - If-Match
-            # for zone change
-            - X-Identity-Zone-Id
-            - X-Identity-Zone-Subdomain
+            headers:
+                - Accept
+                - Authorization
+                - Content-Type
+                - Accept-Language
+                - Content-Language
+                # for update
+                - If-Match
+                # for zone change
+                - X-Identity-Zone-Id
+                - X-Identity-Zone-Subdomain
     default:
         allowed:
-        headers:
-            - Accept
-            - Authorization
-            - Content-Type
-            - Accept-Language
-            - Content-Language
-            # for update
-            - If-Match
-            # for zone change
-            - X-Identity-Zone-Id
-            - X-Identity-Zone-Subdomain
+            headers:
+                - Accept
+                - Authorization
+                - Content-Type
+                - Accept-Language
+                - Content-Language
+                # for update
+                - If-Match
+                # for zone change
+                - X-Identity-Zone-Id
+                - X-Identity-Zone-Subdomain
