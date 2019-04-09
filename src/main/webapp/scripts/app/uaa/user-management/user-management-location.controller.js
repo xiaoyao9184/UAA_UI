@@ -24,7 +24,7 @@ angular.module('uaaUIApp')
                         delete node.nochild;
                     }
                     return members;
-                });
+                })
         };
 
         $scope.expandItem = function(node, $event) {
@@ -95,39 +95,61 @@ angular.module('uaaUIApp')
         };
 
         var reflashChildItem = function(node) {
-            return Member.list({gid: node.id, returnEntities: true}).$promise
-                .then(function(members){
-                    var group_members = [];
-                    angular.forEach(members, function(member){
-                        if(member.type === 'USER'){
-                            return;
-                        }
-                        //Comparison change of members
-                        var nodeMember;
-                        var findOldMember = $filter('filter')(node.members, {'id':member.value}, true);
-                        if(findOldMember.length > 0){
-                            nodeMember = findOldMember[0];
-                        }else{
-                            nodeMember = {
-                                id: member.value,
-                                type: 'NONE',
-                                members: [],
-                                parents: [],
-                                show: false,
-                                nochild: false
-                            };
-                            node.members.push(nodeMember);
-                            nodeMember.parents.push(node);
-                        }
-                        //reflash name
-                        MemberType.getName(member)
-                            .then(function(name){
-                                nodeMember.name = name;
-                            });
-                        group_members.push(nodeMember);
-                    });
-                    return group_members;
+            var deferred = $q.defer();
+
+            var mapping = function(members){
+                var group_members = [];
+                angular.forEach(members, function(member){
+                    if(member.type === 'USER'){
+                        return;
+                    }
+                    //Comparison change of members
+                    var nodeMember;
+                    var findOldMember = $filter('filter')(node.members, {'id':member.value}, true);
+                    if(findOldMember.length > 0){
+                        nodeMember = findOldMember[0];
+                    }else{
+                        nodeMember = {
+                            id: member.value,
+                            type: 'NONE',
+                            members: [],
+                            parents: [],
+                            show: false,
+                            nochild: false
+                        };
+                        node.members.push(nodeMember);
+                        nodeMember.parents.push(node);
+                    }
+                    //reflash name
+                    MemberType.getName(member)
+                        .then(function(name){
+                            nodeMember.name = name;
+                        });
+                    group_members.push(nodeMember);
                 });
+                return group_members;
+            };
+
+            Member.list({gid: node.id, returnEntities: true}).$promise
+                .then(mapping)
+                .then(function(members){
+                    deferred.resolve(members);
+                })
+                .catch(function(res){
+                    if(res.status === 404){
+                        //when delete zone 
+                        //the switching scopes member relationship will not be deleted
+                        Member.list({gid: node.id, returnEntities: false}).$promise
+                            .then(mapping)
+                            .then(function(members){
+                                deferred.resolve(members);
+                            })
+                    }else{
+                        deferred.reject(res);
+                    }
+                })
+
+            return deferred.promise;
         };
 
         var init = function() {

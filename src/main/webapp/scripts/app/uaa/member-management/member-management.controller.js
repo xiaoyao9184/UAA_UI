@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('uaaUIApp')
-    .controller('MemberManagementController', function ($scope, $state, $filter, group, MemberType, Group, User, Member) {
+    .controller('MemberManagementController', function ($scope, $state, $q, $filter, group, MemberType, Group, User, Member) {
         $scope.paths = [];
         $scope.members = [];
 
@@ -91,8 +91,10 @@ angular.module('uaaUIApp')
         };
 
         var getSubItem = function(member) {
-            return Member.list({gid: member.value, returnEntities: true}, function (result) {
-                angular.forEach(result, function(element){
+            var deferred = $q.defer();
+
+            var mapping = function (members) {
+                angular.forEach(members, function(element){
                     element.id = element.value;
                     MemberType.getName(element)
                         .then(function(name){
@@ -109,8 +111,30 @@ angular.module('uaaUIApp')
                     }
                     element.father = member;
                 });
-                member.members = result;
-            }).$promise;
+                member.members = members;
+                return members
+            };
+
+            Member.list({gid: member.id, returnEntities: true}).$promise
+                .then(mapping)
+                .then(function(members){
+                    deferred.resolve(members);
+                })
+                .catch(function(res){
+                    if(res.status === 404){
+                        //when delete zone 
+                        //the switching scopes member relationship will not be deleted
+                        Member.list({gid: member.id, returnEntities: false}).$promise
+                            .then(mapping)
+                            .then(function(members){
+                                deferred.resolve(members);
+                            })
+                    }else{
+                        deferred.reject(res);
+                    }
+                })
+
+            return deferred.promise;
         };
 
         $state.reflash = function(result){

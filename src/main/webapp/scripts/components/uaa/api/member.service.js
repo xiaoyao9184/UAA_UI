@@ -44,14 +44,21 @@ angular.module('uaaUIApp')
                     }else{ 
                         var name = item.resourceName;
                         var resource = $injector.get(name);
-                        resource.get({id: member.id}).$promise
+                        resource.get({id: member.value}).$promise
                             .then(function (result) {
                                 member.entity = result;
                                 deferred.resolve(item.getName(member.entity));
                             })
-                            .catch(function() {
-                                member.entity = undefined;
-                                deferred.resolve("UNKNOW");
+                            .catch(function(res) {
+                                if(res.status === 404){
+                                    //when delete zone 
+                                    //the switching scopes member relationship will not be deleted
+                                    member.entity = undefined;
+                                    deferred.resolve("NOT EXIST"); 
+                                }else{
+                                    member.entity = undefined;
+                                    deferred.resolve("UNKNOW"); 
+                                }
                             });
                     }
                     return deferred.promise;
