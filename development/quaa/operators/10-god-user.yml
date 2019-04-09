@@ -1,5 +1,5 @@
 - type: replace
   path: /scim/users?
   value:
-    - admin|((admin_user_password))|admin|||zones.read,zones.write,idps.read,idps.write,clients.admin,clients.write,clients.read,clients.secret,scim.write,scim.read,scim.create,scim.userids,scim.zones,scim.invite,password.write,oauth.approval,oauth.login,approvals.me,openid,groups.update,uaa.user,uaa.resource,uaa.admin|uaa
+    - admin|admin|admin|||zones.read,zones.write,idps.read,idps.write,clients.admin,clients.write,clients.read,clients.secret,scim.write,scim.read,scim.create,scim.userids,scim.zones,scim.invite,password.write,oauth.approval,oauth.login,approvals.me,openid,groups.update,uaa.user,uaa.resource,uaa.admin|uaa
   

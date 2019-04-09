@@ -18,7 +18,7 @@
       redirect-uri: http://127.0.0.1:5500/src/main/webapp/index.html*/**
       # signup_redirect_url: 
       # change_email_redirect_url: 
-      secret: ((admin_client_secret))
+      secret: ui
       
       override: true
       # access-token-validity: 1

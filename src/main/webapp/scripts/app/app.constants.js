@@ -213,7 +213,7 @@ angular.module('uaaUIApp')
     
     // dev
     
-    "clientSecret": "x9nkg9n7bnberzekf3ni",
-    "password": 'nzhpjprxkcojt1dols89',
+    "clientSecret": "ui",
+    "password": 'admin',
 })
 ;
