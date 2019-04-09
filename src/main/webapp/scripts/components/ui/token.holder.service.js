@@ -32,6 +32,13 @@ angular.module('uaaUIApp')
             },
             getJwt: function(){
                 var token = this.get();
+                if(token === null){
+                    return {
+                        header: undefined,
+                        payload: undefined,
+                        signature: undefined
+                    };
+                }
                 var jwt = token.access_token.split('.');
                 
                 //Base64URL to Base64
