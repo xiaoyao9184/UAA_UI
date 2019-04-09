@@ -136,7 +136,7 @@
                         </button>
                     </span>
                     <input type="text" class="form-control" name="allowedHeader_{{$index}}"
-                        ng-model="allowedHeader" required>
+                        ng-model="corsPolicy.defaultConfiguration.allowedHeaders[$index]" required>
                 </div>
             </div>
             <div class="btn-group" uib-dropdown>
@@ -299,7 +299,7 @@
                         </button>
                     </span>
                     <input type="text" class="form-control" name="allowedHeader_{{$index}}"
-                        ng-model="allowedHeader" required>
+                        ng-model="corsPolicy.xhrConfiguration.allowedHeaders[$index]" required>
                 </div>
             </div>
             <div class="btn-group" uib-dropdown>
