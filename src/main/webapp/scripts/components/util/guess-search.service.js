@@ -6,31 +6,9 @@ angular.module('uaaUIApp')
         moment.suppressDeprecationWarnings = true;
         var configs = [];
 
-
-        var STRIP_COMMENTS = /((\/\/.*$)|(\/\*[\s\S]*?\*\/))/mg;
-        var ARGUMENT_NAMES = /([^\s,]+)/g;
-        function getParamNames(func) {
-            var fnStr = func.toString().replace(STRIP_COMMENTS, '');
-            var result = fnStr.slice(fnStr.indexOf('(')+1, fnStr.indexOf(')')).match(ARGUMENT_NAMES);
-            if(result === null)
-                result = [];
-            return result;
-        }
-
-        var isFunctionParamContext = function(func){
-            if(angular.isFunction(func)){
-                var params = getParamNames(func);
-                if(params.length === 1 && 
-                    params[0] === 'context'){
-                    return true;
-                }
-            }
-            return false;
-        };
-
         var conversion = function(data,context){
             for (var key in data) { 
-                if(isFunctionParamContext(data[key])){
+                if(angular.isFunction(data[key])){
                     data[key] = data[key](context);
                 }
             }
@@ -91,7 +69,7 @@ angular.module('uaaUIApp')
                     return;
                 }
 
-                if(isFunctionParamContext(data)){
+                if(angular.isFunction(data)){
                     data = data(context);
                 }
                 if(angular.isArray(data)){
