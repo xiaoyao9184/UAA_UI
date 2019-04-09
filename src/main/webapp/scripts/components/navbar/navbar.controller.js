@@ -23,7 +23,8 @@ angular.module('uaaUIApp')
             }
             Principal.identity(true)
                 .catch(function() {
-                    if($state.current.name !== 'home' && 
+                    if($state.current.name !== 'auth_redirect' && 
+                        $state.current.name !== 'home' && 
                         $state.current.parent !== 'home' ){
                         $state.go('home');
                     }

@@ -31,7 +31,7 @@
     "angular-local-storage": "0.2.3",
     "modernizr": "3.2.0",
     "ngInfiniteScroll": "1.2.1",
-    "angular-post-message": "^1.4.1",
+    "angular-post-message": "https://github.com/xiaoyao9184/angular-post-message.git#f560ece",
     "json3": "3.3.2",
     "angular-ui-router": "0.2.15",
     "ng-file-upload": "10.0.2",

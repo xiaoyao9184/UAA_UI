@@ -44,14 +44,16 @@ angular.module('uaaUIApp', [
             // previousState is already set in the authExpiredInterceptor. If we're going
             // previousState is already set in the authExpiredInterceptor. If we're going
             // to login directly, we don't want to be sent to some previous state anyway
-            if (angular.isUndefined(toState.data.previous) || 
+            if (angular.isUndefined(toState.data) ||
+                angular.isUndefined(toState.data.previous) || 
                 toState.data.previous === true) {
                 $rootScope.previousStateName = fromState.name;
                 $rootScope.previousStateParams = fromParams;
             }
 
             // Set the page title key to the one configured in state or use default one
-            if (toState.data.pageTitle) {
+            if (angular.isDefined(toState.data) && 
+                toState.data.pageTitle) {
                 titleKey = toState.data.pageTitle;
             }
             $window.document.title = titleKey;
