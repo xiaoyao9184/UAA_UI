@@ -43,6 +43,10 @@ angular.module('uaaUIApp')
                     var cleanHttpErrorListener = $rootScope.$on('uaaUIApp.httpError', function (event, httpResponse) {
                         var i;
                         event.stopPropagation();
+                        if (httpResponse.config.alert === false) {
+                            console.log("No alert for " + httpResponse.status);
+                            return;
+                        }
                         switch (httpResponse.status) {
                             // connection refused, server not reachable
                             case 0:
