@@ -139,6 +139,31 @@
                            value="{{user.zoneId}}" readonly>
                 </td>
             </tr>
+            <tr>
+                <td>
+                    <span>Approvals</span>
+                </td>
+                <td> 
+                    <div class="form-inline" ng-repeat="a in user.approvals">
+                        <div class="form-group" >
+                            <input type="text" class="input-sm form-control" 
+                                value="{{a.clientId}}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="input-sm form-control" 
+                                value="{{a.scope}}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="input-sm form-control" 
+                                value="{{a.status}}" readonly>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="input-sm form-control" 
+                                value="{{a.expiresAt}}"readonly>
+                        </div>
+                    </div>                   
+                </td>
+            </tr>
             </tbody>
         </table>
     </div>
