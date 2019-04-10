@@ -7,6 +7,9 @@
             User Location</h4>
     </div>
     <div class="modal-body">
+        <div class="alert alert-info">
+            Users will have default groups. These default groups have no real membership, so the tree structure may be duplicated.
+        </div>
         <div ng-init="node = this" ng-include="'scripts/app/uaa/member-management/member-item.html'"></div>
     </div>
     <div class="modal-footer">
