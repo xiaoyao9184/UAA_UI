@@ -96,7 +96,7 @@ angular.module('uaaUIApp')
             var mapping_node = function (members) {
                 var member_nodes = [];
                 angular.forEach(members, function(member){
-                    var nodeMember = {
+                    var member_node = {
                         id: member.value,
                         type: member.type,
                         name: '',
@@ -104,27 +104,27 @@ angular.module('uaaUIApp')
 
                     MemberType.getName(member)
                         .then(function(name){
-                            nodeMember.name = name;
+                            member_node.name = name;
                         });
                     //Comparison change
-                    var old = $filter('filter')(node.members, {'id':nodeMember.id});
+                    var old = $filter('filter')(node.members, {'id':member_node.id});
                     if(old != null && old.length === 1 && typeof old[0] !== 'undefined'){
-                        nodeMember.members = old[0].members;
-                        nodeMember.show = old[0].show;
+                        member_node.members = old[0].members;
+                        member_node.show = old[0].show;
                     }else{
-                        nodeMember.members = null;
-                        nodeMember.show = false;
+                        member_node.members = null;
+                        member_node.show = false;
                     }
-                    nodeMember.father = node;
-                    member_nodes.push(nodeMember);
+                    member_node.father = node;
+                    member_nodes.push(member_node);
                 });
-                node.members = member_nodes;
                 return member_nodes;
             };
 
             Member.list({gid: node.id, returnEntities: true}).$promise
                 .then(mapping_node)
                 .then(function(members){
+                    node.members = members;
                     deferred.resolve(members);
                 })
                 .catch(function(res){
@@ -134,6 +134,7 @@ angular.module('uaaUIApp')
                         Member.list({gid: node.id, returnEntities: false}).$promise
                             .then(mapping_node)
                             .then(function(members){
+                                node.members = members;
                                 deferred.resolve(members);
                             })
                     }else{

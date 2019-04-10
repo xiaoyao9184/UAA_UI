@@ -22,16 +22,48 @@ angular.module('uaaUIApp').controller('MemberManagementDeleteController',
 
             // reflash
             var path = $scope.paths[$index];
-            return Member.list({gid: path.id}, function (result) {
-                angular.forEach(result, function(element) {
-                    element.id = element.value;
-                    MemberType.getName(element)
+
+            var deferred = $q.defer();
+            var mapping_node = function (members) {
+                var member_nodes = [];
+                angular.forEach(members, function(member){
+                    var member_node = {
+                        id: member.value,
+                        type: member.type,
+                        name: '',
+                    };
+
+                    MemberType.getName(member)
                         .then(function(name){
-                            element.name = name;
+                            member_node.name = name;
                         });
+                    member_nodes.push(member_node);
                 });
-                $scope.members = result;
-            }).$promise;
+                return member_nodes;
+            };
+
+            Member.list({gid: path.id, returnEntities: true}).$promise
+                .then(mapping_node)
+                .then(function(members){
+                    $scope.members = members;
+                    deferred.resolve(members);
+                })
+                .catch(function(res){
+                    if(res.status === 404){
+                        //when delete zone 
+                        //the switching scopes member relationship will not be deleted
+                        Member.list({gid: path.id, returnEntities: false}).$promise
+                            .then(mapping_node)
+                            .then(function(members){
+                                $scope.members = members;
+                                deferred.resolve(members);
+                            })
+                    }else{
+                        deferred.reject(res);
+                    }
+                })
+
+            return deferred.promise;
         };
 
         $scope.addAction = function(item) {
