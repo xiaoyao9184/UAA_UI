@@ -46,7 +46,9 @@ angular.module('uaaUIApp')
                 var payload = jwt[1].replace(/-/g, '+').replace(/_/g, '/');
                 var signature = jwt[2].replace(/-/g, '+').replace(/_/g, '/');
                 header = angular.fromJson($window.atob(header));
-                payload = angular.fromJson($window.atob(payload));
+                var json = $window.atob(payload);
+                json = decodeURIComponent(escape(json))
+                payload = angular.fromJson(json);
                 signature = $window.atob(signature);
                 return {
                     header: header,
