@@ -92,7 +92,7 @@ angular.module('uaaUIApp')
                             name: getBeforeMomentName,
                             tags: getTextMoment,
                             field: attribute.field,
-                            operator: 'ge',
+                            operator: 'le',
                             value: getISOMoment
                         };
                         _moment_datas.push(before);
