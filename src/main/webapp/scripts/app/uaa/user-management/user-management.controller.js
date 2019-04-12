@@ -103,12 +103,12 @@ angular.module('uaaUIApp')
                 }]
             },{
                 name: 'PreviousLogonTime',
-                field: "previousLogonTime",
+                field: "previous_logon_success_time",
                 moment: true,
                 sort: true
             },{
                 name: 'LastLogonTime',
-                field: "lastLogonTime",
+                field: "last_logon_success_time",
                 moment: true,
                 sort: true
             },{
