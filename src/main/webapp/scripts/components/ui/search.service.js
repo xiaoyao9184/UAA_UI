@@ -44,7 +44,7 @@ angular.module('uaaUIApp')
                 _load = load;
                 _selected = selected;
                 _anys = $filter('filter')(attributes, {'any':true}, true);
-                var _moments = $filter('filter')(attributes, {'moment':true}, true);
+                var _moments = $filter('filter')(attributes, {'moment':'!!'});
                 var _urls = $filter('filter')(attributes, {'url':true}, true);
                 var _emails = $filter('filter')(attributes, {'email':true}, true);
                 var _enums = $filter('filter')(attributes, function(value, index, array){
@@ -96,6 +96,10 @@ angular.module('uaaUIApp')
                             value: getISOMoment
                         };
                         _moment_datas.push(before);
+                        if(angular.isDefined(attribute.value)){
+                            after.value = attribute.value;
+                            before.value = attribute.value;
+                        }
                     });
                     _configs.push({
                         support: 'moment',

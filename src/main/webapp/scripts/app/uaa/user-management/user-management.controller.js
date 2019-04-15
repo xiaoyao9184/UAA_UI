@@ -105,12 +105,18 @@ angular.module('uaaUIApp')
                 name: 'PreviousLogonTime',
                 field: "previous_logon_success_time",
                 moment: true,
-                sort: true
+                sort: true,
+                value: function(context){
+                    return context.moment.valueOf();
+                }
             },{
                 name: 'LastLogonTime',
                 field: "last_logon_success_time",
                 moment: true,
-                sort: true
+                sort: true,
+                value: function(context){
+                    return context.moment.valueOf();
+                }
             },{
                 name: 'PasswordLastModified',
                 field: "passwd_lastmodified",
