@@ -1,0 +1,107 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+    <div class="form-group">
+        <label class="control-label">Home Redirect</label>
+        <input type="text" class="form-control" name="homeRedirect" ng-model="links.homeRedirect" ng-min="-1">
+
+        <div ng-show="editForm.homeRedirect.$invalid">
+            <p class="help-block" ng-show="editForm.homeRedirect.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="alert alert-info" role="alert">
+            Logout Redirect combine sets with client registered redirect uri.
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Logout Redirect Url</label>
+        <input type="text" class="form-control" name="redirectUrl" ng-model="links.logout.redirectUrl" ng-min="-1">
+
+        <div ng-show="editForm.redirectUrl.$invalid">
+            <p class="help-block" ng-show="editForm.redirectUrl.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Logout Redirect Parameter Name</label>
+        <input type="text" class="form-control" name="redirectParameterName" ng-model="links.logout.redirectParameterName">
+
+        <div ng-show="editForm.redirectParameterName.$invalid">
+            <p class="help-block" ng-show="editForm.redirectParameterName.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="disableRedirectParameter" ng-model="links.logout.disableRedirectParameter">
+            <span>Logout Disable Redirect Parameter</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <!-- ng-init="initIfNullUndefined(links.logout,'whitelist',[])"> -->
+        <label class="control-label">Logout White list</label>
+        <br>
+        <div class="form-inline" ng-repeat="white in links.logout.whitelist track by $index">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-danger" ng-click="deleItem(links.logout.whitelist,$index)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                    <button type="button" class="btn btn-default" uib-tooltip="matches zero or more characters" ng-click="white = white + '*'">
+                        *
+                    </button>
+                    <button type="button" class="btn btn-default" uib-tooltip="matches zero or more 'directories' in a path" ng-click="white = white + '/**'">
+                        **
+                    </button>
+                </span>
+                <input type="text" class="form-control" name="white_{{$index}}" placeholder="http://" ng-model="white" required ng-maxlength="100">
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="addItem(links.logout.whitelist,'')">
+            <span class="glyphicon glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+
+    <div class="form-group">
+        <div class="alert alert-info" role="alert">
+            Self Service Links show in 'login' 'idp_discovery/email' page.
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label for="active">
+            <input type="checkbox" id="selfServiceLinksEnabled" ng-model="links.selfService.selfServiceLinksEnabled">
+            <span>Self Service Links Enabled</span>
+        </label>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Self Service Signup</label>
+        <input type="text" class="form-control" name="signup" placeholder="http://" ng-model="links.selfService.signup">
+
+        <div ng-show="editForm.signup.$invalid">
+            <p class="help-block" ng-show="editForm.signup.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Self Service Passwd</label>
+        <input type="text" class="form-control" name="passwd" placeholder="http://" ng-model="links.selfService.passwd">
+
+        <div ng-show="editForm.passwd.$invalid">
+            <p class="help-block" ng-show="editForm.passwd.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+</form>

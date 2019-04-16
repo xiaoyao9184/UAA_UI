@@ -1,0 +1,28 @@
+<form name="deleteForm" ng-submit="confirmChange(zone.id)">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="clear()">&times;</button>
+        <h4 class="modal-title">Confirm change operation</h4>
+    </div>
+    <div class="modal-body">
+        <p>Are you sure you want to change this Zone?</p>
+
+        <div class="alert alert-success" ng-show="canSwitchingZone">
+            Your client can still use after switching zones.
+        </div>
+
+        <div class="alert alert-warning" ng-show="!canSwitchingZone">
+            Your client cannot be used after switching zones. 
+            <br>
+            You should prepare an available client use 
+            <a ui-sref="zone-management-detail({id:zone.id})" ng-click="clear()">Detail</a>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="deleteForm.$invalid" class="btn btn-danger">
+            <span class="glyphicon glyphicon-log-in"></span>&nbsp;<span>Change</span>
+        </button>
+    </div>
+</form>

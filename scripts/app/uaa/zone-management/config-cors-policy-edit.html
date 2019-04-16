@@ -1,0 +1,277 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+    <div class="col-md-6">
+        <h3>Default</h3>
+
+        <div class="form-group">
+            <label class="control-label">Max Age</label>
+            <input type="number" class="form-control" name="maxAge" ng-model="corsPolicy.defaultConfiguration.maxAge" ng-min="-1">
+
+            <div ng-show="editForm.maxAge.$invalid">
+                <p class="help-block" ng-show="editForm.maxAge.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="allowedCredentials">
+                <input type="checkbox" id="allowedCredentials" ng-model="corsPolicy.defaultConfiguration.allowedCredentials">
+                <span>Allowed Credentials</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Allowed Uris</label>
+            <br>
+            <div class="form-inline" ng-repeat="allowedUri in corsPolicy.defaultConfiguration.allowedUris track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="deleItem(corsPolicy.defaultConfiguration.allowedUris,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="allowedUri_{{$index}}" ng-model="corsPolicy.defaultConfiguration.allowedUris[$index]" required ng-maxlength="100">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addItem(corsPolicy.defaultConfiguration.allowedUris,'.*')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Allowed Uris Patterns</label>
+            <br>
+            <div class="form-inline" ng-repeat="allowedOriginPattern in corsPolicy.defaultConfiguration.allowedUriPatterns track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="deleItem(corsPolicy.defaultConfiguration.allowedUriPatterns,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="allowedUriPattern_{{$index}}" ng-model="corsPolicy.defaultConfiguration.allowedUriPatterns[$index]" required ng-maxlength="100">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addItem(corsPolicy.defaultConfiguration.allowedUriPatterns,'.*')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label">Allowed Origins</label>
+            <br>
+            <div class="form-inline" ng-repeat="allowedOrigin in corsPolicy.defaultConfiguration.allowedOrigins track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="deleItem(corsPolicy.defaultConfiguration.allowedOrigins,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="allowedOrigin_{{$index}}" ng-model="corsPolicy.defaultConfiguration.allowedOrigins[$index]" required ng-maxlength="100">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addItem(corsPolicy.defaultConfiguration.allowedOrigins,'.*')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Allowed Origins Patterns</label>
+            <br>
+            <div class="form-inline" ng-repeat="allowedOriginPattern in corsPolicy.defaultConfiguration.allowedOriginPatterns track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="deleItem(corsPolicy.defaultConfiguration.allowedOriginPatterns,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="allowedOriginPattern_{{$index}}" ng-model="corsPolicy.defaultConfiguration.allowedOriginPatterns[$index]" required ng-maxlength="100">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addItem(corsPolicy.defaultConfiguration.allowedOriginPatterns,'.*')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Allowed Methods</label>
+            <br>
+            <div class="form-inline" ng-repeat="method in http.methods track by $index">
+                <h4>
+                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                <span class="label" ng-class="hasItem(corsPolicy.defaultConfiguration.allowedMethods,method) ? 'label-primary' : 'label-default'" ng-click="toggleItem(corsPolicy.defaultConfiguration.allowedMethods,method)">
+                    {{method}}</span>
+                </h4>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label">Allowed Headers</label>
+            <br>
+            <div class="form-inline" ng-repeat="allowedHeader in corsPolicy.defaultConfiguration.allowedHeaders track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="deleItem(corsPolicy.defaultConfiguration.allowedHeaders,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="allowedHeader_{{$index}}" ng-model="corsPolicy.defaultConfiguration.allowedHeaders[$index]" required>
+                </div>
+            </div>
+            <div class="btn-group" uib-dropdown>
+                <button type="button" class="btn btn-primary" id="single-button" uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                    <li role="menuitem" ng-repeat="header in http.headers track by $index">
+                        <a href ng-click="addItem(corsPolicy.defaultConfiguration.allowedHeaders,header)">
+                            {{header}}
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li role="menuitem">
+                        <a href ng-click="addItem(corsPolicy.defaultConfiguration.allowedHeaders,'')">
+                            Other
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <h3>XHR</h3>
+
+        <div class="form-group">
+            <label class="control-label">Max Age</label>
+            <input type="number" class="form-control" name="maxAge" ng-model="corsPolicy.xhrConfiguration.maxAge" ng-min="-1">
+
+            <div ng-show="editForm.maxAge.$invalid">
+                <p class="help-block" ng-show="editForm.maxAge.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="allowedCredentials">
+                <input type="checkbox" id="allowedCredentials" ng-model="corsPolicy.xhrConfiguration.allowedCredentials">
+                <span>Allowed Credentials</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Allowed Uris</label>
+            <br>
+            <div class="form-inline" ng-repeat="allowedUri in corsPolicy.xhrConfiguration.allowedUris track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="deleItem(corsPolicy.xhrConfiguration.allowedUris,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="allowedUri_{{$index}}" ng-model="corsPolicy.xhrConfiguration.allowedUris[$index]" required ng-maxlength="100">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addItem(corsPolicy.xhrConfiguration.allowedUris,'.*')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Allowed Uris Patterns</label>
+            <br>
+            <div class="form-inline" ng-repeat="allowedOriginPattern in corsPolicy.xhrConfiguration.allowedUriPatterns track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="deleItem(corsPolicy.xhrConfiguration.allowedUriPatterns,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="allowedUriPattern_{{$index}}" ng-model="corsPolicy.xhrConfiguration.allowedUriPatterns[$index]" required ng-maxlength="100">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addItem(corsPolicy.xhrConfiguration.allowedUriPatterns,'.*')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label">Allowed Origins</label>
+            <br>
+            <div class="form-inline" ng-repeat="allowedOrigin in corsPolicy.xhrConfiguration.allowedOrigins track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="deleItem(corsPolicy.xhrConfiguration.allowedOrigins,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="allowedOrigin_{{$index}}" ng-model="corsPolicy.xhrConfiguration.allowedOrigins[$index]" required ng-maxlength="100">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addItem(corsPolicy.xhrConfiguration.allowedOrigins,'.*')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Allowed Origins Patterns</label>
+            <br>
+            <div class="form-inline" ng-repeat="allowedOriginPattern in corsPolicy.xhrConfiguration.allowedOriginPatterns track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="deleItem(corsPolicy.xhrConfiguration.allowedOriginPatterns,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="allowedOriginPattern_{{$index}}" ng-model="corsPolicy.xhrConfiguration.allowedOriginPatterns[$index]" required ng-maxlength="100">
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary" ng-click="addItem(corsPolicy.xhrConfiguration.allowedOriginPatterns,'.*')">
+                <span class="glyphicon glyphicon glyphicon-plus"></span>
+            </button>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Allowed Methods</label>
+            <br>
+            <div class="form-inline" ng-repeat="method in http.methods track by $index">
+                <h4>
+                <span class="glyphicon glyphicon-tag" aria-hidden="true"></span>
+                <span class="label" ng-class="hasItem(corsPolicy.xhrConfiguration.allowedMethods,method) ? 'label-primary' : 'label-default'" ng-click="toggleItem(corsPolicy.xhrConfiguration.allowedMethods,method)">
+                    {{method}}</span>
+                </h4>
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label class="control-label">Allowed Headers</label>
+            <br>
+            <div class="form-inline" ng-repeat="allowedHeader in corsPolicy.xhrConfiguration.allowedHeaders track by $index">
+                <div class="input-group">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-danger" ng-click="deleItem(corsPolicy.xhrConfiguration.allowedHeaders,$index)">
+                            <span class="glyphicon glyphicon-minus"></span>
+                        </button>
+                    </span>
+                    <input type="text" class="form-control" name="allowedHeader_{{$index}}" ng-model="corsPolicy.xhrConfiguration.allowedHeaders[$index]" required>
+                </div>
+            </div>
+            <div class="btn-group" uib-dropdown>
+                <button type="button" class="btn btn-primary" id="single-button" uib-dropdown-toggle ng-disabled="disabled">
+                    <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                    <li role="menuitem" ng-repeat="header in http.headers track by $index">
+                        <a href ng-click="addItem(corsPolicy.xhrConfiguration.allowedHeaders,header)">
+                            {{header}}
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li role="menuitem">
+                        <a href ng-click="addItem(corsPolicy.xhrConfiguration.allowedHeaders,'')">
+                            Other
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</form>

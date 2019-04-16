@@ -1,0 +1,45 @@
+<div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>Passcode Login</h1>
+
+            <div class="alert alert-danger" ng-show="error">
+                <strong>{{errorMessage}}</strong> Please check your credentials and try again.
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <form ng-show="!success" name="form" role="form" novalidate show-validation ng-submit="login()">
+
+                <div ng-class="{'text-muted': !setting.debug}">
+                    <div class="form-group">
+                        <label>UAA Server URL:</label>
+                        <input class="form-control" placeholder="UAA Service Url" ng-model="uaa.url" ng-disabled="!setting.debug">
+                    </div>
+                    <div class="form-group">
+                        <label>Client:</label>
+                        <input class="form-control" placeholder="Client Id" ng-model="uaa.clientId" ng-disabled="!setting.debug">
+                    </div>
+                    <div class="form-group">
+                        <label>Client Secret:</label>
+                        <input type="password" class="form-control" placeholder="Client Secret" ng-model="uaa.clientSecret" ng-disabled="!setting.debug">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Passcode:</label>
+                    <div class="input-group">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="goPasscode()">Get it</button>
+                        </span>
+                        <input type="text" class="form-control" placeholder="Passcode" ng-model="uaa.passcode">
+                        <span class="input-group-btn">
+                            <button type="button" class="btn btn-default" ng-click="pastePasscode()">Paste</button>
+                        </span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Login</button>
+            </form>
+
+        </div>
+    </div>
+</div>

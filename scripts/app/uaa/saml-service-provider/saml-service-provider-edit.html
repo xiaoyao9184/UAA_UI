@@ -1,0 +1,109 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myUserLabel">
+            Create or edit a Provider</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label>ID</label>
+            <input type="text" class="form-control" name="id" ng-model="provider.id" readonly="readonly">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <input type="text" class="form-control" name="name" ng-model="provider.name" required ng-maxlength="255">
+
+            <div ng-show="editForm.name.$invalid">
+                <p class="help-block" ng-show="editForm.name.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block" ng-show="editForm.name.$error.maxlength" translate-value-max="255">
+                    This field cannot be longer than 255 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Entity Id</label>
+            <input type="text" class="form-control" name="entityId" ng-readonly="provider.id" ng-model="provider.entityId">
+        </div>
+
+        <div class="form-group">
+            <label for="active">
+                <input type="checkbox" id="active" ng-model="provider.active">
+                <span>Activated</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">MetaData Location</label>
+
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <label class="btn btn-primary" ng-model="ui.MetaDataFormat" uib-btn-radio="'XML'">XML</label>
+                    <label class="btn btn-primary" ng-model="ui.MetaDataFormat" uib-btn-radio="'URL'">URL</label>
+                </span>
+                <input type="text" class="form-control" name="metaDataLocation" required placeholder="http://" ng-show="ui.MetaDataFormat === 'URL'" ng-model="provider.config.metaDataLocation">
+                <textarea class="form-control" style="height: 300px;" ng-show="ui.MetaDataFormat === 'XML'" ng-model="provider.config.metaDataLocation"></textarea>
+            </div>
+
+            <div ng-show="editForm.metaDataLocation.$invalid">
+                <p class="help-block" ng-show="editForm.metaDataLocation.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label for="metadataTrustCheck">
+                <input type="checkbox" id="active" ng-model="provider.config.metadataTrustCheck">
+                <span>Metadata Trust Check</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label for="enableIdpInitiatedSso">
+                <input type="checkbox" id="active" ng-model="provider.config.enableIdpInitiatedSso">
+                <span>Enable Idp Initiated Sso</span>
+            </label>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:email</label>
+            <input type="text" class="form-control" name="email" uib-tooltip="Map email to the attribute for email in the provider assertion or token." ng-model="provider.config.attributeMappings.email">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:given_name</label>
+            <input type="text" class="form-control" name="given_name" uib-tooltip="Map given_name to the attribute for given name in the provider assertion or token." ng-model="provider.config.attributeMappings.given_name">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:family_name</label>
+            <input type="text" class="form-control" name="family_name" uib-tooltip="Map family_name to the attribute for family name in the provider assertion or token." ng-model="provider.config.attributeMappings.family_name">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Mapping:phone_number</label>
+            <input type="text" class="form-control" name="phone_number" uib-tooltip="Map phone_number to the attribute for phone number in the provider assertion or token." ng-model="provider.config.attributeMappings.phone_number">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Static Custom Attributes</label>
+            <textarea class="form-control" name="staticCustomAttributes" style="height: 300px;" placeholder="Json string" ng-model="config_staticCustomAttributes"></textarea>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <jh-alert-error></jh-alert-error>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

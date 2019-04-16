@@ -1,0 +1,169 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+    <div class="form-group">
+        <label class="control-label">Company Name</label>
+        <input type="text" class="form-control" name="companyName" uib-tooltip="On page title" ng-model="branding.companyName" ng-min="-1">
+
+        <div ng-show="editForm.companyName.$invalid">
+            <p class="help-block" ng-show="editForm.companyName.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <label class="control-label">Product Icon</label>
+        <div class="media">
+            <div class="media-left">
+                <div ng-model="fileProductLogo" ng-change="fileToImageModel(fileProductLogo,branding_productLogo)" file-browser>
+                    <a class="thumbnail">
+                        <img class="media-object" data-ng-src="{{branding_productLogo.url}}">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Square Icon</label>
+        <div class="media">
+            <div class="media-left">
+                <div ng-model="fileSquareLogo" ng-change="fileToImageModel(fileSquareLogo,branding_squareLogo)" file-browser>
+                    <a class="thumbnail">
+                        <img class="media-object" data-ng-src="{{branding_squareLogo.url}}">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Footer Legal Text</label>
+        <input type="text" class="form-control" name="footerLegalText" uib-tooltip="is copyright on footer" ng-model="branding.footerLegalText">
+
+        <div ng-show="editForm.footerLegalText.$invalid">
+            <p class="help-block" ng-show="editForm.footerLegalText.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    
+
+    <div class="form-group">
+        <label class="control-label">Footer Links</label>
+        <br>
+        <div class="form-inline" ng-repeat="(k,v) in branding.footerLinks">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-danger" ng-click="deleItem(branding.footerLinks, k)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </span>
+                <span class="input-group-addon">{{k}}</span>
+                <input type="text" class="form-control" name="footerLink_{{k}}_value" ng-model="branding.footerLinks[k]">
+            </div>
+        </div>
+        <div class="form-inline">
+            <div class="input-group">
+                <input type="text" class="form-control" placeholder="Set name of Footer Link" ng-model="branding_key">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-primary" ng-disabled="!branding_key" ng-click="addItem(branding.footerLinks, {key: branding_key,value: ''});branding_key=''">
+                        <span class="glyphicon glyphicon glyphicon-plus"></span>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    
+    <div class="form-group">
+        <div class="alert alert-info" role="alert">
+            Banner show in 'idp_discovery/*' and 'mfa/*' page.
+            <br>
+            You must enable 'IDP Discovery'. go 
+            <a href ng-click="activeTab(9)">config it</a>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Banner Logo</label>
+        <div class="media">
+            <div class="media-left">
+                <div ng-model="fileBannerLogo" ng-change="fileToImageModel(fileBannerLogo,branding_banner_logo)" file-browser>
+                    <a class="thumbnail">
+                        <img class="media-object" style="min-width: 50px;min-height: 50px;" data-ng-src="{{branding_banner_logo.url}}">
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Banner Text Color</label>
+        <input type="text" class="form-control" name="textColor" placeholder="format is #FFFFFF" ng-model="branding.banner.textColor">
+
+        <div ng-show="editForm.textColor.$invalid">
+            <p class="help-block" ng-show="editForm.textColor.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Banner Background Color</label>
+        <input type="text" class="form-control" name="backgroundColor" placeholder="format is #FFFFFF" ng-model="branding.banner.backgroundColor">
+
+        <div ng-show="editForm.backgroundColor.$invalid">
+            <p class="help-block" ng-show="editForm.backgroundColor.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Banner Text</label>
+        <input type="text" class="form-control" name="text" ng-model="branding.banner.text">
+
+        <div ng-show="editForm.text.$invalid">
+            <p class="help-block" ng-show="editForm.text.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Banner Link</label>
+        <input type="text" class="form-control" name="link" placeholder="must start with http://" ng-model="branding.banner.link">
+
+        <div ng-show="editForm.link.$invalid">
+            <p class="help-block" ng-show="editForm.link.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    
+    <div class="form-group">
+        <div class="alert alert-info" role="alert">
+            Consent show in 'invitations/accept_invite' 'accounts/new_activation_email' and 'error' page.
+            <br>
+            <a ui-sref="user-management.invite">Invite user</a> then can accept invite. 
+            Or go <a href="{{setting.url}}create_account">create account</a>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label">Consent Text</label>
+        <input type="text" class="form-control" name="consent_text" ng-model="branding.consent.text">
+
+        <div ng-show="editForm.consent_text.$invalid">
+            <p class="help-block" ng-show="editForm.consent_text.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Consent Link</label>
+        <input type="text" class="form-control" name="consent_link" placeholder="must start with http://" ng-model="branding.consent.link">
+
+        <div ng-show="editForm.consent_link.$invalid">
+            <p class="help-block" ng-show="editForm.consent_link.$error.required">
+                This field is required.
+            </p>
+        </div>
+    </div>
+</form>

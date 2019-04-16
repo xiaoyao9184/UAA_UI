@@ -1,0 +1,138 @@
+<div ng-cloak>
+    <div class="row">
+
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="alert alert-info">
+                You are using UAA_UI with "{{setting.loginType}}" mode. 
+                <a ui-sref="setting">Setting</a>
+            </div>
+
+            <!-- <div ng-switch="healthz === 'ok\n'"> -->
+            <div class="alert" ng-class="isHealthy() ? 'alert-success' : 'alert-danger'">
+                You are used uaa service at "<a target="_blank" ng-href="{{setting.url}}">{{setting.url}}</a>". 
+                <a ui-sref="server-info">Server Info</a>
+                
+                <div class="row">
+                    <h4 class="col-md-2 align-middle">
+                        Server status:
+                    </h4>
+                    <div class="col-md-2 embed-responsive" style="height: 40px; width: 100px;">
+                        <iframe class="embed-responsive-item" ng-src="{{url_healthz}}"></iframe>
+                    </div>
+                </div>
+            </div>
+            <!-- </div> -->
+
+            <!-- <div class="alert alert-success">
+                <ifarme 
+                style="height: 90px; width: 150px;" src="{{url_healthz}}"></ifarme>
+                <ifarme 
+                style="height: 90px; width: 150px;" src="http://localhost:8080/uaa/healthz"></ifarme>
+            </div> -->
+
+            <div class="alert alert-warning" ng-show="isZoneMode">
+                You are in zone "{{zone.name}}" mode. 
+                <a class="hand" ng-click="exitZoneMode()">Exit</a>
+            </div>
+            <div class="alert alert-danger" ng-show="isZoneMode && isSwitchingZone()">
+                <strong>With switching client (in uaa zone not "{{zone.name}}")</strong>
+                only some features are available.
+                <br>
+                <strong>Don't refresh your browser</strong>
+                If you do that.
+                <br>
+                You will lose the current user information and authorization.
+                <br>
+                The switching client does not have permission to get current user information.
+                <br>
+                So you can only exit zone mode re-enter for fix it.
+            </div>
+            
+            <div ng-switch="isAuthenticated()">
+                <div class="alert alert-success" ng-switch-when="true">
+                    You are logged in as {{isClient() ? 'client' : 'user'}} "{{userName}}". 
+                    <a ui-sref="token">Token Details</a>
+                </div>
+
+                <div ng-switch-when="false">
+
+                    
+                    <!-- <div ui-view="{{setting.loginType}}"></div> -->
+                    <div ui-view="login"></div>
+
+                    <!-- <div>
+                        <div class="row">
+                            <div class="col-md-8 col-md-offset-2">
+                                <h1>UAA Form</h1>
+
+
+                                <div class="alert alert-danger" ng-show="error">
+                                    <strong>{{errorMessage}}</strong> Please check your credentials and try again.
+                                </div>
+
+
+                            </div>
+                            <div class="col-md-8 col-md-offset-2">
+                                <form ng-show="!success" name="form" role="form" novalidate ng-submit="validateuaacredentials()" show-validation>
+
+
+                                    <div class="form-group">
+                                        <label>UAA Server URL:</label>
+                                        <input class="form-control" value="http://localhost:8080/uaa/" placeholder="http://localhost:8080/uaa/" ng-model="uaa.url">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Client:</label>
+                                        <input class="form-control" placeholder="app" ng-model="uaa.clientId">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Client Secret:</label>
+                                        <input class="form-control" placeholder="appclientsecret" ng-model="uaa.clientSecret">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>UserName:</label>
+                                        <input class="form-control" placeholder="marissa" ng-model="uaa.username">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password:</label>
+                                        <input class="form-control" placeholder="koala" ng-model="uaa.password">
+
+                                    </div>
+
+
+
+                                    <button type="submit" ng-disabled="form.$invalid" class="btn btn-primary">Validate Credintials</button>
+                                </form>
+
+                            </div>
+                        </div>
+                    </div> -->
+
+
+
+
+                </div>
+
+
+            </div>
+
+            <p>
+                If you have any question on UAA:
+            </p>
+
+            <ul>
+                <li><a href="https://github.com/cloudfoundry/uaa/" target="_blank">UAA homepage</a></li>
+                <li><a href="https://github.com/cloudfoundry/uaa/blob/master/docs/UAA-APIs.rst" target="_blank">UAA Docs</a></li>
+                <li><a href="https://github.com/cloudfoundry/uaa/issues" target="_blank">UAA Issues on Github</a></li>
+            </ul>
+
+            <p>
+             <span>If you like UAA UI, don't forget to give us a star on </span>&nbsp;<a href="https://github.com/svennela/UAA_UI" target="_blank">Github</a>!
+            </p>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<ul class="list-group">
+    <li class="list-group-item hand tree" ng-repeat="node in node.members | orderBy:'name' track by node.id" ng-click="selectItem(node,$event)" ng-class="{'disabled': node.type === 'NONE'}">
+        <span class="glyphicon glyphicon-user" ng-show="node.type === 'USER'"></span>
+        <span class="glyphicon" ng-class="{
+                'glyphicon-file': node.nochild, 
+                'glyphicon-folder-open': !node.nochild && node.show, 
+                'glyphicon-folder-close': !node.nochild && !node.show
+            }" ng-show="node.type === 'GROUP'" ng-click="expandItem(node,$event)"></span>
+
+        <span class="glyphicon" ng-class="{
+                'glyphicon-file': node.nochild, 
+                'glyphicon-folder-open': !node.nochild && node.show, 
+                'glyphicon-folder-close': !node.nochild && !node.show
+            }" ng-show="['INDIRECT','DIRECT','NONE'].includes(node.type)" ng-click="expandItem(node,$event)"></span>
+        {{node.name}}
+        <span class="glyphicon" uib-tooltip="Click to move/remove user to this group" ng-class="{
+                'glyphicon-map-marker': node.type === 'DIRECT', 
+                'glyphicon-road': node.type === 'INDIRECT', 
+                'glyphicon-pushpin': node.type === 'NONE'
+            }" ng-show="['INDIRECT','DIRECT','NONE'].includes(node.type)" ng-click="toggleItem(node,$event)"></span>
+        
+        <div ng-show="node.show" ng-init="node = node" ng-include="'scripts/app/uaa/member-management/member-item.html'"></div>
+    </li>
+</ul>

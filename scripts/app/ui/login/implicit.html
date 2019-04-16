@@ -1,0 +1,33 @@
+<div>
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+            <h1>Implicit Login</h1>
+
+            <div class="alert alert-danger" ng-show="error">
+                <strong>{{errorMessage}}</strong> Please check your credentials and try again.
+            </div>
+        </div>
+        <div class="col-md-8 col-md-offset-2">
+            <form ng-show="!success" name="form" role="form" novalidate show-validation ng-submit="login()">
+
+                <div ng-class="{'text-muted': !setting.debug}">
+                    <div class="form-group">
+                        <label>UAA Server URL:</label>
+                        <input class="form-control" placeholder="UAA Service Url" ng-model="uaa.url" ng-disabled="!setting.debug">
+                    </div>
+                    <div class="form-group">
+                        <label>UAA_UI URL:</label>
+                        <input class="form-control" placeholder="UAA_UI url of receive redirect parameter" ng-model="uaa.redirect_uri" ng-disabled="!setting.debug">
+                    </div>
+                    <div class="form-group">
+                        <label>Client:</label>
+                        <input class="form-control" placeholder="Client Id" ng-model="uaa.clientId" ng-disabled="!setting.debug">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" ng-disabled="form.$invalid">Login</button>
+            </form>
+
+        </div>
+    </div>
+</div>

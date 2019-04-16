@@ -1,0 +1,38 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+    <div class="row">
+        <div class="col-md-4" ng-repeat="prompt in prompts track by $index">
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <input type="text" class="form-control" name="name_{{$index}}" ng-model="prompt.name">
+
+                <div ng-show="editForm.name_{{$index}}.$invalid">
+                    <p class="help-block" ng-show="editForm.name_{{$index}}.$error.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label">Type</label>
+                <input type="text" class="form-control" name="type_{{$index}}" ng-model="prompt.type">
+
+                <div ng-show="editForm.type_{{$index}}.$invalid">
+                    <p class="help-block" ng-show="editForm.type_{{$index}}.$error.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label class="control-label">Text</label>
+                <input type="text" class="form-control" name="text_{{$index}}" ng-model="prompt.text">
+
+                <div ng-show="editForm.text__{{$index}}.$invalid">
+                    <p class="help-block" ng-show="editForm.text__{{$index}}.$error.required">
+                        This field is required.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

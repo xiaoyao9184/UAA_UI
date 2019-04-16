@@ -1,0 +1,102 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+    <div class="form-group">
+        <label class="control-label">Expire Secret In Months</label>
+        <input type="number" class="form-control" name="expireSecretInMonths" ng-model="clientSecretPolicy.expireSecretInMonths" ng-min="-1">
+
+        <div ng-show="editForm.expireSecretInMonths.$invalid">
+            <p class="help-block" ng-show="editForm.expireSecretInMonths.$error.required">
+                This field is required.
+            </p>
+
+            <p class="help-block" ng-show="editForm.expireSecretInMonths.$error.min" translate-value-max="255">
+                This field cannot be smaller than -1.
+            </p>
+        </div>
+    </div>
+
+        
+    <div class="form-group">
+        <label class="control-label">Min Length</label>
+        <input type="number" class="form-control" name="minLength" ng-model="clientSecretPolicy.minLength" ng-min="-1">
+
+        <div ng-show="editForm.minLength.$invalid">
+            <p class="help-block" ng-show="editForm.minLength.$error.required">
+                This field is required.
+            </p>
+
+            <p class="help-block" ng-show="editForm.minLength.$error.min" translate-value-max="255">
+                This field cannot be smaller than -1.
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Max Length</label>
+        <input type="number" class="form-control" name="maxLength" ng-model="clientSecretPolicy.maxLength" ng-min="-1">
+
+        <div ng-show="editForm.maxLength.$invalid">
+            <p class="help-block" ng-show="editForm.maxLength.$error.required">
+                This field is required.
+            </p>
+
+            <p class="help-block" ng-show="editForm.maxLength.$error.min" translate-value-max="255">
+                This field cannot be smaller than -1.
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Require Upper Case Character</label>
+        <input type="number" class="form-control" name="requireUpperCaseCharacter" ng-model="clientSecretPolicy.requireUpperCaseCharacter" ng-min="-1">
+
+        <div ng-show="editForm.requireUpperCaseCharacter.$invalid">
+            <p class="help-block" ng-show="editForm.requireUpperCaseCharacter.$error.required">
+                This field is required.
+            </p>
+
+            <p class="help-block" ng-show="editForm.requireUpperCaseCharacter.$error.min" translate-value-max="255">
+                This field cannot be smaller than -1.
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Require Lower Case Character</label>
+        <input type="number" class="form-control" name="requireLowerCaseCharacter" ng-model="clientSecretPolicy.requireLowerCaseCharacter" ng-min="-1">
+
+        <div ng-show="editForm.requireLowerCaseCharacter.$invalid">
+            <p class="help-block" ng-show="editForm.requireLowerCaseCharacter.$error.required">
+                This field is required.
+            </p>
+
+            <p class="help-block" ng-show="editForm.requireLowerCaseCharacter.$error.min" translate-value-max="255">
+                This field cannot be smaller than -1.
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Require Digit</label>
+        <input type="number" class="form-control" name="requireDigit" ng-model="clientSecretPolicy.requireDigit" ng-min="-1">
+
+        <div ng-show="editForm.requireDigit.$invalid">
+            <p class="help-block" ng-show="editForm.requireDigit.$error.required">
+                This field is required.
+            </p>
+
+            <p class="help-block" ng-show="editForm.refreshTokenValidity.$error.min" translate-value-max="255">
+                This field cannot be smaller than -1.
+            </p>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="control-label">Require Special Character</label>
+        <input type="number" class="form-control" name="requireSpecialCharacter" ng-model="clientSecretPolicy.requireSpecialCharacter" ng-min="-1">
+
+        <div ng-show="editForm.requireSpecialCharacter.$invalid">
+            <p class="help-block" ng-show="editForm.requireSpecialCharacter.$error.required">
+                This field is required.
+            </p>
+
+            <p class="help-block" ng-show="editForm.refreshTokenValidity.$error.min" translate-value-max="255">
+                This field cannot be smaller than -1.
+            </p>
+        </div>
+    </div>
+</form>

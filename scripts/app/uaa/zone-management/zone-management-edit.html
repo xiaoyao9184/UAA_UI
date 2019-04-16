@@ -1,0 +1,101 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myUserLabel">
+            Create or edit a Zone</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label class="control-label">ID</label>
+            <input type="text" class="form-control" name="id" ng-model="zone.id">
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Name</label>
+            <input type="text" class="form-control" name="name" ng-model="zone.name" ng-required="true" ng-maxlength="255">
+
+            <div ng-show="editForm.name.$invalid">
+                <p class="help-block" ng-show="editForm.name.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block" ng-show="editForm.name.$error.maxlength" translate-value-max="255">
+                    This field cannot be longer than 255 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label">Sub Domain</label>
+            <input type="text" class="form-control" name="subdomain" ng-model="zone.subdomain" required ng-maxlength="255">
+
+            <div ng-show="editForm.subdomain.$invalid">
+                <p class="help-block" ng-show="editForm.subdomain.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block" ng-show="editForm.subdomain.$error.maxlength" translate-value-max="255">
+                    This field cannot be longer than 255 characters.
+                </p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="active">
+                <input type="checkbox" id="active" ng-model="zone.active">
+                <span>Activated</span>
+            </label>
+        </div>
+        <div class="form-group">
+            <label>Description</label>
+            <input type="text" class="form-control" name="description" ng-model="zone.description">
+        </div>
+
+        <div class="form-group">
+            <uib-tabset active="active">
+                <uib-tab index="0" heading="Token Policy">
+                    <div ng-include="'scripts/app/uaa/zone-management/config-token-policy-edit.html'"></div>
+                </uib-tab>
+                <uib-tab index="1" heading="Client Secret Policy">
+                    <div ng-include="'scripts/app/uaa/zone-management/config-client-policy-edit.html'"></div>
+                </uib-tab>
+                <uib-tab index="2" heading="CORS Policy">
+                    <div ng-include="'scripts/app/uaa/zone-management/config-cors-policy-edit.html'"></div>
+                </uib-tab>
+                <uib-tab index="3" heading="Prompts">
+                    <div ng-include="'scripts/app/uaa/zone-management/config-prompts-edit.html'"></div>
+                </uib-tab>
+                <uib-tab index="4" heading="Links">
+                    <div ng-include="'scripts/app/uaa/zone-management/config-links-edit.html'"></div>
+                </uib-tab>
+                <uib-tab index="5" heading="Branding">
+                    <div ng-include="'scripts/app/uaa/zone-management/config-branding-edit.html'"></div>
+                </uib-tab>
+                <uib-tab index="6" heading="Saml" select="changeKey(samlConfig.activeKeyId)">
+                    <div ng-include="'scripts/app/uaa/zone-management/config-saml-edit.html'"></div>
+                </uib-tab>
+                <uib-tab index="7" heading="MFA">
+                    <div ng-include="'scripts/app/uaa/zone-management/config-mfa-edit.html'"></div>
+                </uib-tab>
+                <uib-tab index="8" heading="User">
+                    <div ng-include="'scripts/app/uaa/zone-management/config-user-edit.html'"></div>
+                </uib-tab>
+                <uib-tab index="9" heading="Other">
+                    <div ng-include="'scripts/app/uaa/zone-management/config-other-edit.html'"></div>
+                </uib-tab>
+                <uib-tab index="10" heading="Raw" select="initRawConfig()">
+                    <label>Config</label>
+                    <textarea class="form-control" name="config" style="min-height: 500px;" ng-model="config" ng-change="configChange"></textarea>
+                </uib-tab>
+            </uib-tabset>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <jh-alert-error></jh-alert-error>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

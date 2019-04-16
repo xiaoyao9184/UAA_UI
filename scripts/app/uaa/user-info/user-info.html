@@ -1,0 +1,78 @@
+<div>
+    <!-- <jh-alert></jh-alert> -->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">User Info</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-success">
+                            User name is <kbd>{{userInfo.user_name}}</kbd>
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            Full name is <kbd>{{userInfo.name}}</kbd>
+                        </li>
+                        <li class="list-group-item" ng-class="userInfo.email_verified ? 'list-group-item-success' : 'list-group-item-danger'">
+                            Email is <kbd>{{userInfo.email}}</kbd>
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            Phone is <kbd>{{userInfo.phone_number}}</kbd>
+                        </li>
+                        <li class="list-group-item list-group-item-warning">
+                            Last logon at <kbd>{{userInfo.previous_logon_time | date:'dd/MM/yy HH:mm' }}</kbd>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="panel panel-danger">
+                <div class="panel-heading">Change password</div>
+                <div class="panel-body">
+                    <!-- <jh-alert-error></jh-alert-error>
+                    <jh-alert></jh-alert> -->
+                    <div class="col-md-8 col-md-offset-2">
+                        <form name="passwordForm" role="form" novalidate ng-submit="changePassword()" show-validation>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="old-password-addon">Old Password</span>
+                                    <input type="password" class="form-control" id="old-password" aria-describedby="old-password-addon" ng-model="password.oldPassword">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon" id="new-password-addon">New Password</span>
+                                    <input type="password" class="form-control" id="new-password" name="new_password" aria-describedby="new-password-addon" required ng-maxlength="50" ng-model="password.password">
+                                </div>
+                                <div ng-show="passwordForm.new_password.$invalid">
+                                    <p class="help-block" ng-show="passwordForm.new_password.$error.required">
+                                        Your password is required.
+                                    </p>
+                                    <p class="help-block" ng-show="passwordForm.new_password.$error.maxlength">
+                                        Your password cannot be longer than 50 characters.
+                                    </p>
+                                </div>
+                                <password-strength-bar password-to-check="password.password"></password-strength-bar>
+                            </div>
+                            <button type="submit" class="btn btn-danger" ng-disabled="passwordForm.$invalid">
+                                <span>Change it</span>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="panel panel-info">
+                <div class="panel-heading">Get passcode</div>
+                <div class="panel-body">
+                    <div class="col-md">
+                        1. Go to UAA
+                        <button type="button" class="btn btn-default" aria-haspopup="true" aria-expanded="false" ng-click="getPasscode()">Go get it</button>
+                        <br>
+                        2. Other clients can get token using only passcode
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

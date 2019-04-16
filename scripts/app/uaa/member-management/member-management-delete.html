@@ -1,0 +1,49 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true" ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myUserLabel">
+            Delete a Member</h4>
+
+        <ol class="breadcrumb">
+            <li ng-repeat="path in paths track by $index">
+                <a ng-click="changePath($index,$event)">{{path.name}}</a>
+            </li>
+        </ol>
+    </div>
+    <div class="modal-body">
+        <div class="row">
+            <div class="form-group col-md-4">
+                <label class="control-label">Current list</label>
+                <ul class="list-group">
+                    <li class="list-group-item hand tree" ng-repeat="item in members track by $index" ng-click="addAction(item)">
+                        <span class="glyphicon glyphicon glyphicon-user" ng-show="item.type == 'USER'"></span>
+                        <span class="glyphicon glyphicon-folder-open" ng-show="item.type == 'GROUP'"></span>
+                        {{item.name}}
+                    </li>
+                </ul>
+            </div>
+
+            <div class="form-group col-md-4">
+                <label class="control-label">Delete list</label>
+                <ul class="list-group">
+                    <li class="list-group-item hand tree" ng-repeat="item in actionItems track by $index" ng-click="removeAction($index)">
+                        <span class="glyphicon glyphicon glyphicon-user" ng-show="item.type == 'USER'"></span>
+                        <span class="glyphicon glyphicon-folder-open" ng-show="item.type == 'GROUP'"></span>
+                        {{item.name}}
+                    </li>
+                </ul>
+            </div>
+
+        </div>
+    </div>
+    <div class="modal-footer">
+        <jh-alert-error></jh-alert-error>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>

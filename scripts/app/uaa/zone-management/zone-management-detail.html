@@ -1,0 +1,130 @@
+<div>
+    <h2><span>Zone</span> "{{zone.id}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>ID</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.id}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Name</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.name}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Sub Domain</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.subdomain}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Activated</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.active}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Description</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.description}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>CreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.created | date:'dd/MM/yy HH:mm' }}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastCreatedDate</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{zone.last_modified | date:'dd/MM/yy HH:mm' }}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Config</span>
+                </td>
+                <td>
+                    <pre>{{zone.config | json}}</pre>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row" ng-show="isAllowSwitching()">
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Zone switching scopes</div>
+                <div class="panel-body">
+                    Zone 'uaa' allow cross zone management.
+                    <div>
+                        Click for add/delete to group
+                        <br>
+                        <span class="label hand" uib-tooltip="{{hasGroup(group) ? 'Already has this group' : 'This group is not included'}}" ng-class="hasGroup(group) ? 'label-success' : 'label-default'" ng-click="toggleGroup(group)" ng-repeat-start="group in ui.groups">
+                            <span class="glyphicon glyphicon-folder-close"></span>
+                            {{group.title}}
+                        </span>
+                        <span ng-repeat-end>
+                            &nbsp;
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="panel panel-info">
+                <div class="panel-heading">Zone switching clients</div>
+                <div class="panel-body">
+                    Zone 'uaa' allow cross zone management.
+                    <div>
+                        Zone client can create in here
+                        <br>
+                        <button type="submit" class="btn btn-success" ui-sref="zone-management-detail.client({id:zone.id})">
+                            <span class="glyphicon glyphicon-flash"></span>&nbsp;<span> Create</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <button type="submit" class="btn btn-info" ng-click="back()">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+    
+    <button type="submit" class="btn btn-primary" ui-sref="zone-management-detail.edit({id:zone.id})">
+        <span class="glyphicon glyphicon-pencil"></span>&nbsp;<span> Edit</span>
+    </button>
+
+    <button type="submit" class="btn btn-warning" ng-show="isZoneMode" ng-click="exitZoneMode()">
+        <span class="glyphicon glyphicon-log-out"></span>&nbsp;<span> Exit</span>
+    </button>
+</div>

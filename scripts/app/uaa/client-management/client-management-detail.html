@@ -1,0 +1,197 @@
+<div>
+    <h2><span>Client</span> "{{client.client_id}}"</h2>
+
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Field</th>
+                    <th>Value</th>
+                </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td>
+                    <span>ID</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.client_id}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Token Salt</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.token_salt}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Grant</span>
+                </td>
+                <td>
+                    <div ng-repeat="authorized_grant_type in client.authorized_grant_types track by $index">
+                        <input type="text" class="input-sm form-control" value="{{authorized_grant_type}}" readonly="readonly">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Redirect</span>
+                </td>
+                <td>
+                    <div ng-repeat="redirect_uri in client.redirect_uri track by $index">
+                        <input type="text" class="input-sm form-control" value="{{redirect_uri}}" readonly="readonly">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Scope</span>
+                </td>
+                <td>
+                    <div ng-repeat="scope in client.scope track by $index">
+                        <input type="text" class="input-sm form-control" value="{{scope}}" readonly="readonly">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Resource ID</span>
+                </td>
+                <td>
+                    <div ng-repeat="resource_id in client.resource_ids track by $index">
+                        <input type="text" class="input-sm form-control" value="{{resource_id}}" readonly="readonly">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Authorities</span>
+                </td>
+                <td>
+                    <div ng-repeat="authoritie in client.authorities track by $index">
+                        <input type="text" class="input-sm form-control" value="{{authoritie}}" readonly="readonly">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>AutoApprove</span>
+                </td>
+                <td>
+                    <div ng-repeat="autoapprove in client.autoapprove track by $index">
+                        <input type="text" class="input-sm form-control" value="{{autoapprove}}" readonly="readonly">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Access token validity</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.access_token_validity}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Refresh token validity</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.refresh_token_validity}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Allowed providers</span>
+                </td>
+                <td>
+                    <div ng-repeat="allowedprovider in client.allowedproviders track by $index">
+                        <input type="text" class="input-sm form-control" value="{{allowedprovider}}" readonly="readonly">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Created with</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.createdwith}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Approvals deleted</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.approvals_deleted}}" readonly="readonly">
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>Required user groups</span>
+                </td>
+                <td>
+                    <div ng-repeat="required_user_group in client.required_user_groups track by $index">
+                        <input type="text" class="input-sm form-control" value="{{required_user_group}}" readonly="readonly">
+                    </div>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <span>LastModified</span>
+                </td>
+                <td>
+                    <input type="text" class="input-sm form-control" value="{{client.lastModified | date:'dd/MM/yy HH:mm'}}" readonly="readonly">
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="panel panel-danger">
+        <div class="panel-heading">Change Secret</div>
+        <div class="panel-body">
+            <!-- <jh-alert-error></jh-alert-error>
+            <jh-alert></jh-alert> -->
+            <div class="col-md-6 col-md-offset-3"> 
+                <form name="secretForm" role="form" novalidate ng-submit="changeSecret()" show-validation>              
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="old-secret-addon">Old Secret</span>
+                            <input type="password" class="form-control" id="old-secret" aria-describedby="old-secret-addon" ng-model="secret.old_secret">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon" id="new-secret-addon">Secret</span>
+                            <input type="password" class="form-control" id="new_secret" name="new_secret" aria-describedby="new-secret-addon" required ng-maxlength="50" ng-model="secret.secret">
+                        </div>
+                        <div ng-show="secretForm.new_secret.$invalid">
+                            <p class="help-block" ng-show="secretForm.new_secret.$error.required">
+                                Your password is required.
+                            </p>
+                            <p class="help-block" ng-show="secretForm.new_secret.$error.maxlength">
+                                Your password cannot be longer than 50 characters.
+                            </p>
+                        </div>
+                        <password-strength-bar password-to-check="secret.secret"></password-strength-bar>
+                    </div>
+                    <button type="submit" class="btn btn-danger" aria-haspopup="true" aria-expanded="false">
+                        <span>Change it</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">Tokens Manage</div>
+        <div class="panel-body" ui-view="token"></div>
+    </div>
+
+    <button type="submit" class="btn btn-info" ng-click="back()">
+        <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+    </button>
+</div>

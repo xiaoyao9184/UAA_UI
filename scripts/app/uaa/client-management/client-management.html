@@ -1,0 +1,129 @@
+<div>
+    <h2>Clients</h2>
+    <!-- <jh-alert></jh-alert> -->
+
+    <div class="row">
+        <div class="col-xs-6 col-md-2" ng-repeat="app in apps track by app.clientId">
+            <div class="center-block" style="height:120px">
+                <a class="thumbnail tiles-nowidth" uib-tooltip="{{app.clientId}}" tooltip-placement="bottom" ui-sref="client-management.meta({id:app.clientId})">
+                    
+                    <div class="tile-icon" style="background-image:url({{app.appIconUrl}})">
+                        <span class="glyphicon glyphicon-th-large" uib-tooltip="Show on home page" tooltip-placement="right" ng-show="app.showOnHomePage"></span>
+                    </div>
+                </a>
+                <div class="red-text text-center">{{app.clientName}}</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="client-management.new">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new Client</span>
+                </button>
+            </div>
+            <div class="col-md-6 form-group">
+                <ui-select multiple="multiple" theme="bootstrap" title="Choose a filter" close-on-select="false" on-select="filtering($select.selected)" on-remove="filtering($select.selected)" tagging="tagging" tagging-tokens="," ng-model="selected.value">
+                    <ui-select-match placeholder="Search...">
+                        <span class="glyphicon" aria-hidden="true" ng-class="$item.icon">
+                        </span>
+                        {{$item.name}}
+                    </ui-select-match>
+                    <ui-select-choices group-by="'group'" repeat="filter in filters | filter: $select.search">
+                        <span class="glyphicon" aria-hidden="true" ng-class="filter.icon">
+                        </span>
+                        {{filter.name}}
+                        <div></div>
+                        <small>
+                            <code>{{filter.field}} <strong>{{filter.operator}}</strong> {{filter.value}}</code>
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Url</th>
+                <th>Grant</th>
+                <th>LastModified</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat-start="client in clients track by client.client_id">
+                <td>
+                    <a ui-sref="client-management-detail({id:client.client_id})">
+                        {{client.client_id}}
+                    </a>
+                </td>
+
+                <td>
+                    {{client.redirect_uri.join(' ')}}
+                </td>
+                
+                <td>
+                    <div ng-repeat="grant in client.authorized_grant_types">
+                        <span class="glyphicon glyphicon-tag"></span> {{grants[grant].name}}
+                    </div>
+                </td>
+
+                <td>{{client.lastModified | date:'dd/MM/yy HH:mm'}}</td>
+
+                <td class="text-right" rowspan="2">
+                    <div>
+                        <button type="submit" class="btn btn-info btn-sm" ui-sref="client-management-detail({id:client.client_id})">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm" ui-sref="client-management.edit({id:client.client_id})">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-danger btn-sm" ui-sref="client-management.delete({id:client.client_id})">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </button>
+                        <button type="submit" class="btn btn-success btn-sm" uib-tooltip="Upgrade to Application" ui-sref="client-management.meta({id:client.client_id})">
+                            <span class="glyphicon glyphicon-blackboard"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            <tr ng-repeat-end>
+                <td colspan="9">
+                    <span class="label hand" uib-tooltip="{{['Auto approve scope','Wild match scope','Base scope'][getScopeTipIndex(scope,client.autoapprove)]}}" ng-class="getScopeLabel(scope,client.autoapprove)" ng-click="goGroupListOrDetail(scope)" ng-repeat-start="scope in client.scope | orderBy:'toString()'">
+                        <span class="glyphicon" ng-class="getScopeIcon(scope,client.autoapprove)"></span>
+                        {{scope}}
+                    </span>
+                    <span ng-repeat-end>
+                        &nbsp;
+                    </span>
+
+                    <span class="label label-info hand" uib-tooltip="Authoritie as user" ng-click="goGroupListOrDetail(authoritie)" ng-repeat-start="authoritie in client.authorities | orderBy:'toString()'">
+                        <span class="glyphicon glyphicon-text-background"></span>
+                        {{authoritie}}
+                    </span>
+                    <span ng-repeat-end>
+                        &nbsp;
+                    </span>
+
+                    <span class="label label-warning hand" uib-tooltip="Provider must allowed" ng-click="goIdentityProviderDetail(allowedprovider)" ng-repeat-start="allowedprovider in client.allowedproviders | orderBy:'toString()'">
+                        <span class="glyphicon glyphicon-cloud"></span>
+                        {{allowedprovider}}
+                    </span>
+                    <span ng-repeat-end>
+                        &nbsp;
+                    </span>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <ul uib-pagination class="pagination-sm" total-items="pageTotal" items-per-page="pageSize" ng-model="pageNumber" ng-change="pagging()"></ul>
+    </div>
+</div>

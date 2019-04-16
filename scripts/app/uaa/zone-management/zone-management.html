@@ -1,0 +1,69 @@
+<div>
+    <h2>Zones</h2>
+    <!-- <jh-alert></jh-alert> -->
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <button class="btn btn-primary" ui-sref="zone-management.new">
+                      <span class="glyphicon glyphicon-flash"></span> <span>Create a new Zone</span>
+              </button>
+          </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Sub Domain</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Created<br>LastModified</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="zone in zones track by zone.id">
+                <td>
+                    <a ui-sref="zone-management-detail({id:zone.id})">
+                        {{zone.id | limitTo:8}}
+                    </a>
+                </td>
+                <td>{{zone.name}}</td>
+                <td>{{zone.subdomain}}</td>
+                <td>
+                    <span class="label label-danger hand" ng-click="setActive(zone, true)" ng-show="!zone.active">Desactivated</span>
+                    <span class="label label-success hand" ng-click="setActive(zone, false)" ng-show="zone.active">Activated</span>
+                </td>
+                <td>{{zone.description}}</td>
+                <td>
+                    {{zone.created | date:'dd/MM/yy HH:mm'}}
+                    <br><br>
+                    {{zone.last_modified | date:'dd/MM/yy HH:mm'}}
+                </td>
+                <td class="text-right">
+                    <div>
+                        <button type="submit" class="btn btn-info btn-sm" ui-sref="zone-management-detail({id:zone.id})">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm" ui-sref="zone-management.edit({id:zone.id})">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-danger btn-sm" ui-sref="zone-management.delete({id:zone.id})">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </button>
+                        <button type="submit" class="btn btn-warning btn-sm" uib-tooltip="Change zone" ng-disabled="!canChangeZone(zone.id)" ui-sref="zone-management.change({id:zone.id})">
+                            <span class="glyphicon glyphicon-log-in"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+    </div>
+</div>

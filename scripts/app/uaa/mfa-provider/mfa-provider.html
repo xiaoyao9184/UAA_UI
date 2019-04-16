@@ -1,0 +1,63 @@
+<div>
+    <h2>MFA Providers</h2>
+    <!-- <jh-alert></jh-alert> -->
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <button class="btn btn-primary" ui-sref="mfa-provider.new">
+                  <span class="glyphicon glyphicon-flash"></span> <span>Create a new provider</span>
+              </button>
+          </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>issuer</th>
+                <th>Provider Description</th>
+                <th>Created<br>LastModified</th>
+                <th>ZoneId</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="provider in providers track by provider.id">
+                <td>
+                    <a ui-sref="mfa-provider-detail({id:provider.id,type:provider.type})">
+                        {{provider.id | limitTo:8}}
+                    </a>
+                </td>
+                <td>{{provider.name}}</td>
+                <td>{{provider.type}}</td>
+                <td>{{provider.config.issuer}}</td>
+                <td>{{provider.config.providerDescription}}</td>
+                <td>
+                    {{provider.created | date:'dd/MM/yy HH:mm'}}
+                    <br><br>
+                    {{provider.last_modified | date:'dd/MM/yy HH:mm'}}
+                </td>
+                <td>
+                    <a ui-sref="zone-management-detail({id:provider.identityZoneId})">
+                        {{provider.identityZoneId | limitTo:8}}
+                    </a>
+                </td>
+
+                <td class="text-right">
+                    <button type="submit" class="btn btn-info btn-sm" ui-sref="mfa-provider-detail({id:provider.id,type:provider.type})">
+                        <span class="glyphicon glyphicon-eye-open"></span>
+                    </button>
+                    <button type="submit" class="btn btn-danger btn-sm" ui-sref="mfa-provider.delete({id:provider.id})">
+                        <span class="glyphicon glyphicon-remove-circle"></span>
+                    </button>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+    </div>
+</div>

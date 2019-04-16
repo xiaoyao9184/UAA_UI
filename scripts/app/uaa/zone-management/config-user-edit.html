@@ -1,0 +1,19 @@
+<form class="col-md-8 col-md-offset-2" name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+    <div class="form-group">
+        <label class="control-label">Default Groups</label>
+        <br>
+        <div class="form-inline" ng-repeat="defaultGroup in userConfig.defaultGroups track by $index">
+            <div class="input-group">
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-danger" ng-click="deleItem(userConfig.defaultGroups,$index)">
+                        <span class="glyphicon glyphicon-minus"></span>
+                    </button>
+                </span>
+                <input type="text" class="form-control" name="defaultGroup_{{$index}}" ng-model="defaultGroup" required ng-maxlength="100">
+            </div>
+        </div>
+        <button type="button" class="btn btn-primary" ng-click="addItem(userConfig.defaultGroups,'')">
+            <span class="glyphicon glyphicon glyphicon-plus"></span>
+        </button>
+    </div>
+</form>

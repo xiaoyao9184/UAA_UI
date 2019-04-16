@@ -1,0 +1,100 @@
+<nav class="navbar navbar-default" role="navigation">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#/">
+                <span>
+                    <img src="assets/images/navbar-uaa.png" style="height:100%">
+                </span>
+                <span>UAA UI</span>
+            </a>
+        </div>
+        <div class="collapse navbar-collapse" id="navbar-collapse" ng-switch="isAuthenticated()">
+            <ul class="nav navbar-nav navbar-right">
+                <li ui-sref-active="active">
+                    <a ui-sref="home" data-toggle="collapse" data-target=".navbar-collapse.in">
+                        <span class="glyphicon glyphicon-home"></span>
+                        <span class="hidden-sm">Home</span>
+                    </a>
+                </li>
+                <!-- jhipster-needle-001 - JHipster will add new menu items here -->
+
+                <li class="dropdown pointer" ng-class="{active: $state.includes('admin')}" ng-switch-when="true">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="" id="admin-menu">
+                        <span>
+                            <span class="glyphicon glyphicon-th-list"></span>
+                            <span class="hidden-sm">UAA Operations</span>
+                            <b class="caret"></b>
+                        </span>
+                    </a>
+                    <ul class="dropdown-menu">
+
+                        <li ui-sref-active="active" ng-show="!isClient()">
+                            <a ui-sref="user-info" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon glyphicon-user"></span>
+                            &#xA0;<span translate="global.menu.admin.user">Your Information</span></a></li>
+
+                        <li role="separator" class="divider"></li>
+
+<!-- 
+                        <li ui-sref-active="active">
+                            <a ui-sref="metrics" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon glyphicon-user"></span>
+                            &#xA0;<span translate="global.menu.admin.metrics">Client Management</span></a></li> -->
+
+                        
+                        <li ui-sref-active="active" ng-show="isZoneMode">
+                            <a ui-sref="zone-management-detail({id:zone.id})" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-globe"></span>
+                            &#xA0;<span>Zone: <span class="badge">{{zone.name}}</span></span></a></li>
+
+                        <li ui-sref-active="active" ng-show="!isZoneMode">
+                            <a ui-sref="zone-management" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-globe"></span>
+                            &#xA0;<span translate="global.menu.admin.zone-management">Zone Management</span></a></li>
+
+                            
+                        <li ui-sref-active="active">
+                            <a ui-sref="client-management" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-inbox"></span>
+                            &#xA0;<span translate="global.menu.admin.client-management">Client Management</span></a></li>
+    
+                        <li ui-sref-active="active">
+                            <a ui-sref="user-management" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-user"></span>
+                            &#xA0;<span translate="global.menu.admin.user-management">User Management</span></a></li>
+                        
+                        <li ui-sref-active="active">
+                            <a ui-sref="group-management" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-folder-open"></span>
+                            &#xA0;<span translate="global.menu.admin.group-management">Group Management</span></a></li>
+        
+                        <li role="separator" class="divider">Provider</li>
+
+                        <li ui-sref-active="active">
+                            <a ui-sref="identity-provider" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-cloud"></span>
+                            &#xA0;<span translate="global.menu.admin.identity-provider">Identity Provider</span></a></li>
+            
+                        <li ui-sref-active="active">
+                            <a ui-sref="mfa-provider" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-text-background"></span>
+                            &#xA0;<span translate="global.menu.admin.mfa-provider">MFA Provider</span></a></li>
+                
+                        <li ui-sref-active="active">
+                            <a ui-sref="saml-service-provider" data-toggle="collapse" data-target=".navbar-collapse.in">
+                            <span class="glyphicon glyphicon-lock"></span>
+                            &#xA0;<span translate="global.menu.admin.saml-service-provider">SAML Service Provider</span></a></li>
+                
+                    </ul>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>

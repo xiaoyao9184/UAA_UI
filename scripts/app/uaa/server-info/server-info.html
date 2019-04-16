@@ -1,0 +1,81 @@
+<div>
+    <!-- <jh-alert></jh-alert> -->
+    <div class="row">
+        <div class="col-md-8 col-md-offset-2">
+
+            <div class="panel panel-primary">
+                <div class="panel-heading">Server Info</div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-info">
+                            App version is <kbd>{{serverInfo.app.version}}</kbd>
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            App time is <kbd>{{serverInfo.timestamp | date:'dd/MM/yy HH:mm' }}</kbd>
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            App Git commit id is <kbd>{{serverInfo.commit_id}}</kbd>
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            Zone name is <kbd>{{serverInfo.zone_name}}</kbd>
+                        </li>
+                        <li class="list-group-item" ng-class="serverInfo.showLoginLinks ? 'list-group-item-success' : 'list-group-item-danger'">
+                            Show Login Links
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="links-login-addon">login</span>
+                                <input type="text" class="form-control" id="links-login" aria-describedby="links-login-addon" ng-model="serverInfo.links.login">
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="links-uaa-addon">uaa</span>
+                                <input type="text" class="form-control" id="links-uaa" aria-describedby="links-uaa-addon" ng-model="serverInfo.links.uaa">
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="links-passwd-addon">passwd</span>
+                                <input type="text" class="form-control" id="links-passwd" aria-describedby="links-passwd-addon" ng-model="serverInfo.links.passwd">
+                            </div>
+
+                            <div class="input-group">
+                                <span class="input-group-addon" id="links-register-addon">register</span>
+                                <input type="text" class="form-control" id="links-register" aria-describedby="links-register-addon" ng-model="serverInfo.links.register">
+                            </div>
+
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            Prompts
+                            
+                            <div class="input-group">
+                                <input type="{{serverInfo.prompts.username[0]}}" class="form-control" id="prompts-username" placeholder="{{serverInfo.prompts.username[1]}}">
+                            </div>
+                            
+                            <div class="input-group">
+                                <input type="{{serverInfo.prompts.password[0]}}" class="form-control" id="prompts-password" placeholder="{{serverInfo.prompts.password[1]}}">
+                            </div>
+                            
+                            <div class="input-group">
+                                <input type="{{serverInfo.prompts.passcode[0]}}" class="form-control" id="prompts-passcode" placeholder="{{serverInfo.prompts.passcode[1]}}">
+                            </div>
+                            
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            SAML service provider entityID is {{serverInfo.entityID}}
+                        </li>
+                        <li class="list-group-item list-group-item-info">
+                            <div class="input-group" ng-repeat="(key, value) in serverInfo.idpDefinitions">
+                                <span class="input-group-addon" id="links-idpDefinition-addon">{{key}}</span>
+                                <input type="text" class="form-control" id="links-idpDefinition" aria-describedby="links-idpDefinition-addon" ng-model="value">
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            
+            <button type="submit" ui-sref="home" ui-sref-opts="{reload:false}" class="btn btn-info">
+                <span class="glyphicon glyphicon-arrow-left"></span>&nbsp;<span> Back</span>
+            </button>
+        </div>
+    </div>
+</div>

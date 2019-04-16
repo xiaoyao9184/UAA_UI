@@ -1,0 +1,122 @@
+<div>
+    <h2>Users</h2>
+    <!-- <jh-alert></jh-alert> -->
+    <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+              <button class="btn btn-primary" ui-sref="user-management.new">
+                  <span class="glyphicon glyphicon-flash"></span> <span>Create a new User</span>
+              </button>
+              <button class="btn btn-success" ui-sref="user-management.invite">
+                  <span class="glyphicon glyphicon-flash"></span> <span>Invite users</span>
+              </button>
+          </div>
+          <div class="col-md-6 form-group">
+              <ui-select multiple="multiple" theme="bootstrap" title="Choose a filter" close-on-select="false" on-select="filtering($select.selected)" on-remove="filtering($select.selected)" tagging="tagging" tagging-tokens="SPACE|,|/" ng-model="selected.value">
+                  <ui-select-match placeholder="Search...">
+                      <span class="glyphicon" aria-hidden="true" ng-class="$item.icon">
+                      </span>
+                      {{$item.name}}
+                  </ui-select-match>
+                  <ui-select-choices group-by="'group'" repeat="filter in filters | filter: $select.search">
+                      <span class="glyphicon" aria-hidden="true" ng-class="filter.icon">
+                      </span>
+                      {{filter.name}}
+                      <div></div>
+                      <small>
+                          <code>{{filter.field}} <strong>{{filter.operator}}</strong> {{filter.value}}</code>
+                      </small>
+                  </ui-select-choices>
+              </ui-select>
+          </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name<br>Given/Family</th>
+                <th>Email<br>Phone</th>
+                <th>Status</th>
+                <th>Previous/Last<br>LogonTime</th>
+                <th>Password<br>LastModified</th>
+                <th>Created<br>LastModified</th>
+                <th>ZoneId<br>Origin</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="user in users track by user.id" rowspan="2">
+                <td>
+                    <a ui-sref="user-management-detail({id:user.id})">
+                        {{user.id | limitTo:8}}
+                    </a>
+                </td>
+                <td>
+                    {{user.userName}}
+                    <br><br>
+                    {{user.name.givenName}} {{user.name.familyName}}
+                </td>
+                <td>
+                    <span ng-repeat="e in user.emails">
+                        <a ng-href="mailto:{{e.value}}">{{e.value}}</a>
+                    </span>
+                    <br><br>
+                    <span ng-repeat="p in user.phoneNumbers" class="hand">{{p.value}}</span>
+                </td>
+                <td>
+                    <span class="label label-danger hand" ng-click="setActive(user, true)" ng-show="!user.active">Desactivated</span>
+                    <span class="label label-success hand" ng-click="setActive(user, false)" ng-show="user.active">Activated</span>
+                    <br><br>
+                    <span class="label label-danger" ng-show="!user.verified">Desverified</span>
+                    <span class="label label-success" ng-show="user.verified">Verified</span>
+                </td>
+
+                <td>
+                    {{user.previousLogonTime | date:'dd/MM/yy HH:mm'}} 
+                    <br><br>
+                    {{user.lastLogonTime | date:'dd/MM/yy HH:mm'}}
+                </td>
+                <td>{{user.passwordLastModified | date:'dd/MM/yy HH:mm'}}</td>
+                <td>
+                    {{user.meta.created | date:'dd/MM/yy HH:mm'}}
+                    <br><br>
+                    {{user.meta.lastModified | date:'dd/MM/yy HH:mm'}}
+                </td>
+                <td>
+                    <a ui-sref="zone-management-detail({id:user.zoneId})">
+                        {{user.zoneId | limitTo:8}}
+                    </a>
+                    <br><br>
+                    <span class="label label-primary" uib-tooltip="{{user.origin}}" ng-show="user.origin === 'uaa'">Internal</span>
+                    <span class="label label-default" uib-tooltip="{{user.origin}}" ng-show="user.origin !== 'uaa'">External</span>
+                    
+                </td>
+
+                <td class="text-right">
+                    <div>
+                        <button type="submit" class="btn btn-info btn-sm" ui-sref="user-management-detail({id:user.id})">
+                            <span class="glyphicon glyphicon-eye-open"></span>
+                        </button>
+                        <button type="submit" class="btn btn-primary btn-sm" ui-sref="user-management.edit({id:user.id})">
+                            <span class="glyphicon glyphicon-pencil"></span>
+                        </button>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn btn-danger btn-sm" ui-sref="user-management.delete({id:user.id})">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </button>
+                        <button type="submit" class="btn btn-success btn-sm" uib-tooltip="Locate user groups" ui-sref="user-management.location({id:user.id})" ng-class="{'disabled': user.groups.length === 0}">
+                            <span class="glyphicon glyphicon-map-marker"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <ul uib-pagination class="pagination-sm" total-items="pageTotal" items-per-page="pageSize" ng-model="pageNumber" ng-change="pagging()"></ul>
+    </div>
+</div>
