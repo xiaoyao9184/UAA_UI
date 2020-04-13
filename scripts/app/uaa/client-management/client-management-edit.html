@@ -23,7 +23,14 @@
 
         <div class="form-group" ng-show="!client.$promise">
             <label class="control-label">Secret</label>
-            <input type="password" class="form-control" name="client_secret" ng-model="client.client_secret" ng-maxlength="256">
+            
+            <div class="input-group">
+                <input type="password" class="form-control" name="client_secret" aria-describedby="password-format" ng-model="client.client_secret" ng-maxlength="256">
+                <span class="input-group-addon" id="password-format">
+                    <a href="https://github.com/cloudfoundry/uaa/releases/tag/v74.0.0" target="_blank">Special characters format</a>
+                </span>
+            </div>
+            
 
             <div ng-show="editForm.client_secret.$invalid">
                 <p class="help-block" ng-show="editForm.client_secret.$error.maxlength" translate-value-max="256">
