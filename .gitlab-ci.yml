@@ -1,0 +1,48 @@
+image: node:10.20
+
+before_script:
+  - cd src/main/webapp/
+
+stages:
+  - install
+  - build
+  - publish
+  - run
+
+cache:
+  paths:
+    - src/main/webapp/node_modules/
+    - src/main/webapp/bower_components/
+
+install_dependencies:
+  stage: install
+  script:
+    - npm install
+    - node ./node_modules/bower/bin/bower install --allow-root
+
+npm_build:
+  stage: build
+  script:
+    - node ./node_modules/gulp/bin/gulp build
+  artifacts:
+    paths:
+      - src/main/webapp/dist/
+
+docker_image:
+  stage: publish
+  image: docker:19.03.1
+  dependencies: 
+    - npm_build
+  script:
+    - docker info
+    - docker build -t uaa-ui .
+
+docker_run:
+  stage: run
+  image: docker:19.03.1
+  script:
+    - docker run -d --rm --name uaa-ui -p 16667:8080 uaa-ui
+
+# testing_testing:
+#   stage: test
+#   script: npm test

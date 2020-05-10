@@ -1,0 +1,8 @@
+FROM danjellz/http-server:latest
+
+WORKDIR /uaa-ui
+COPY dist public/
+
+# Start
+CMD [ "http-server" ]
+EXPOSE 8080

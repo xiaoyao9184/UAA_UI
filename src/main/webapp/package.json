@@ -6,7 +6,7 @@
   "dependencies": {},
   "devDependencies": {
     "bower": "^1.8.8",
-    "gulp": "^3.0.0",
+    "gulp": "^3.9.1",
     "gulp-clean": "^0.4.0",
     "gulp-clean-css": "^4.0.0",
     "gulp-connect": "^5.7.0",
@@ -19,6 +19,7 @@
     "gulp-sourcemaps": "^2.6.5",
     "gulp-uglify": "^3.0.2",
     "gulp-usemin": "^0.3.29",
+    "gulp-util": "^3.0.8",
     "jshint": "^2.10.2",
     "jshint-stylish": "^2.2.1",
     "run-sequence": "^2.2.1",
