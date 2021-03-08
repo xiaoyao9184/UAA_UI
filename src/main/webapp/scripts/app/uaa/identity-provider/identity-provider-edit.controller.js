@@ -91,7 +91,7 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
 
                         scopes: [],
                         prompts: [],
-                        showLinkText: false
+                        showLinkText: angular.isDefined(config.showLinkText) ?  config.showLinkText : false
                     },
                     config);
             },
@@ -106,7 +106,7 @@ angular.module('uaaUIApp').controller('IdentityProviderEditController',
                         },
 
                         scopes: [],
-                        showLinkText: false
+                        showLinkText: angular.isDefined(config.showLinkText) ?  config.showLinkText : false
                     },
                     config);
             },
