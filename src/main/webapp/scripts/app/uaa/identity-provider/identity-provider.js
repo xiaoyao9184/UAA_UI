@@ -79,7 +79,7 @@ angular.module('uaaUIApp')
                     }).result.then(function(result) {
                         $state.go('identity-provider', null, { reload: true });
                     }, function() {
-                        $state.go('^');
+                        $state.go('identity-provider');
                     });
                 }]
             })
