@@ -1,0 +1,80 @@
+<div>
+    <h2>External Group Mappings</h2>
+    <!-- <jh-alert></jh-alert> -->
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                <button class="btn btn-primary" ui-sref="group-mapping.map">
+                    <span class="glyphicon glyphicon-flash"></span> <span>Create a new Group Mapping</span>
+                </button>
+            </div>
+            <div class="col-md-6 form-group">
+                <ui-select multiple theme="bootstrap" title="Choose a filter"
+                    close-on-select="false" 
+                    on-select="filtering($select.selected)" 
+                    on-remove="filtering($select.selected)"
+                    tagging="tagging" tagging-tokens="SPACE|/"
+                    ng-model="selected.value">
+                    <ui-select-match placeholder="Search...">
+                        <span class="glyphicon" aria-hidden="true"
+                            ng-class="$item.icon">
+                        </span>
+                        {{$item.name}}
+                    </ui-select-match>
+                    <ui-select-choices group-by="'group'" repeat="filter in filters | filter: $select.search">
+                        <span class="glyphicon" aria-hidden="true"
+                            ng-class="filter.icon">
+                        </span>
+                        {{filter.name}}
+                        <div></div>
+                        <small>
+                            <code>{{filter.field}} <strong>{{filter.operator}}</strong> {{filter.value}}</code>
+                        </small>
+                    </ui-select-choices>
+                </ui-select>
+            </div>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-striped table-bordered">
+            <thead>
+            <tr>
+                <th>DisplayName</th>
+                <th>GroupId</th>
+                <th>ExternalGroup</th>
+                <th>Origin</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="mapping in mappings track by $index">
+                <td>{{mapping.displayName}}</td>
+                <td>
+                    <a ui-sref="group-management-detail({id:mapping.groupId})">
+                        {{mapping.groupId | limitTo:8}}
+                    </a>
+                    {{mapping.groupName}}
+                </td>
+                <td>{{mapping.externalGroup}}</td>
+                <td>
+                    <a ui-sref="identity-provider-detail({id:mapping.idpId})">
+                        {{mapping.origin}}
+                    </a>
+                </td>
+                <td class="text-right">
+                    <div>
+                        <button type="submit" class="btn btn-danger btn-sm"
+                            ui-sref="group-mapping.unmap({groupId:mapping.groupId,externalGroup:mapping.externalGroup,origin:mapping.origin})">
+                            <span class="glyphicon glyphicon-remove-circle"></span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="text-center">
+        <ul uib-pagination class="pagination-sm" total-items="pageTotal" items-per-page="pageSize"
+            ng-model="pageNumber" ng-change="pagging()"></ul>
+    </div>
+</div>

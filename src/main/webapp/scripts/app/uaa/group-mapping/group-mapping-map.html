@@ -1,0 +1,108 @@
+<form name="editForm" role="form" novalidate ng-submit="save()" show-validation>
+
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true"
+                ng-click="clear()">&times;</button>
+        <h4 class="modal-title" id="myUserLabel">
+            Create a Group Mapping</h4>
+    </div>
+    <div class="modal-body">
+        <div class="form-group">
+            <label>Group Id</label>
+            <input type="text" class="form-control" name="groupId"
+                   ng-model="mapping.groupId" readonly>
+
+            <ui-select multiple theme="bootstrap" title="Choose a filter"
+                close-on-select="true" 
+                on-select="select($item,$select)"
+                on-remove="remove($item)"
+                tagging="tagging" tagging-tokens="SPACE|,|/"
+                ng-model="selected.value">
+                <ui-select-match placeholder="Search...">
+                    <span class="glyphicon" aria-hidden="true"
+                        ng-class="$item.icon">
+                    </span>
+                    {{$item.name}}
+                </ui-select-match>
+                <ui-select-choices group-by="'group'" repeat="filter in filters | filter: $select.search">
+                    <span class="glyphicon" aria-hidden="true"
+                        ng-class="filter.icon">
+                    </span>
+                    {{filter.name}}
+                    <div></div>
+                    <small>
+                        <code>{{filter.field}} <strong>{{filter.operator}}</strong> {{filter.value}}</code>
+                    </small>
+                </ui-select-choices>
+            </ui-select>
+
+            <div ng-show="editForm.groupId.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.groupId.$error.required">
+                    This field is required.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">External Group</label>
+            <input type="text" class="form-control" name="externalGroup"
+                ng-model="mapping.externalGroup" ng-maxlength="255">
+
+            <div ng-show="editForm.externalGroup.$invalid">
+                <p class="help-block"
+                    ng-show="editForm.externalGroup.$error.maxlength"
+                    translate-value-max="255">
+                    This field cannot be longer than 255 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Display Name</label>
+            <input type="text" class="form-control" name="displayName"
+                   ng-model="mapping.displayName" ng-maxlength="255">
+
+            <div ng-show="editForm.displayName.$invalid">
+                <p class="help-block"
+                   ng-show="editForm.displayName.$error.required">
+                    This field is required.
+                </p>
+
+                <p class="help-block"
+                   ng-show="editForm.displayName.$error.maxlength"
+                   translate-value-max="255">
+                    This field cannot be longer than 255 characters.
+                </p>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label">Origin</label>
+            <br>
+            <div class="btn-group" uib-dropdown>
+                <button id="single-button" type="button" class="btn btn-primary" 
+                    uib-dropdown-toggle ng-disabled="disabled">
+                    {{mapping.origin}} 
+                    <span class="caret"></span>
+                </button>
+                <ul class="dropdown-menu" uib-dropdown-menu role="menu" aria-labelledby="single-button">
+                    <li role="menuitem"
+                        ng-repeat="provider in providers track by $index">
+                        <a href ng-click="mapping.origin = provider.originKey">{{provider.originKey}}({{provider.name}})</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="modal-footer">
+        <jh-alert-error></jh-alert-error>
+        <button type="button" class="btn btn-default" data-dismiss="modal" ng-click="clear()">
+            <span class="glyphicon glyphicon-ban-circle"></span>&nbsp;<span>Cancel</span>
+        </button>
+        <button type="submit" ng-disabled="editForm.$invalid || isSaving" class="btn btn-primary">
+            <span class="glyphicon glyphicon-save"></span>&nbsp;<span>Save</span>
+        </button>
+    </div>
+</form>
